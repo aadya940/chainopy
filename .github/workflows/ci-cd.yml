@@ -1,0 +1,57 @@
+name: ChainoPy Continuos Integration
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.6', '3.7', '3.8', '3.9', '3.10', '3.11']
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python 
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{matrix.python-version}}
+
+      - name: Install Package Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Test Dependencies
+        run: pip install -r requirements_test.txt
+
+      - name: Build Cython Files
+        run: python setup.py build_ext --inplace
+
+      - name: Run Tests
+        run: python -m pytest chainopy/test_markovchain.py
+
+
+  check-format:
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+            python-version: ['3.6', '3.7', '3.8', '3.9', '3.10', '3.11']
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+            python-version: ${{matrix.python-version}}
+
+      - name: Install Black
+        run: pip install black
+
+      - name: Check Code Formatting
+        run: black --check .
