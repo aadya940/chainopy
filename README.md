@@ -1,5 +1,10 @@
 # ChainoPy 1.0
-A Python :snake: Package for Markov Chains and Markov Chain Neural Networks
+A Python :snake: Package for Markov Chains and Markov Chain Neural Networks.
+
+## Why ChainoPy?
+- Faster than other libraries (eg: 5x Faster than PyDTMC)
+- First Package to contain functions for [Markov Chain Neural Networks](https://openaccess.thecvf.com/content_cvpr_2018_workshops/papers/w42/Awiszus_Markov_Chain_Neural_CVPR_2018_paper.pdf)
+  
 
 
 # How to Install ChainoPy?
