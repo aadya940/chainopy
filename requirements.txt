@@ -1,0 +1,7 @@
+cython
+numpy
+scipy
+xarray
+matplotlib
+networkx
+torch
