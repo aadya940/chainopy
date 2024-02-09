@@ -42,3 +42,15 @@ Run tests as described in the tests section
 ```bash
 pip install .
 ```
+
+
+# How to run ChainoPy Tests?
+### 1. Clone the project locally 
+### 2. Install packages mentioned in `requirements_test.txt`
+### 3. Travel to the directory containing `test_markovchain.py`
+### 4. Run the following command:
+```bash
+python -m pytest test_markovchain.py
+```
+
+You're all Set! 😃 👍
