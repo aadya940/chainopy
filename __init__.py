@@ -1,9 +1,9 @@
 from .chainopy import (
-    MarkovChain, 
+    MarkovChain,
     MarkovChainNeuralNetwork,
-    )
+)
 
 __all__ = [
     "MarkovChain",
     "MarkovChainNeuralNetwork",
-    ]
+]

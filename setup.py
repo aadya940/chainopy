@@ -4,15 +4,21 @@ import numpy as np
 
 
 extensions = [
-    Extension(name="chainopy._backend._absorbing", sources=["chainopy/_backend/_absorbing.pyx"]),
+    Extension(
+        name="chainopy._backend._absorbing",
+        sources=["chainopy/_backend/_absorbing.pyx"],
+    ),
     Extension(
         name="chainopy._backend._is_communicating",
         sources=["chainopy/_backend/_is_communicating.pyx"],
     ),
     Extension(
-        name="chainopy._backend._learn_matrix", sources=["chainopy/_backend/_learn_matrix.pyx"]
+        name="chainopy._backend._learn_matrix",
+        sources=["chainopy/_backend/_learn_matrix.pyx"],
     ),
-    Extension(name="chainopy._backend._simulate", sources=["chainopy/_backend/_simulate.pyx"]),
+    Extension(
+        name="chainopy._backend._simulate", sources=["chainopy/_backend/_simulate.pyx"]
+    ),
     Extension(
         name="chainopy._backend._stationary_dist",
         sources=["chainopy/_backend/_stationary_dist.pyx"],
