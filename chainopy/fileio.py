@@ -96,6 +96,7 @@ def _save_model_markovchain(_object, filename: str):
                             with transition matrix"
         )
 
+
 def _load_model_markovchain(filepath):
     # If matrix is of sparse format during loading, handle it seperately
 
@@ -129,9 +130,8 @@ def _load_model_markovchain(filepath):
             )
 
             return [transition_matrix, states, eigendecom, _eigenvalues, _eigenvectors]
-        
-        return [transition_matrix, states, eigendecom]
 
+        return [transition_matrix, states, eigendecom]
 
     elif isinstance(data["tpm"], list):
         # Handle Non - Sparse Matrix Cases
@@ -139,7 +139,6 @@ def _load_model_markovchain(filepath):
         transition_matrix = np.array(data["tpm"])
         states = data["states"]
         eigendecom = data["eigendecom"]
-
 
         if "eigenvalues-real" in data.keys():
             _eigenvalues = np.array(data["eigenvalues-real"]) + np.array(

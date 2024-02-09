@@ -12,7 +12,7 @@ def handle_exceptions(func):
                     raise ValueError(
                         "Argument 'n_steps' must be a non-negative integer."
                     )
-            
+
             elif func.__name__ in ["is_communicating", "is_transient", "is_recurrent"]:
                 states = args[0].states
                 for state in args[1:]:
@@ -20,12 +20,12 @@ def handle_exceptions(func):
                         raise ValueError(
                             "Argument 'state' must be a string and present in MarkovChain.states."
                         )
-            
+
             elif func.__name__ == "fit":
                 data = args[1]
                 if not isinstance(data, str) or len(data) == 0:
                     raise ValueError("Argument 'data' must be a non-empty string.")
-            
+
             elif func.__name__ in ["save_model", "load_model"]:
                 path = args[1]
                 if (
@@ -38,7 +38,7 @@ def handle_exceptions(func):
                     )
 
             return func(*args, **kwargs)
-        
+
         except Exception as e:
             print(f"Exception in function '{func.__name__}': {str(e)}")
             raise

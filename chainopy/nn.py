@@ -7,6 +7,7 @@ import warnings
 
 from .MarkovChain import MarkovChain
 
+
 class MarkovChainNeuralNetwork(nn.Module):
     def __init__(self, markov_chain, num_layers):
         super().__init__()
@@ -63,7 +64,6 @@ class MarkovChainNeuralNetwork(nn.Module):
             j = 0
 
             for state in states:
-
                 step = num_samples // len(self._mc.states)
                 _random_values = torch.rand(step)
 
@@ -143,7 +143,6 @@ class MarkovChainNeuralNetwork(nn.Module):
 
         with torch.no_grad():
             for rand_value in random_values:
-
                 input_vector = torch.cat(
                     (rand_value.view(1), current_state.squeeze()), dim=0
                 ).float()

@@ -18,7 +18,6 @@ from ._backend import (
 
 
 class MarkovChain:
-
     __slots__ = "tpm", "states", "eigendecom", "eigenvalues", "eigenvectors"
 
     def __init__(
@@ -255,10 +254,7 @@ class MarkovChain:
 
         transient_states = self.states - set(absorbing_states_)
         for i in absorbing_states_:
-            if all(
-                self.is_communicating(state, i)
-                for state in transient_states
-            ):
+            if all(self.is_communicating(state, i) for state in transient_states):
                 return True
         return False
 
@@ -415,7 +411,7 @@ class MarkovChain:
         If the Markov chain is not absorbing or has no transient
         states, then None is returned.
         """
-        
+
         absorbing_indices = self._absorbing_state_indices()
         k = len(self.states) - len(absorbing_indices)
 

@@ -4,6 +4,7 @@ import numpy as np
 
 from .MarkovChain import MarkovChain
 
+
 def test_init():
     x = MarkovChain([[0, 1], [1, 0]], states=["Rain", "No-Rain"])
     assert x is not None
@@ -215,7 +216,4 @@ def test_predict():
 
 
 def test_absorbing_probabilities():
-    x = MarkovChain([[0.7, 0.3, 0.0],
-                     [0.4, 0.5, 0.1], 
-                     [0.0, 0.0, 1.0]])
-    
+    x = MarkovChain([[0.7, 0.3, 0.0], [0.4, 0.5, 0.1], [0.0, 0.0, 1.0]])

@@ -1,5 +1,6 @@
 from functools import lru_cache, wraps
 
+
 def cache(class_method):
     def decorator(method):
         @lru_cache()
