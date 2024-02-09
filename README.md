@@ -12,7 +12,7 @@ A Python :snake: Package for Markov Chains and Markov Chain Neural Networks.
 # How to Install ChainoPy?
 
 Before you begin, ensure you have the following installed on your system:
-- Python (version 3.6 or higher)
+- Python (>= 3.6 )
 
 ### 1. Clone the Repository
 Clone the Chainopy repository to your local machine using Git:
