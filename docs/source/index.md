@@ -10,6 +10,9 @@
 :maxdepth: 2
 ```
 
+```{include} ../../README.md
+```
+
 # Indices and tables
 
 - {ref}`genindex`
