@@ -82,6 +82,3 @@ jobs:
       
       - name: Navigate to docs build
         run: cd docs/build/html
-
-      - name: View docs
-        run: python -m http.server
