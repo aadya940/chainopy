@@ -29,7 +29,7 @@ def handle_exceptions(func):
             elif func.__name__ == "simulate":
                 n_steps = args[2]
                 initial_state = args[1]
-                if not isinstance(n_steps, int) or len(n_steps) <= 0:
+                if not isinstance(n_steps, int) or n_steps <= 0:
                     raise ValueError("Argument 'n_steps' must be a non-empty string.")
 
                 if not isinstance(initial_state, str) or (
