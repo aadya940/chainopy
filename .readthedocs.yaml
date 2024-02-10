@@ -15,9 +15,6 @@ python:
       extra_requirements:
         - build
         - docs
-
-dependencies:
-  install:
     
 
 sphinx:
