@@ -1,4 +1,5 @@
 cython
+Cython
 numpy
 scipy
 xarray
