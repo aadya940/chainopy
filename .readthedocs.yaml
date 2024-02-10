@@ -13,11 +13,10 @@ python:
     - requirements: requirements_doc.txt
     - method: pip
       path: .
-
-    extra_requirements:
-      - build
-      - docs
-      - html
+      extra_requirements:
+        - build
+        - docs
+        - html
 
 sphinx:
   builder: html
