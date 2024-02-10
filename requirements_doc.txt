@@ -1,5 +1,4 @@
 sphinx
-sphinx-autodoc
 sphinx-rtd-theme
 furo
 myst-parser
