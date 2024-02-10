@@ -55,3 +55,36 @@ jobs:
 
       - name: Check Code Formatting
         run: black --check .
+
+  build-docs:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{matrix.python-version}}
+
+      - name: Install Doc dependencies
+        run: pip install -r requirements_doc.txt
+
+      - name: Run apidoc
+        run: sphinx-apidoc -o docs/source chainopy/
+
+      - name: Navigate to doc root
+        run: cd docs
+
+      - name: Make docs
+        run: make html
+
+      - name: Navigate to docs build
+        run: cd build/html
+
+      - name: View docs
+        run: python -m http.server
