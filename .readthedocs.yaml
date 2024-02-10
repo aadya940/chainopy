@@ -16,7 +16,10 @@ python:
       extra_requirements:
         - build
         - docs
-        - html
+
+before_build:
+  - - 'sphinx-apidoc -o docs/source chainopy/'
+
 
 sphinx:
   builder: html
