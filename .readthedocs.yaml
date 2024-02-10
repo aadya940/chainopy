@@ -7,17 +7,17 @@ build:
   tools:
     python: "3.10"
 
-  python:
-    install:
-      - requirements: requirements.txt
-      - requirements: requirements_doc.txt
-      - method: pip
-        path: .
+python:
+  install:
+    - requirements: requirements.txt
+    - requirements: requirements_doc.txt
+    - method: pip
+      path: .
 
-    extra_requirements:
-      - build
-      - docs
-      - html
+  extra_requirements:
+    - build
+    - docs
+    - html
 
 sphinx:
   builder: html
