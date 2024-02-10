@@ -1,7 +1,6 @@
 version: 2
 
-formats: 
-  - all
+formats: all
 
 build:
   os: ubuntu-22.04
