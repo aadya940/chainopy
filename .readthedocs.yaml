@@ -15,9 +15,15 @@ python:
       extra_requirements:
         - build
         - docs
-    
 
 sphinx:
   builder: html
   configuration: docs/source/conf.py
   fail_on_warning: false
+
+documentation:
+  - type: sphinx
+    configuration: docs/source/conf.py
+    output_dir: docs/build/html
+    fail_on_warning: false
+    fail_on_error: true
