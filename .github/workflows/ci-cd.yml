@@ -80,9 +80,9 @@ jobs:
       - name: Navigate to doc root
         run: cd docs
 
-      - name: Make docs
-        run: make html
-
+      - name: Build HTML documentation
+        run: sphinx-build -b html docs/source docs/build/html
+      
       - name: Navigate to docs build
         run: cd build/html
 
