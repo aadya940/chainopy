@@ -14,10 +14,10 @@ python:
     - method: pip
       path: .
 
-  extra_requirements:
-    - build
-    - docs
-    - html
+    extra_requirements:
+      - build
+      - docs
+      - html
 
 sphinx:
   builder: html
