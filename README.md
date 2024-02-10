@@ -1,5 +1,5 @@
 # ChainoPy 1.0
-A Python :snake: Package for Markov Chains and Markov Chain Neural Networks.
+A Python 🐍 Package for Markov Chains and Markov Chain Neural Networks.
 
 ## Why ChainoPy?
 - Covers most of the fundamental agorithms for Markov Chain Analysis
