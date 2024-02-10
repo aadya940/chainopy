@@ -18,7 +18,8 @@ python:
         - docs
 
 before_build:
-  - - 'sphinx-apidoc -o docs/source chainopy/'
+  jobs:
+    - 'sphinx-apidoc -o docs/source chainopy/'
 
 
 sphinx:
