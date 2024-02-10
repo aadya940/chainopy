@@ -18,6 +18,10 @@ from ._backend import (
 
 
 class MarkovChain:
+    """
+    A class Fundamental Functions for Discrete Time Markov Chains.
+    """
+
     __slots__ = "tpm", "states", "eigendecom", "eigenvalues", "eigenvectors"
 
     def __init__(
@@ -94,25 +98,24 @@ class MarkovChain:
     @handle_exceptions
     def fit(self, data: str) -> np.ndarray:
         """
-        Learn Transition Matrix from Sequence of Data
+        Learn Transition Matrix from Sequence of Data.
+        Each Unique Word is considered a State.
+        It will override the current transition-matrix.
 
-        update self.p = self._learn_matrix(data)
+        Args:
+            data: str
+                Data on which the MarkovChain model must
+                be fitted.
+
+        Returns:
+            ndarray: Transition - Matrix based on `data`
+
+        Usage:
+            >>> chainopy.MarkovChain().fit("My name is John.")
         """
         return self._learn_matrix(data=data)
 
     def _learn_matrix(self, data: str) -> np.ndarray:
-        """
-        # Replace existing TPM with new TPM.
-
-        Parameters
-        ----------
-            data: seq of str objects
-                eg: "my name is James"
-        Returns
-        -------
-            np.ndarray:
-                transition matrix built from data
-        """
         _tpm = _learn_matrix.learn_matrix_cython(data)
         self.tpm = _tpm
         if self.states is None:
@@ -120,18 +123,25 @@ class MarkovChain:
         self._validate_transition_matrix(self.tpm, self.states)
         return _tpm
 
+    @handle_exceptions
     def simulate(self, initial_state: str, n_steps: int) -> List[str]:
         """
-        Simulate the Markov Chain for `n_steps`
+        Simulate the Markov Chain for `n_steps` steps.
+
+        Args:
+            initial_state: str
+                State from which the simulation starts
+            n_steps: int
+                Number of steps to simulate the chain for
+
+        Returns:
+            list: Contains states attained during simulation
         """
         return _simulate._simulate_cython(self.states, self.tpm, initial_state, n_steps)
 
     @staticmethod
     @numba.jit(nopython=True)
     def _vectorize(states: List[str], initial_state: str) -> np.ndarray:
-        """
-        Transforms `initial_state` string to OneHot Numpy Vector
-        """
         if initial_state in states:
             init = states.index(initial_state)
             initial_vect = np.zeros((1, len(states)))
@@ -142,13 +152,20 @@ class MarkovChain:
 
     def adjacency_matrix(self) -> np.ndarray:
         """
-        Returns adjacency matrix of the chain
+        Returns:
+            ndarray: Adjacency matrix of the chain.
         """
         return (self.tpm > 0).astype(int)
 
     def predict(self, initial_state: str) -> str:
         """
-        Return the next most likely states
+        Return the next most likely states.
+
+        Args:
+            initial_state (str): Initial state.
+
+        Returns:
+            str: Next most likely state.
         """
         initial_vect = self._vectorize(self.states, initial_state)
         return self.states[np.argmax(initial_vect @ self.tpm)]
@@ -156,11 +173,14 @@ class MarkovChain:
     @handle_exceptions
     def nstep_distribution(self, n_steps: int) -> np.ndarray:
         """
-        Calculates the distribution of the Markov Chain after n-steps
-        """
-        # Use Efficient Matrix Multiplication
-        # if matrix is eigendecomposable
+        Calculates the distribution of the Markov Chain after n-steps.
 
+        Args:
+            n_steps (int): Number of steps.
+
+        Returns:
+            np.ndarray: Distribution of the Markov Chain.
+        """
         is_eigendecom = self.eigendecom
         eigvals = self.eigenvalues
         eigvecs = self.eigenvectors
@@ -178,21 +198,30 @@ class MarkovChain:
     @cache(class_method=True)
     def is_ergodic(self) -> bool:
         """
-        A Markov chain is called an ergodic Markov chain if it is
-        possible to go from every state to every state (not
-        necessarily in one move).
+        Checks if the Markov chain is ergodic.
+
+        Returns:
+            bool: True if the Markov chain is ergodic, False otherwise.
         """
         return self.is_irreducible() and self.is_aperiodic()
 
     @cache(class_method=True)
     def is_symmetric(self) -> bool:
+        """
+        Checks if the Markov chain is symmetric.
+
+        Returns:
+            bool: True if the Markov chain is symmetric, False otherwise.
+        """
         return np.allclose(self.tpm, self.tpm.transpose())
 
     @cache(class_method=True)
     def stationary_dist(self) -> np.ndarray:
         """
-        Normalized Eigenvector of tpm.transpose() with \
-        eigenvalue 1. Raise error if matrix is invalid
+        Returns the stationary distribution of the Markov chain.
+
+        Returns:
+            np.ndarray: Stationary distribution.
         """
         tpm_T = self.tpm.transpose()
         return _stationary_dist.cython_stationary_dist(tpm_T)
@@ -201,13 +230,15 @@ class MarkovChain:
     @cache(class_method=True)
     def is_communicating(self, state1: str, state2: str, threshold: int = 1000) -> bool:
         """
-        Checks if two states are communicating or not.
+        Checks if two states are communicating.
 
-        NOTE:
-        =====
+        Args:
+            state1 (str): First state.
+            state2 (str): Second state.
+            threshold (int, optional): Threshold for convergence. Defaults to 1000.
 
-        A very small threshold might not let the chain reach convergence
-        hence its more prone to errors.
+        Returns:
+            bool: True if the states are communicating, False otherwise.
         """
         return _is_communicating.is_communicating_cython(
             self.tpm, self.states, state1, state2, threshold
@@ -216,7 +247,10 @@ class MarkovChain:
     @cache(class_method=True)
     def is_irreducible(self) -> bool:
         """
-        If all states are communicating, the Markov Chain is irreducible
+        Checks if the Markov chain is irreducible.
+
+        Returns:
+            bool: True if the Markov chain is irreducible, False otherwise.
         """
         return all(
             any(self.is_communicating(state1, state2) for state2 in self.states)
@@ -229,7 +263,10 @@ class MarkovChain:
     @cache(class_method=True)
     def absorbing_states(self) -> List[str]:
         """
-        Returns all absorbing states
+        Returns all absorbing states.
+
+        Returns:
+            List[str]: Absorbing states.
         """
         indices = self._absorbing_state_indices()
         return [self.states[i] for i in indices]
@@ -237,16 +274,10 @@ class MarkovChain:
     @cache(class_method=True)
     def is_absorbing(self) -> bool:
         """
-        An absorbing Markov chain is a Markov chain in which every state
-        can reach an absorbing state.
-        An absorbing state is a state, where once reached, we can't get out.
+        Checks if the Markov chain is absorbing.
 
-        # Approach:
-        - Check if there are absorbing states:
-            - If YES:
-                - Check if all other states are transient
-            - If NO:
-                - Return False
+        Returns:
+            bool: True if the Markov chain is absorbing, False otherwise.
         """
         absorbing_states_ = self.absorbing_states()
         if len(absorbing_states_) == 0:
@@ -261,16 +292,10 @@ class MarkovChain:
     @cache(class_method=True)
     def is_aperiodic(self) -> bool:
         """
-        If any state contains a `self - loop` , the whole chain \
-        becomes aperiodic.
-        
-        A state in a discrete-time Markov chain is periodic if 
-        the chain can return to the state only at multiples of some 
-        integer larger than 1.
+        Checks if the Markov chain is aperiodic.
 
-        Formally, period = k, such that `k` is the gcd of `n`, for all \
-        TPM^n(i, i) > 0. `k` might not belong to `n`. If `k` = 1, chain
-        is aperiodic.
+        Returns:
+            bool: True if the Markov chain is aperiodic, False otherwise.
         """
         if self.period() == 1:
             return True
@@ -279,17 +304,10 @@ class MarkovChain:
     @cache(class_method=True)
     def period(self) -> int:
         """
-        Returns period of the chain
+        Returns the period of the Markov chain.
 
-        Steps:
-            If:
-                - self-loop, period = 1
-            Else:
-                - Calculate communicating States
-                - Calculate Return Times of the states
-                using n, such that TPM^n(i, i) > 0.
-                - Calculate GCD of `n`.
-                - Return Result
+        Returns:
+            int: Period of the Markov chain.
         """
         if np.any(np.diag(self.tpm) > 0):
             return 1
@@ -322,12 +340,6 @@ class MarkovChain:
 
     @cache(class_method=True)
     def _is_eigendecomposable(self) -> bool:
-        """
-        Checks if the matrix is Eigendecomposable,
-        That is,
-        Is the Matrix Square (YES, TPM is always Square) \
-        and Diagonalizable?
-        """
         eigenvalues, _ = np.linalg.eig(self.tpm)
         unique_eigenvalues = np.unique(eigenvalues)
         return len(unique_eigenvalues) == self.tpm.shape[0]
@@ -336,20 +348,13 @@ class MarkovChain:
     @cache(class_method=True)
     def is_transient(self, state: str) -> bool:
         """
-        If there is a `possibility` of leaving the state
-        and never coming back, the state is called Transient.
+        Checks if a state is transient.
 
-        => P(Xn = i, X0 = i) < 1, For all `n`.
+        Args:
+            state (str): State to check.
 
-        To check if a state is transient using the fundamental matrix,
-        you need to examine the diagonal element corresponding to that
-        state. If N[i, i] < inf, the state is transient; otherwise, it is
-        recurrent.
-
-        In summary, for a state i,i:
-
-        If N[i, i] < inf , the state is transient.
-        If N[i, i] = inf, the state is recurrent.
+        Returns:
+            bool: True if the state is transient, False otherwise.
         """
 
         state_idx = self.states.index(state)
@@ -363,8 +368,6 @@ class MarkovChain:
                 if np.isclose(_fundamental_matrix[state_idx, state_idx], np.inf):
                     return False
         else:
-            # Use Naive Approach where fundamental Matrix is not
-            # defined.
 
             n_step_tpm = self.tpm
             _truth_vals = []
@@ -375,7 +378,7 @@ class MarkovChain:
                     return False
                 j = n_step_tpm
                 n_step_tpm = n_step_tpm @ self.tpm
-                # Check Convergence
+
                 if np.allclose(n_step_tpm, j):
                     break
 
@@ -386,30 +389,23 @@ class MarkovChain:
     @handle_exceptions
     def is_recurrent(self, state: str) -> bool:
         """
-        If fundamental matrix has corresponding diagonal element equal to
-        infinity, state is recurrent.
+        Checks if a state is recurrent.
+
+        Args:
+            state (str): State to check.
+
+        Returns:
+            bool: True if the state is recurrent, False otherwise.
         """
         return not self.is_transient(state)
 
     @cache(class_method=True)
     def fundamental_matrix(self) -> Union[np.ndarray, None]:
         """
-        Gives Information about the expected number of times
-        a process is in a certain state before reaching an
-        absorbing state.
+        Returns the fundamental matrix.
 
-        It's more relevant in the context of absorbing markov
-        chains.
-
-        Fundamental Matrix `N`, is defined for an absorbing Markov
-        Chain with `k` absorbing states.
-        N = (I - Q)^(-1)
-        I = Identity Matrix
-        Q = Submatrix of the transition-matrix, obtained by removing
-        all the absorbing states.
-
-        If the Markov chain is not absorbing or has no transient
-        states, then None is returned.
+        Returns:
+            Union[np.ndarray, None]: Fundamental matrix.
         """
 
         absorbing_indices = self._absorbing_state_indices()
@@ -429,6 +425,9 @@ class MarkovChain:
     def absorption_probabilities(self) -> np.ndarray:
         """
         Returns the absorption probabilities matrix for each state.
+
+        Returns:
+            np.ndarray: Absorption probabilities matrix.
         """
         fundamental_matrix = self.fundamental_matrix()
         if fundamental_matrix is not None:
@@ -444,6 +443,9 @@ class MarkovChain:
     def expected_time_to_absorption(self) -> np.ndarray:
         """
         Returns the expected time to absorption for each state.
+
+        Returns:
+            np.ndarray: Expected time to absorption.
         """
         absorption_probs = self.absorption_probabilities()
         return np.sum(absorption_probs, axis=1)
@@ -451,9 +453,10 @@ class MarkovChain:
     @cache(class_method=True)
     def expected_number_of_visits(self) -> np.ndarray:
         """
-        Returns the expected number of visits
+        Returns the expected number of visits to each state before absorption.
 
-        to each state before absorption.
+        Returns:
+            np.ndarray: Expected number of visits.
         """
         absorption_probs = self.absorption_probabilities()
         return np.reciprocal(1 - absorption_probs)
@@ -461,8 +464,13 @@ class MarkovChain:
     @cache(class_method=True)
     def expected_hitting_time(self, state: str) -> Union[float, None]:
         """
-        Returns the expected hitting time to
-        reach the given absorbing state.
+        Returns the expected hitting time to reach the given absorbing state.
+
+        Args:
+            state (str): Absorbing state.
+
+        Returns:
+            Union[float, None]: Expected hitting time.
         """
         fundamental_matrix = self.fundamental_matrix()
         if fundamental_matrix is not None:
@@ -489,7 +497,12 @@ class MarkovChain:
     @handle_exceptions
     def save_model(self, filename: str):
         """
-        Save Model as a JSON Object
+        Save Model as a JSON Object.
+        If tpm is sparsifyable, it stores tpm
+        as a sparse matrix.
+
+        Args:
+            filename (str): Name of the file to save.
         """
         _save_model_markovchain(self, filename)
 
@@ -497,7 +510,13 @@ class MarkovChain:
     def load_model(self, path: str):
         """
         Load a ChainoPy Model stored as a JSON Object
-        and return as a `MarkovChain` object
+        and return as a `MarkovChain` object.
+
+        Args:
+            path (str): Path to the file.
+
+        Raises:
+            ValueError: If the file cannot be loaded.
         """
 
         result = _load_model_markovchain(path)

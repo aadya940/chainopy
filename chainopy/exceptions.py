@@ -26,6 +26,20 @@ def handle_exceptions(func):
                 if not isinstance(data, str) or len(data) == 0:
                     raise ValueError("Argument 'data' must be a non-empty string.")
 
+            elif func.__name__ == "simulate":
+                n_steps = args[2]
+                initial_state = args[1]
+                if not isinstance(n_steps, int) or len(n_steps) <= 0:
+                    raise ValueError("Argument 'n_steps' must be a non-empty string.")
+
+                if not isinstance(initial_state, str) or (
+                    initial_state not in args[0].states
+                ):
+                    raise ValueError(
+                        "Argument 'initial_state' must be a non-empty string present \
+                                    in `MarkovChain.states`."
+                    )
+
             elif func.__name__ in ["save_model", "load_model"]:
                 path = args[1]
                 if (
