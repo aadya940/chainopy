@@ -17,6 +17,8 @@ import numpy as np
 def _save_model_markovchain(_object, filename: str):
     """
     Save the model as JSON file.
+
+    NOTE: Not to be called directly.
     """
 
     # Check if tpm is sparse or can be converted to sparse
@@ -98,6 +100,10 @@ def _save_model_markovchain(_object, filename: str):
 
 
 def _load_model_markovchain(filepath):
+    """
+    NOTE: Not to be called directly.
+    """
+
     # If matrix is of sparse format during loading, handle it seperately
 
     with open(filepath, "r") as f:

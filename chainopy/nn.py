@@ -5,10 +5,25 @@ import torch.nn.functional as F
 import numpy as np
 import warnings
 
-from .MarkovChain import MarkovChain
+from .markov_chain import MarkovChain
 
 
 class MarkovChainNeuralNetwork(nn.Module):
+    """
+    Neural network for simulating Markov chain behavior.
+
+    Args:
+        markov_chain : chainopy.MarkovChain
+            Markov chain object.
+        num_layers : int
+            Number of layers in the neural network.
+
+
+    Raises:
+        ValueError: If markov_chain is not of type MarkovChain.
+
+    """
+
     def __init__(self, markov_chain, num_layers):
         super().__init__()
 
@@ -21,7 +36,7 @@ class MarkovChainNeuralNetwork(nn.Module):
             )
 
         self._mc = markov_chain
-        self._tpm = torch.Tensor(self._mc.tpm)
+        self._tpm = torch.from_numpy(self._mc.tpm)
         _shape = markov_chain.tpm.shape[0]
 
         self.input_dim = _shape + 1
@@ -39,12 +54,39 @@ class MarkovChainNeuralNetwork(nn.Module):
         self.output_data = None
 
     def forward(self, x):
+        """
+        Forward pass of the neural network.
+
+        Args:
+            x : torch.tensor
+                Input data.
+
+        Returns:
+            torch.Tensor: Output data after passing through the network.
+
+        """
+
         for layer in self._layers[:-1]:
             x = F.relu(layer(x))
 
         return F.softmax(self._layers[-1](x), dim=1)
 
     def _generate_training_data(self, num_samples):
+        """
+        Generates training data for the model.
+
+        Args:
+            num_samples : int
+                Number of samples to generate.
+
+        Returns:
+            torch.Tensor: Input data.
+            torch.Tensor: Output data.
+
+        References:
+            Makov-Chain-Neural-Networks<https://openaccess.thecvf.com/content_cvpr_2018_workshops/papers/w42/Awiszus_Markov_Chain_Neural_CVPR_2018_paper.pdf>_.
+        """
+
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
 
@@ -93,6 +135,28 @@ class MarkovChainNeuralNetwork(nn.Module):
         patience=500,
         factor=0.5,
     ):
+        """
+
+        Trains the neural network model.
+
+        Args:
+            num_samples : int
+                Number of training samples.
+            epochs : int
+                Number of training epochs.
+            learning_rate : float
+                Learning rate for optimization.
+            momentum : float
+                Momentum factor (default is 0.9).
+            verbose : bool, optional
+                If True, prints training progress (default is True).
+            patience : int, optional
+                Patience parameter for learning rate scheduler (default is 500).
+            factor : float, optional
+                Factor by which the learning rate will be reduced (default is 0.5).
+
+        """
+
         self.optimizer = optim.SGD(
             self.parameters(), lr=learning_rate, momentum=momentum
         )
@@ -125,6 +189,13 @@ class MarkovChainNeuralNetwork(nn.Module):
                     print(f"Epoch: {epoch}/{epochs}, Loss: {loss.item():.4f}")
 
     def get_weights(self):
+        """
+        Returns the weights of the model.
+
+        Returns:
+            dict: Dictionary containing layer names and corresponding weights.
+
+        """
         weights_dict = self.state_dict()
 
         return {
@@ -134,6 +205,20 @@ class MarkovChainNeuralNetwork(nn.Module):
         }
 
     def simulate_random_walk(self, start_state, steps):
+        """
+        Simulates a random walk based on the trained model.
+
+        Args:
+            start_state: int
+                Starting state for the random walk.
+            steps: int
+                Number of steps to simulate.
+
+        Returns:
+            list: List of states representing the random walk.
+
+        """
+
         current_state = torch.from_numpy(
             MarkovChain._vectorize(self._mc.states, start_state)
         )

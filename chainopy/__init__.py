@@ -1,7 +1,7 @@
-from .MarkovChain import MarkovChain
+from .markov_chain import MarkovChain
 from .nn import MarkovChainNeuralNetwork
 
 __all__ = [
-    "MarkovChain",
+    "markov_chain",
     "MarkovChainNeuralNetwork",
 ]

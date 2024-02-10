@@ -2,6 +2,14 @@ from functools import lru_cache, wraps
 
 
 def cache(class_method):
+    """
+    Method for caching results while the Transition-Matrix
+    doesn't change.
+
+    NOTE: Not to be called directly.
+
+    """
+
     def decorator(method):
         @lru_cache()
         @wraps(method)

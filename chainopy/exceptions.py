@@ -3,6 +3,13 @@ import os
 
 
 def handle_exceptions(func):
+    """
+    Method for function arguments validation.
+
+    NOTE: Not to be called directly.
+
+    """
+
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         try:

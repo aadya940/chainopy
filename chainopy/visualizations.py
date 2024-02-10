@@ -4,6 +4,11 @@ import networkx as nx
 
 
 def _visualize_tpm(transition_matrix, states):
+    """
+
+    NOTE: Not to be called directly.
+
+    """
     da_transition = xr.DataArray(
         transition_matrix,
         dims=["current_state", "next_state"],
@@ -16,6 +21,11 @@ def _visualize_tpm(transition_matrix, states):
 
 
 def _visualize_chain(transition_matrix, states):
+    """
+
+    NOTE: Not to be called directly.
+
+    """
     G = nx.DiGraph()
 
     for i, state in enumerate(states):
