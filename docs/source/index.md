@@ -10,8 +10,6 @@
 :maxdepth: 2
 ```
 
-
-
 # Indices and tables
 
 - {ref}`genindex`
