@@ -57,5 +57,7 @@ You're all Set! 😃 👍
 
 
 # The Basics
+```{bash}
 >>> mc = chainopy.MarkovChain([[0, 1], [1, 0]], states = ["Rain, "No-Rain"])
 >>> neural_network = chainoy.MarkovChainNeuralNetwork(mc, num_layers = 5)
+```
