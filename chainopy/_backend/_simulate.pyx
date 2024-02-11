@@ -1,7 +1,6 @@
 import numpy as np
 cimport numpy as np
 from numpy cimport ndarray
-from libc.stdlib cimport rand, srand, RAND_MAX
 cimport cython
 
 
