@@ -1,8 +1,6 @@
 cimport numpy as cnp
 import numpy as np
 import cython
-from cython import gil, nogil
-from cython.parallel cimport prange
 
 def get_index(list listVar, str element):
     idx =  listVar.index(element)
