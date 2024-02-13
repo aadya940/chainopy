@@ -1,5 +1,5 @@
 import math
-from typing import List, Union, Tuple
+from typing import List, Union
 
 import numpy as np
 import numba
