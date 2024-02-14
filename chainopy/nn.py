@@ -264,7 +264,7 @@ def divergance_analysis(mc: MarkovChain, nn: MarkovChainNeuralNetwork) -> float:
     _real_tpm = mc.tpm.flatten()
     _epsilon = mc.epsilon
 
-    def _generate_fit_string():
+    def _generate_estimated_tpm():
         # len(mc.states) * 200 steps so there are enough states for efficient estimation
         _observed_seq_list = nn.simulate_random_walk(
             random.choice(mc.states), len(mc.states) * 200
@@ -274,6 +274,6 @@ def divergance_analysis(mc: MarkovChain, nn: MarkovChainNeuralNetwork) -> float:
         )
         return _estimated_tpm
 
-    _est_tpm = _generate_fit_string().flatten()
+    _est_tpm = _generate_estimated_tpm().flatten()
     _kl_divergance = np.sum(_real_tpm * np.log(_real_tpm / _est_tpm))
     return _kl_divergance
