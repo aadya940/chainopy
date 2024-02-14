@@ -1,5 +1,5 @@
 import math
-from typing import List, Union, Tuple
+from typing import List, Union
 
 import numpy as np
 import numba
@@ -22,7 +22,7 @@ class MarkovChain:
     A class containing Fundamental Functions for Discrete Time Markov Chains.
     """
 
-    __slots__ = "tpm", "states", "eigendecom", "eigenvalues", "eigenvectors"
+    __slots__ = "tpm", "states", "eigendecom", "eigenvalues", "eigenvectors", "epsilon"
 
     def __init__(
         self, p: Union[np.ndarray, None] = None, states: Union[List[str], None] = None
@@ -39,8 +39,9 @@ class MarkovChain:
         self.eigendecom = None
         self.eigenvalues = None
         self.eigenvectors = None
+        self.epsilon = 1e-16
 
-        self._validate_transition_matrix(p, states)
+        self._validate_transition_matrix(p, states, epsilon=1e-16)
 
     def __repr__(self) -> str:
         return (
@@ -56,7 +57,9 @@ class MarkovChain:
             f"and {len(self.states)} states>"
         )
 
-    def _validate_transition_matrix(self, p: np.ndarray, states: List[str]) -> None:
+    def _validate_transition_matrix(
+        self, p: np.ndarray, states: List[str], epsilon
+    ) -> None:
         def elements_range(arr):
             if np.any((arr < 0) | (arr > 1)):
                 raise ValueError("All elements in the TPM must be between 0 and 1.")
@@ -89,23 +92,25 @@ class MarkovChain:
                 ):
                     raise ValueError(f"Invalid TPM {p}")
 
-                if not np.allclose(np.sum(p, axis=1), 1):
+                if not np.allclose(np.sum(p, axis=1), 1, atol=epsilon * len(states)):
                     raise ValueError(
                         f"Rows of the Transition Probability Matrix \
                                             (TPM) {p} must sum to 1."
                     )
 
     @handle_exceptions
-    def fit(self, data: str) -> np.ndarray:
+    def fit(self, data: Union[str, list], epsilon: float = 1e-16) -> np.ndarray:
         """
-        Learn Transition Matrix from Sequence of Data.
+        Learn Transition Matrix from Sequence (list or str) of Data.
         Each Unique Word is considered a State.
         It will override the current transition-matrix.
 
         Args:
-            data: str
+            data: Union[str, list]
                 Data on which the MarkovChain model must
                 be fitted.
+            epsilon: float
+                Small dummy value to avoid zeros in the Transition-Matrix
 
         Returns:
             ndarray: Transition - Matrix based on `data`
@@ -113,14 +118,15 @@ class MarkovChain:
         Usage:
             >>> chainopy.MarkovChain().fit("My name is John.")
         """
-        return self._learn_matrix(data=data)
+        return self._learn_matrix(data=data, epsilon=epsilon)
 
-    def _learn_matrix(self, data: str) -> np.ndarray:
-        _tpm = _learn_matrix.learn_matrix_cython(data)
+    def _learn_matrix(self, data: str, epsilon: float) -> np.ndarray:
+        _tpm = _learn_matrix.learn_matrix_cython(data, epsilon=epsilon)
         self.tpm = _tpm
+        self.epsilon = epsilon
         if self.states is None:
             self.states = list(set(data.split(" ")))
-        self._validate_transition_matrix(self.tpm, self.states)
+        self._validate_transition_matrix(self.tpm, self.states, self.epsilon)
         return _tpm
 
     @handle_exceptions
@@ -288,7 +294,7 @@ class MarkovChain:
         if len(absorbing_states_) == 0:
             return False
 
-        transient_states = self.states - set(absorbing_states_)
+        transient_states = set(self.states) - set(absorbing_states_)
         for i in absorbing_states_:
             if all(self.is_communicating(state, i) for state in transient_states):
                 return True
@@ -314,7 +320,7 @@ class MarkovChain:
         Returns:
             int: Period of the Markov chain.
         """
-        if np.any(np.diag(self.tpm) > 0):
+        if np.any(np.diag(self.tpm) > self.epsilon):
             return 1
 
         communicating_states = []
@@ -417,7 +423,7 @@ class MarkovChain:
         absorbing_indices = self._absorbing_state_indices()
         k = len(self.states) - len(absorbing_indices)
 
-        if (not self.is_absorbing()) or (k == 0):
+        if not self.is_absorbing():
             return None
 
         I = np.identity(k)
@@ -502,7 +508,7 @@ class MarkovChain:
         _visualize_chain(self.tpm, self.states)
 
     @handle_exceptions
-    def save_model(self, filename: str):
+    def save_model(self, filename: str, epsilon: float = 1e-16):
         """
         Save Model as a JSON Object.
         If tpm is sparsifyable, it stores tpm
@@ -511,8 +517,10 @@ class MarkovChain:
         Args:
             filename : str
                 Name of the file to save.
+            epsilon: float
+                Small dummy value to avoid zeros in the Transition-Matrix
         """
-        _save_model_markovchain(self, filename)
+        _save_model_markovchain(self, filename, epsilon=epsilon)
 
     @handle_exceptions
     def load_model(self, path: str):
@@ -529,8 +537,8 @@ class MarkovChain:
         """
 
         result = _load_model_markovchain(path)
-        if len(result) == 3:
-            self.tpm, self.states, self.eigendecom = result
+        if len(result) == 4:
+            self.tpm, self.states, self.eigendecom, self.epsilon = result
         else:
             (
                 self.tpm,
@@ -538,6 +546,7 @@ class MarkovChain:
                 self.eigendecom,
                 self.eigenvalues,
                 self.eigenvectors,
+                self.epsilon,
             ) = result
 
-        self.tpm = np.where(self.tpm == 0, 0.0001, self.tpm)
+        self.tpm = np.where(self.tpm == 0, self.epsilon, self.tpm)

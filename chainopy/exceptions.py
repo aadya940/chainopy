@@ -47,13 +47,9 @@ def handle_exceptions(func):
                                     in `MarkovChain.states`."
                     )
 
-            elif func.__name__ in ["save_model", "load_model"]:
+            elif func.__name__ == "save_model":
                 path = args[1]
-                if (
-                    not isinstance(path, str)
-                    or not os.path.isfile(path)
-                    or not path.endswith(".json")
-                ):
+                if not isinstance(path, str) or not path.endswith(".json"):
                     raise ValueError(
                         "Argument 'path' must be a valid filepath ending with '.json'."
                     )

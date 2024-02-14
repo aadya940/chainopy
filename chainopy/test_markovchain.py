@@ -1,6 +1,7 @@
 import pytest
 import pydtmc
 import numpy as np
+import os
 
 from .markov_chain import MarkovChain
 
@@ -215,5 +216,12 @@ def test_predict():
         assert x.predict("Sunny") == y.predict(1, "Sunny")[-1]
 
 
-def test_absorbing_probabilities():
+def test_save_and_load_model():
     x = MarkovChain([[0.7, 0.3, 0.0], [0.4, 0.5, 0.1], [0.0, 0.0, 1.0]])
+    _tpm_x = x.tpm
+    x.save_model("file_x.json")
+    assert "file_x.json" in os.listdir(".")
+    y = MarkovChain()
+    y.load_model(path="file_x.json")
+    assert np.allclose(_tpm_x, y.tpm)
+    os.remove("file_x.json")

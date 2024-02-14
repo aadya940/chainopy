@@ -14,7 +14,7 @@ import numpy as np
 # when storing the matrix as JSON for less memory footprint.
 
 
-def _save_model_markovchain(_object, filename: str):
+def _save_model_markovchain(_object, filename: str, epsilon: float = 1e-16):
     """
     Save the model as JSON file.
 
@@ -27,7 +27,7 @@ def _save_model_markovchain(_object, filename: str):
     if _object.tpm is not None:
         # Do sparsity checks
         sparsity = (
-            np.sum(np.less_equal(_object.tpm, 0.0001).astype(int))
+            np.sum(np.less_equal(_object.tpm, epsilon).astype(int))
             / _object.tpm.shape[0]
         )
 
@@ -36,7 +36,7 @@ def _save_model_markovchain(_object, filename: str):
             x = np.copy(_object.tpm)
 
             # Replace all very small elements by zero
-            _object.tpm = np.where(x <= 0.0001, 0.0, x)
+            _object.tpm = np.where(x <= epsilon, 0.0, x)
 
             _object.tpm = scipy.sparse.coo_matrix(_object.tpm)
             json_sparse = {
@@ -50,6 +50,7 @@ def _save_model_markovchain(_object, filename: str):
                 "tpm": json_sparse,
                 "states": _object.states,
                 "eigendecom": _object.eigendecom,
+                "epsilon": epsilon,
             }
 
             if _object.eigendecom:
@@ -77,6 +78,7 @@ def _save_model_markovchain(_object, filename: str):
                 "tpm": _object.tpm.tolist(),
                 "states": _object.states,
                 "eigendecom": _object.eigendecom,
+                "epsilon": epsilon,
             }
 
             if _object.eigendecom:
@@ -109,7 +111,12 @@ def _load_model_markovchain(filepath):
     with open(filepath, "r") as f:
         data = json.load(f)
 
-    if ("tpm" not in data) and ("states" not in data) and ("eigendecom" not in data):
+    if (
+        ("tpm" not in data)
+        and ("states" not in data)
+        and ("eigendecom" not in data)
+        and ("epsilon" not in data)
+    ):
         raise ValueError("Incorrect file contents. Enter a valid model")
 
     if isinstance(data["tpm"], dict):
@@ -125,6 +132,7 @@ def _load_model_markovchain(filepath):
         transition_matrix = sparse_matrix.toarray()
         states = data["states"]
         eigendecom = data["eigendecom"]
+        epsilon = data["epsilon"]
 
         if "eigenvalues-real" in data.keys():
             _eigenvalues = np.array(data["eigenvalues-real"]) + np.array(
@@ -135,9 +143,16 @@ def _load_model_markovchain(filepath):
                 data["eigenvectors-imag"], np.complex_
             )
 
-            return [transition_matrix, states, eigendecom, _eigenvalues, _eigenvectors]
+            return [
+                transition_matrix,
+                states,
+                eigendecom,
+                _eigenvalues,
+                _eigenvectors,
+                epsilon,
+            ]
 
-        return [transition_matrix, states, eigendecom]
+        return [transition_matrix, states, eigendecom, epsilon]
 
     elif isinstance(data["tpm"], list):
         # Handle Non - Sparse Matrix Cases

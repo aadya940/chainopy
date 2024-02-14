@@ -4,8 +4,10 @@ import torch.optim as optim
 import torch.nn.functional as F
 import numpy as np
 import warnings
+import random
 
 from .markov_chain import MarkovChain
+from ._backend import _learn_matrix
 
 
 class MarkovChainNeuralNetwork(nn.Module):
@@ -239,3 +241,37 @@ class MarkovChainNeuralNetwork(nn.Module):
                 ).squeeze()
 
         return markov_walk
+
+
+def analysis(mc: MarkovChain, nn: MarkovChainNeuralNetwork) -> float:
+    """
+    KL Divergance between `MarkovChain.tpm` and
+    `MarkovChain().fit(MarkovChainNeuralNetwork.simulate_random_walk).tpm`.
+
+    Args:
+        mc: MarkovChain
+            Original Markov Chain that is used to fit the `MarkovChainNeuralNetwork`.
+        nn: MarkovChainNeuralNetwork
+            The fitted `MarkovChainNeuralNetwork`.
+
+    Returns:
+        float: KL-Divergance
+            Lower the KL-Divergance, better the fit.
+
+    NOTES:
+        KL-Divergance<https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence>_.
+    """
+    _real_tpm = mc.tpm.flatten()
+    _epsilon = mc.epsilon
+
+    def _generate_fit_string():
+        # len(mc.states) * 200 steps so there are enough states for efficient estimation
+        _observed_seq_list = nn.simulate_random_walk(
+            random.choice(mc.states), len(mc.states) * 200
+        )
+        _estimated_tpm = _learn_matrix(_observed_seq_list, epsilon=_epsilon)
+        return _estimated_tpm
+
+    _est_tpm = _generate_fit_string().flatten()
+    _kl_divergance = np.sum(_real_tpm * np.log(_real_tpm / _est_tpm))
+    return _kl_divergance

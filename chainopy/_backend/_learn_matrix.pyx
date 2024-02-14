@@ -9,19 +9,25 @@ def get_index(list listVar, str element):
 @cython.wraparound(False)
 @cython.boundscheck(False)
 @cython.cdivision(False)
-def learn_matrix_cython(seq):
+def learn_matrix_cython(seq, epsilon: float = 0.0001):
     cdef list unique_words = []
     cdef int num_unique_words
-    cdef list words = seq.split(" ")
-    cdef int len_seq = len(words)
+    cdef list words 
     cdef list bigram
     cdef int idx0
     cdef int idx1
 
+    if isinstance(seq, list):
+        words = seq
+    elif isinstance(seq, str):
+        words = seq.split(" ")
+
+    cdef int len_seq = len(words)
+
     unique_words = list(set(words))
     num_unique_words = len(unique_words)
 
-    cdef cnp.ndarray[cnp.float64_t, ndim=2] transition_matrix = np.ones((num_unique_words, num_unique_words)) * 0.0001
+    cdef cnp.ndarray[cnp.float64_t, ndim=2] transition_matrix = np.ones((num_unique_words, num_unique_words)) * epsilon
     cdef list bigrams = [[words[i], words[i+1]] for i in range(0, len_seq - 1)]
     cdef Py_ssize_t i, j
     cdef double row_sum
