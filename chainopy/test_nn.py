@@ -9,7 +9,7 @@ from .markov_chain import MarkovChain
 @pytest.fixture
 def mock_markov_chain():
     tpm = np.array([[0.5, 0.5], [0.3, 0.7]])
-    states = ['Rain', 'No-Rain']
+    states = ["Rain", "No-Rain"]
     mc = MarkovChain(tpm, states)
     return mc
 

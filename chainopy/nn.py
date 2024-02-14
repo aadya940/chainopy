@@ -20,7 +20,7 @@ class MarkovChainNeuralNetwork(nn.Module):
         num_layers : int
             Number of layers in the neural network.
 
-            
+
     Raises:
         ValueError: If markov_chain is not of type MarkovChain.
 
@@ -269,7 +269,9 @@ def divergance_analysis(mc: MarkovChain, nn: MarkovChainNeuralNetwork) -> float:
         _observed_seq_list = nn.simulate_random_walk(
             random.choice(mc.states), len(mc.states) * 200
         )
-        _estimated_tpm = _learn_matrix.learn_matrix_cython(_observed_seq_list, epsilon=_epsilon)
+        _estimated_tpm = _learn_matrix.learn_matrix_cython(
+            _observed_seq_list, epsilon=_epsilon
+        )
         return _estimated_tpm
 
     _est_tpm = _generate_fit_string().flatten()
