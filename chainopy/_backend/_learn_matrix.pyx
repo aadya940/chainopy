@@ -9,7 +9,7 @@ def get_index(list listVar, str element):
 @cython.wraparound(False)
 @cython.boundscheck(False)
 @cython.cdivision(False)
-def learn_matrix_cython(seq, epsilon: float = 0.0001):
+def learn_matrix_cython(seq, epsilon: float = 1e-16):
     cdef list unique_words = []
     cdef int num_unique_words
     cdef list words 
