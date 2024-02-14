@@ -161,7 +161,7 @@ class MarkovChain:
         Returns:
             ndarray: Adjacency matrix of the chain.
         """
-        return (self.tpm > 0).astype(int)
+        return (self.tpm > self.epsilon).astype(int)
 
     def predict(self, initial_state: str) -> str:
         """
