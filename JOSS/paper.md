@@ -30,14 +30,13 @@ We do the following key optimizations:
 [ A^n = V \Lambda^n V^{-1} ]
 ```
 
-Where:
+**Where:**
 
-```
 - \( A \) is the eigendecomposable matrix,
 - \( V \) is the matrix of eigenvectors of \( A \),
 - \( \Lambda \) is the diagonal matrix of eigenvalues of \( A \),
 - \( n \) is the exponent for matrix power calculation.
-```
+
 
 
 - Parallel Execution: Some functions are parallelized (eg: `MarkovChain().is_absorbing()`)
