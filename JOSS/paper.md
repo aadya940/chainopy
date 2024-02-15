@@ -31,10 +31,10 @@ We do the following key optimizations:
 ```
 
 Where:
-- \( A \) is the eigendecomposable matrix,
-- \( V \) is the matrix of eigenvectors of \( A \),
-- \( \Lambda \) is the diagonal matrix of eigenvalues of \( A \),
-- \( n \) is the exponent for matrix power calculation.
+\( A \) is the eigendecomposable matrix,
+\( V \) is the matrix of eigenvectors of \( A \),
+\( \Lambda \) is the diagonal matrix of eigenvalues of \( A \),
+\( n \) is the exponent for matrix power calculation.
 
 
 - Parallel Execution: Some functions are parallelized (eg: `MarkovChain().is_absorbing()`)
