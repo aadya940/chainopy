@@ -5,7 +5,7 @@ A Python 🐍 Package for Markov Chains and Markov Chain Neural Networks.
 - Covers most of the fundamental agorithms for Markov Chain Analysis
 - Memory efficient Model saving 
 - Faster than other libraries (eg: 5x Faster than PyDTMC)
-- First Package to contain functions for [Markov Chain Neural Networks](https://openaccess.thecvf.com/content_cvpr_2018_workshops/papers/w42/Awiszus_Markov_Chain_Neural_CVPR_2018_paper.pdf)
+- First Package to contain functions to build equivalent [Markov Chain Neural Networks](https://openaccess.thecvf.com/content_cvpr_2018_workshops/papers/w42/Awiszus_Markov_Chain_Neural_CVPR_2018_paper.pdf) from Markov Chains.
   
 
 
