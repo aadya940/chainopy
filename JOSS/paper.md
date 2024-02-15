@@ -30,23 +30,6 @@ We do the following key optimizations:
 [ A^n = V \Lambda^n V^{-1} ]
 ```
 
-**Where:**
-
-```math
-A  
-```
- is the eigendecomposable matrix,
-```math 
-V
-```
- is the matrix of eigenvectors of \( A \),
-```math
-\Lambda\
-``` is the diagonal matrix of eigenvalues of \( A \),
-```math
-n  
-```is the exponent for matrix power calculation.
-
 
 - Parallel Execution: Some functions are parallelized (eg: `MarkovChain().is_absorbing()`)
 - JIT compilation with Numba: Numba is used for just-in-time compilation to improve performance.
