@@ -5,7 +5,7 @@ tags:
     - Markov Chain Neural Networks
     - Stochastic Analysis
     - High Performance Computing
-authos:
+authors:
     - name: Aadya A. Chinubhai
     - affiliation: 1
 affiliations:
@@ -13,6 +13,7 @@ affiliations:
       index: 1
 bibliography: paper.bib
 ---
+
 
 ### Statement of Need
 There are significant limitations in current Markov Chain packages that rely solely on pure NumPy [@harris2020array] and Python for implementation. Markov Chains often require iterative convergence-based algorithms [@rosenthal1995convergence], where Python's dynamic typing, Global Interpreter Lock (GIL), and garbage collection can hinder potential performance improvements like Parallelism. To address these issues, we enhance our library with extensions like Cython and Numba for efficient algorithm implementation. Additionally, we introduce a Markov Chain Neural Network [@awiszus2018markov] that simulates given Markov Chains while preserving statistical properties from the training data. This approach eliminates the need for post-processing steps such as sampling from the outcome distribution while giving neural networks stochastic properties rather than deterministic behavior.
