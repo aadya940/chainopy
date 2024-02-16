@@ -15,12 +15,12 @@ bibliography: paper.bib
 ---
 
 ### Statement of Need
-There are significant limitations in current Markov Chain packages that rely solely on pure NumPy and Python for implementation. Markov Chains often require iterative convergence-based algorithms, where Python's dynamic typing, Global Interpreter Lock (GIL), and garbage collection can hinder potential performance improvements like Parallelism. To address these issues, we enhance our library with extensions like Cython and Numba for efficient algorithm implementation. Additionally, we introduce a Markov Chain Neural Network [@awiszus2018markov] that simulates given Markov Chains while preserving statistical properties from the training data. This approach eliminates the need for post-processing steps such as sampling from the outcome distribution while giving neural networks stochastic properties rather than deterministic behavior.
+There are significant limitations in current Markov Chain packages that rely solely on pure NumPy [@harris2020array] and Python for implementation. Markov Chains often require iterative convergence-based algorithms [@rosenthal1995convergence], where Python's dynamic typing, Global Interpreter Lock (GIL), and garbage collection can hinder potential performance improvements like Parallelism. To address these issues, we enhance our library with extensions like Cython and Numba for efficient algorithm implementation. Additionally, we introduce a Markov Chain Neural Network [@awiszus2018markov] that simulates given Markov Chains while preserving statistical properties from the training data. This approach eliminates the need for post-processing steps such as sampling from the outcome distribution while giving neural networks stochastic properties rather than deterministic behavior.
 
 ### Implementation
 
 We implement two public classes `MarkovChain` and `MarkovChainNeuralNetwork` that contain core functionalities of the package. Performance itensive functions for the `MarkovChain` class are implemented in the `_backend` directory where a
-custom cython backend is implemented circumventing drawbacks of python like the GIL, dynamic typing etc. The `MarkovChain` class implements various functionalities for discrete-time Markov chains. It provides methods for fitting the transition matrix from data, simulating the chain, calculating properties such as ergodicity, irreducibility, symmetry, and periodicity, as well as computing stationary distributions, absorption probabilities, expected time to absorption, and expected number of visits. It also supports visualization of the transition matrix and chain.  
+custom cython [@behnel2010cython] backend is implemented circumventing drawbacks of python like the GIL, dynamic typing etc. The `MarkovChain` class implements various functionalities for discrete-time Markov chains. It provides methods for fitting the transition matrix from data, simulating the chain, calculating properties such as ergodicity, irreducibility, symmetry, and periodicity, as well as computing stationary distributions, absorption probabilities, expected time to absorption, and expected number of visits. It also supports visualization of the transition matrix and chain.  
 
 We do the following key optimizations: 
 
@@ -32,15 +32,14 @@ We do the following key optimizations:
 
 
 - Parallel Execution: Some functions are parallelized (eg: `MarkovChain().is_absorbing()`)
-- JIT compilation with Numba: Numba is used for just-in-time compilation to improve performance.
+- JIT compilation with Numba [@lam2015numba]: Numba is used for just-in-time compilation to improve performance.
 - `__slots__` usage: `__slots__` is used instead of `__dict__` for storing object attributes, reducing memory overhead.
 - Caching decorator: Class methods are decorated with caching to avoid recomputation of unnecessary results.
-- Direct LAPACK use: LAPACK function `dgeev` is directly used to calculate stationary-distribution via SciPy's 
-`cython_lapack` API 
+- Direct LAPACK use: LAPACK function `dgeev` is directly used to calculate stationary-distribution via SciPy's [@virtanen2020scipy] `cython_lapack` API 
 - Utility functions for visualization: Utility functions are implemented for visualizing the Markov chain.
 - Sparse storage of transition matrix: The model is stored as a JSON object, and if 40% or more elements of the transition matrix are near zero, it is stored in a sparse format.
 
-The `MarkovChainNeuralNetwork` implementation defines a neural network model, MarkovChainNeuralNetwork, using PyTorch for simulating Markov chain behavior. It takes a Markov chain object and the number of layers as input, with each layer being a linear layer. The model's forward method computes the output probabilities for the next state. The model is trained using stochastic gradient descent (SGD) with a learning rate scheduler. Finally, the model's performance is evaluated using the KL divergence between the original Markov chain's transition probabilities and those estimated from the simulated walks.
+The `MarkovChainNeuralNetwork` implementation defines a neural network model, MarkovChainNeuralNetwork, using PyTorch [@paszke2019pytorch] for simulating Markov chain behavior. It takes a Markov chain object and the number of layers as input, with each layer being a linear layer. The model's forward method computes the output probabilities for the next state. The model is trained using stochastic gradient descent (SGD) with a learning rate scheduler. Finally, the model's performance is evaluated using the KL divergence between the original Markov chain's transition probabilities and those estimated from the simulated walks.
 
 The steps to generate training data as described in [@awiszus2018markov]  are as follows:
     1. Input Data Augmentation: Add a random value (r) between 0 and 1 to the input data. This value influences the output, simulating the Markov chain's probabilistic nature.
