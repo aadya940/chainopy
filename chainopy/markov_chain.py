@@ -121,11 +121,11 @@ class MarkovChain:
         return self._learn_matrix(data=data, epsilon=epsilon)
 
     def _learn_matrix(self, data: str, epsilon: float) -> np.ndarray:
-        _tpm = _learn_matrix.learn_matrix_cython(data, epsilon=epsilon)
+        _tpm, _states = _learn_matrix.learn_matrix_cython(data, epsilon=epsilon)
         self.tpm = _tpm
         self.epsilon = epsilon
         if self.states is None:
-            self.states = list(set(data.split(" ")))
+            self.states = _states
         self._validate_transition_matrix(self.tpm, self.states, self.epsilon)
         return _tpm
 
