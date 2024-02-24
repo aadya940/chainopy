@@ -507,7 +507,7 @@ class MarkovChain:
         """
         Visualize the Markov Chain
         """
-        _visualize_chain(self.tpm, self.states)
+        _visualize_chain(self.tpm, self.states, self.epsilon)
 
     @handle_exceptions
     def save_model(self, filename: str, epsilon: float = 1e-16):

@@ -20,7 +20,7 @@ def _visualize_tpm(transition_matrix, states):
     plt.show()
 
 
-def _visualize_chain(transition_matrix, states):
+def _visualize_chain(transition_matrix, states, epsilon):
     """
 
     NOTE: Not to be called directly.
@@ -32,7 +32,7 @@ def _visualize_chain(transition_matrix, states):
         G.add_node(state)
         for j, next_state in enumerate(states):
             probability = transition_matrix[i, j]
-            if probability > 0:
+            if probability > epsilon:
                 G.add_edge(state, next_state, weight=probability)
 
     pos = nx.spring_layout(G)
