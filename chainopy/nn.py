@@ -79,7 +79,10 @@ class MarkovChainNeuralNetwork(nn.Module):
 
         Args:
             num_samples : int
-                Number of samples to generate.
+                Number of samples to generate. 
+                In reality, number of samples are multiple
+                of num_states, nearest to `num_samples` for
+                equally distribution of samples.
 
         Returns:
             torch.Tensor: Input data.
