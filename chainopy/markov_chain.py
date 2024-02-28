@@ -146,7 +146,7 @@ class MarkovChain:
         return _simulate._simulate_cython(self.states, self.tpm, initial_state, n_steps)
 
     @staticmethod
-    @numba.jit(nopython=True)
+    @numba.jit(nopython=True, cache=True)
     def _vectorize(states: List[str], initial_state: str) -> np.ndarray:
         if initial_state in states:
             init = states.index(initial_state)
@@ -296,9 +296,10 @@ class MarkovChain:
 
         transient_states = set(self.states) - set(absorbing_states_)
         for i in absorbing_states_:
-            if all(_is_communicating._is_partially_communicating(state, i)
-                   for state in 
-                   transient_states):
+            if all(
+                _is_communicating._is_partially_communicating(state, i)
+                for state in transient_states
+            ):
                 return True
         return False
 
