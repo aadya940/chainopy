@@ -555,3 +555,19 @@ class MarkovChain:
             ) = result
 
         self.tpm = np.where(self.tpm == 0, self.epsilon, self.tpm)
+
+    @cache(class_method=True)
+    def marginal_dist(self, state: str):
+        """
+        Args
+        ----
+        state: str
+            State for which to calculate the marginal distribution
+
+        Returns
+        -------
+        float:
+            marginal distribution of a state
+        """
+        _idx = self.states.index(state)
+        return np.sum(self.tpm[:, _idx])
