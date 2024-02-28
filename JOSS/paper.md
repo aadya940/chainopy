@@ -58,11 +58,11 @@ API of the library:
             Public Methods
             -------------- 
             
-            - fit(data, epsilon=1e-16)
-            - simulate(initial_state, n_steps)
-            - predict(initial_state)
+            - fit()
+            - simulate()
+            - predict()
             - adjacency_matrix()
-            - nstep_distribution(n_steps)
+            - nstep_distribution()
             - is_ergodic()
             - is_symmetric()
             - stationary_dist()
@@ -79,17 +79,18 @@ API of the library:
             - expected_hitting_time(state)
             - visualize_transition_matrix()
             - visualize_chain()
-            - save_model(filename, epsilon=1e-16)
-            - load_model(path)
+            - save_model()
+            - load_model()
+            - marginal_dist()
 
     - chainopy.MarkovChainNeuralNetwork(chainopy.MarkovChain, num_layers)
 
             Public Methods
             --------------
 
-            - train_model(num_samples, epochs, learning_rate, momentum=0.9, verbose=True, patience=500, factor=0.5)
+            - train_model()
             - get_weights()
-            - simulate_random_walk(start_state, steps)
+            - simulate_random_walk()
     
     - chainopy.divergance_analysis(MarkovChain, MarkovChainNeuralNetwork)
 
