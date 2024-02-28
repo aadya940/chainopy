@@ -30,7 +30,10 @@ def handle_exceptions(func):
 
             elif func.__name__ == "fit":
                 data = args[1]
-                if not (isinstance(data, str) or isinstance(data, list)) or len(data) == 0:
+                if (
+                    not (isinstance(data, str) or isinstance(data, list))
+                    or len(data) == 0
+                ):
                     raise ValueError("Argument 'data' must be a non-empty string.")
 
             elif func.__name__ == "simulate":
