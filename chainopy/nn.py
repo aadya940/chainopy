@@ -269,7 +269,7 @@ def divergance_analysis(mc: MarkovChain, nn: MarkovChainNeuralNetwork) -> float:
         _observed_seq_list = nn.simulate_random_walk(
             random.choice(mc.states), len(mc.states) * 200
         )
-        _estimated_tpm = _learn_matrix.learn_matrix_cython(
+        _estimated_tpm, _ = _learn_matrix.learn_matrix_cython(
             _observed_seq_list, epsilon=_epsilon
         )
         return _estimated_tpm
