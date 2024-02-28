@@ -6,7 +6,7 @@ import numba
 
 from .exceptions import handle_exceptions
 from .visualizations import _visualize_tpm, _visualize_chain
-from .fileio import _save_model_markovchain, _load_model_markovchain
+from .fileio import _save_model_markovchain, _load_model_markovchain, load_text
 from .caching import cache
 from ._backend import (
     _simulate,
@@ -120,7 +120,7 @@ class MarkovChain:
         """
         return self._learn_matrix(data=data, epsilon=epsilon)
 
-    def _learn_matrix(self, data: str, epsilon: float) -> np.ndarray:
+    def _learn_matrix(self, data: Union[str, list], epsilon: float) -> np.ndarray:
         _tpm, _states = _learn_matrix.learn_matrix_cython(data, epsilon=epsilon)
         self.tpm = _tpm
         self.epsilon = epsilon
@@ -571,3 +571,23 @@ class MarkovChain:
         """
         _idx = self.states.index(state)
         return np.sum(self.tpm[:, _idx])
+
+    @handle_exceptions
+    def fit_from_file(self, path: str, epsilon: float = 1e-16):
+        """
+        Args
+        ----
+        path: str
+            path to the text file
+        epsilon: float
+            small value to avoid zero division
+
+        Returns
+        -------
+        ndarray:
+            Transition Matrix trained from the text file.
+            If `self.tpm` is None. Then this sets `self.tpm`
+            to the new transition-matrix.
+        """
+        _data_list = load_text(path)
+        return _learn_matrix.learn_matrix_cython(_data_list, epsilon)

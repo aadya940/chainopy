@@ -82,6 +82,7 @@ API of the library:
             - save_model()
             - load_model()
             - marginal_dist()
+            - fit_from_file()
 
     - chainopy.MarkovChainNeuralNetwork(chainopy.MarkovChain, num_layers)
 

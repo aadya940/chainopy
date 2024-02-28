@@ -28,7 +28,7 @@ def handle_exceptions(func):
                             "Argument 'state' must be a string and present in MarkovChain.states."
                         )
 
-            elif func.__name__ == "fit":
+            elif func.__name__ in ["fit", "fit_from_file"]:
                 data = args[1]
                 if (
                     not (isinstance(data, str) or isinstance(data, list))

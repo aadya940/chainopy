@@ -1,6 +1,7 @@
 import json
 import scipy
 import numpy as np
+import os
 
 
 # Write functions to read CSV and real Excel
@@ -173,3 +174,32 @@ def _load_model_markovchain(filepath):
             return [transition_matrix, states, eigendecom, _eigenvalues, _eigenvectors]
 
         return [transition_matrix, states, eigendecom]
+
+
+def load_text(path: str):
+    """
+    Reads data from a text file and returns it in a
+    `chainopy.MarkovChain.fit()` compatible list.
+
+    Args
+    ----
+    path: str
+        path of the text file
+
+    Returns
+    -------
+    list: contains all the words in the text file
+    """
+    if (not os.path.exists(path)) or (not path.endswith(".txt")):
+        raise ValueError(
+            f"Enter a Valid path. {path} is an invalid or is not a text file."
+        )
+
+    _corpus = []
+
+    with open(path, "r") as f:
+        for i in f.readlines():
+            words = i.split(" ")
+            _corpus.extend(words)
+
+        return _corpus
