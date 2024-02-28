@@ -70,10 +70,25 @@ def test_fundamental_matrix():
     fm_x = x.fundamental_matrix()
     fm_y = y.fundamental_matrix
 
-    if (fm_x == None) and (fm_y == None):
+    if (fm_x is None) and (fm_y is None):
         assert True
     else:
-        assert np.isclose(fm_x, fm_y)
+        assert np.allclose(fm_x, fm_y, atol=1e-4, equal_nan=True)
+
+    _tpm = np.array(
+        [[0.1, 0.3, 0.4, 0.2], [0, 0.1, 0.2, 0.7], [0, 0, 1, 0], [0, 0, 0, 1]]
+    )
+
+    x = MarkovChain(_tpm)
+    y = pydtmc.MarkovChain(_tpm)
+
+    fm_x = x.fundamental_matrix()
+    fm_y = y.fundamental_matrix
+
+    if (fm_x is None) and (fm_y is None):
+        assert True
+
+    assert np.allclose(fm_x, fm_y, atol=1e-4, equal_nan=True)
 
 
 def test_is_transient():

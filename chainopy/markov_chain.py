@@ -297,7 +297,9 @@ class MarkovChain:
         transient_states = set(self.states) - set(absorbing_states_)
         for i in absorbing_states_:
             if all(
-                _is_communicating._is_partially_communicating(state, i)
+                _is_communicating._is_partially_communicating(
+                    self.tpm, self.states, state, i, threshold=1000
+                )
                 for state in transient_states
             ):
                 return True
