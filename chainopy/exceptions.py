@@ -1,5 +1,4 @@
 import functools
-import os
 
 
 def handle_exceptions(func):
@@ -64,3 +63,8 @@ def handle_exceptions(func):
             raise
 
     return wrapper
+
+
+class ChainopyException(Exception):
+    # Not Implemented 
+    pass
