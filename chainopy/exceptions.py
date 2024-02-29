@@ -66,5 +66,5 @@ def handle_exceptions(func):
 
 
 class ChainopyException(Exception):
-    # Not Implemented 
+    # Not Implemented
     pass
