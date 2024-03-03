@@ -62,3 +62,16 @@ You're all Set! 😃 👍
 >>> mc = chainopy.MarkovChain([[0, 1], [1, 0]], states = ["Rain, "No-Rain"])
 >>> neural_network = chainoy.MarkovChainNeuralNetwork(mc, num_layers = 5)
 ```
+
+Create a Markov Switching Model as follows:
+
+```
+>>> import numpy as np
+>>> import random
+>>> from chainopy import MarkovSwitchingModel
+>>> X = np.random.normal(0, 1, 1000) + np.random.logistic(5, 10, 1000) # Generate Random Training Data
+>>> regime_col = [random.choice(["High", "Low", "Stagnant"]) for _ in range(1000)] # Generate Regimes for Training Data
+>>> mod = MarkovSwitchingModel()
+>>> mod.fit(data, regime_col)
+>>> y, regime_y = mod.predict("High", steps=20)
+```
