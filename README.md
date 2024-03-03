@@ -58,6 +58,7 @@ You're all Set! 😃 👍
 
 
 # The Basics
+Create Markov Chains and Markov Chain Neural Networks as follows:
 ```{bash}
 >>> mc = chainopy.MarkovChain([[0, 1], [1, 0]], states = ["Rain, "No-Rain"])
 >>> neural_network = chainoy.MarkovChainNeuralNetwork(mc, num_layers = 5)
@@ -65,7 +66,7 @@ You're all Set! 😃 👍
 
 Create a Markov Switching Model as follows:
 
-```
+```{bash}
 >>> import numpy as np
 >>> import random
 >>> from chainopy import MarkovSwitchingModel
