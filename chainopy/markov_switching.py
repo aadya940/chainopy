@@ -1,7 +1,6 @@
 import numpy as np
 from typing import List
 from statsmodels.tsa.ar_model import AutoReg
-from numba import njit
 
 from .markov_chain import MarkovChain
 
@@ -106,7 +105,4 @@ class MarkovSwitchingModel:
             predictions[i] = prediction
             current_regime = self._markov_chain.predict(current_regime)
             regime_predictions.append(current_regime)
-        return (
-            predictions,
-            np.array(regime_predictions)
-        )
+        return (predictions, np.array(regime_predictions))
