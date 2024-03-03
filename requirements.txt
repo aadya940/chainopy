@@ -7,3 +7,4 @@ matplotlib
 networkx
 torch
 numba
+statsmodels
