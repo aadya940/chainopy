@@ -32,7 +32,7 @@ jobs:
         run: python setup.py build_ext --inplace
 
       - name: Run Tests
-        run: python -m pytest chainopy/test_markovchain.py
+        run: python -m pytest chainopy/tests/
 
 
   check-format:
