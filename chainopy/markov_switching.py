@@ -96,17 +96,16 @@ class MarkovSwitchingModel:
         np.ndarray
             Array of predicted Regimes for each feature for each step.
         """
-        predictions = []
+        predictions = np.zeros(steps, dtype=np.float32)
         regime_predictions = []
         current_regime = start_regime
-        regime_predictions.append(current_regime)
-        for _ in range(steps):
+        for i in range(steps):
             _model = self.models[current_regime]
             prediction = _model.model.predict(_model.params, start=steps, end=steps)
-            predictions.append(prediction)
+            predictions[i] = prediction
             current_regime = self._markov_chain.predict(current_regime)
             regime_predictions.append(current_regime)
         return (
-            np.array(predictions).flatten(),
-            np.array(regime_predictions).flatten()[0:steps],
+            predictions,
+            np.array(regime_predictions).flatten(),
         )
