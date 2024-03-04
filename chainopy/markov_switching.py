@@ -122,3 +122,21 @@ class MarkovSwitchingModel:
             predictions[i] = prediction
 
         return predictions, np.array(regime_predictions)
+
+    def evaluate(self, ts_test, ts_pred):
+        """
+        Evaluates the accuracy of the model using the
+        mean squared error metric.
+
+        Parameters
+        ----------
+        ts_test: ndarray
+            Real target values of the Time Series 
+        ts_pred: ndarray
+            Predicted target values of the Time Series
+
+        Returns
+        -------
+        float: mean square error between `ts_test` and `ts_pred`
+        """
+        return np.mean(np.square(ts_test - ts_pred))
