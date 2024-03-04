@@ -10,8 +10,8 @@ import os
 # ==================================================
 
 # When we call the `_learn_matrix` function in the fit
-# method, we initialize elements with 0.0001. Hence, it
-# makes sense to throw away these elements that are 0.0001
+# method, we initialize elements with 1e-16 (epsilon). Hence, it
+# makes sense to throw away these elements that are 1e-16 (epsilon)
 # when storing the matrix as JSON for less memory footprint.
 
 
