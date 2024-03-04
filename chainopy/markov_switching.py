@@ -20,7 +20,7 @@ class MarkovSwitchingModel:
 
     @staticmethod
     def _validate_data(ts_data, regime_sequence):
-        if not len(ts_data.shape == 1):
+        if not (len(ts_data.shape) == 1):
             raise ValueError("Time Series should be a 1 Dimensional Array.")
 
         if not (ts_data.shape[0] == len(regime_sequence)):
