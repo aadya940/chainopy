@@ -5,7 +5,6 @@ from ..markov_switching import MarkovSwitchingModel
 
 
 def test_model_fit():
-
     data = np.random.normal(0, 1, 1000)
     regime_col = [random.choice(["High", "Low", "Stagnant"]) for _ in range(1000)]
 
@@ -17,7 +16,6 @@ def test_model_fit():
 
 
 def test_model_predict():
-
     data = np.random.normal(0, 1, 1000)
     regime_col = [random.choice(["High", "Low", "Stagnant"]) for _ in range(1000)]
 

@@ -70,8 +70,7 @@ class MarkovSwitchingModel:
 
         Returns
         -------
-        ndarray: Matrix of means for each regime,
-                shape = (num_regimes, num_features)
+        dict: Returns Autoregressive models for each Regime
         """
         _regime_sequence = np.array(regime_sequence)
         for i in range(self.num_regimes):
