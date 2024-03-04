@@ -20,7 +20,26 @@ class MarkovSwitchingModel:
 
     @staticmethod
     def _validate_data(ts_data, regime_sequence):
-        pass
+        if not len(ts_data.shape == 1):
+            raise ValueError("Time Series should be a 1 Dimensional Array.")
+
+        if not (ts_data.shape[0] == len(regime_sequence)):
+            raise ValueError(
+                "Regime Sequence and Time Series Data \
+                            must be of the same length"
+            )
+
+        if not (isinstance(ts_data, np.ndarray)):
+            raise ValueError("Time Series data must be a Numpy Array")
+
+        if not (isinstance(regime_sequence, list)):
+            raise ValueError("Regime Sequence must be a list")
+
+        if np.nan in ts_data:
+            raise ValueError("Time Series Data must not contain NaN values")
+
+        if None in regime_sequence:
+            raise ValueError("Regime Sequence must not contain None values")
 
     def fit(self, ts_data, regime_sequence):
         """
