@@ -59,7 +59,7 @@ class MarkovSwitchingModel:
         self,
         ts_data: np.ndarray,
         regime_sequence: List[str],
-    ) -> np.ndarray:
+    ) -> dict:
         """
         Parameters
         ----------
