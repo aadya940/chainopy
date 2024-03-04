@@ -41,7 +41,7 @@ class MarkovSwitchingModel:
         if None in regime_sequence:
             raise ValueError("Regime Sequence must not contain None values")
 
-    def fit(self, ts_data, regime_sequence):
+    def fit(self, ts_data, regime_sequence, lags=1):
         """
         Parameters
         ----------
@@ -55,7 +55,7 @@ class MarkovSwitchingModel:
             ts_data=ts_data, regime_sequence=regime_sequence
         )
         self._learn_regime_proba(regime_sequence)
-        self._learn_models(ts_data, regime_sequence)
+        self._learn_models(ts_data, regime_sequence, lags=lags)
 
     def _learn_regime_proba(self, regime_sequence: List[str]) -> np.ndarray:
         """
@@ -78,6 +78,7 @@ class MarkovSwitchingModel:
         self,
         ts_data: np.ndarray,
         regime_sequence: List[str],
+        lags,
     ) -> dict:
         """
         Parameters
@@ -94,7 +95,7 @@ class MarkovSwitchingModel:
         _regime_sequence = np.array(regime_sequence)
         for i in range(self.num_regimes):
             X = ts_data[_regime_sequence == self.regimes[i]]
-            self.models[self.regimes[i]] = AutoReg(X, lags=None).fit()
+            self.models[self.regimes[i]] = AutoReg(X, lags=lags).fit()
 
     def predict(self, start_regime: str, steps: int = 1) -> np.ndarray:
         """
