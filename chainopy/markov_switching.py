@@ -43,6 +43,9 @@ class MarkovSwitchingModel:
 
     def fit(self, ts_data, regime_sequence, lags=1):
         """
+        Trains and sets the models `self.models` and `self._markov_chain`
+        attributes
+
         Parameters
         ----------
         ts_data: ndarray,
@@ -59,20 +62,18 @@ class MarkovSwitchingModel:
 
     def _learn_regime_proba(self, regime_sequence: List[str]) -> np.ndarray:
         """
+        Learns transition probabilities for regimes. Overrides, if these
+        probabilities already exist.
+
         Parameters
         ----------
         regime_sequence: list,
                     Training data consisting of Regimes in chronological
                     Order.
-
-        Returns
-        -------
-        ndarray: Markov Transition Matrix calculated based on `regime_sequence`
         """
-        if (self._markov_chain.tpm is None) and (self.regimes is None):
-            self._markov_chain.fit(regime_sequence)
-            self.regimes = self._markov_chain.states
-            self.num_regimes = len(self.regimes)
+        self._markov_chain.fit(regime_sequence)
+        self.regimes = self._markov_chain.states
+        self.num_regimes = len(self.regimes)
 
     def _learn_models(
         self,
@@ -87,10 +88,6 @@ class MarkovSwitchingModel:
             1D Target values at different timepoints
         regime_sequence: list
             regimes corresponding to target values at each timepoint
-
-        Returns
-        -------
-        dict: Returns Autoregressive models for each Regime
         """
         _regime_sequence = np.array(regime_sequence)
         for i in range(self.num_regimes):
@@ -118,10 +115,10 @@ class MarkovSwitchingModel:
         predictions = np.zeros(steps, dtype=np.float32)
         regime_predictions = []
         current_regime = start_regime
-        for i in range(steps):
-            _model = self.models[current_regime]
-            prediction = _model.model.predict(_model.params, start=steps, end=steps)
+        regime_predictions = self._markov_chain.simulate(current_regime, steps)
+        for i, regime in enumerate(regime_predictions):
+            _model = self.models[regime]
+            prediction = _model.model.predict(_model.params)[-1]
             predictions[i] = prediction
-            current_regime = self._markov_chain.predict(current_regime)
-            regime_predictions.append(current_regime)
-        return (predictions, np.array(regime_predictions))
+
+        return predictions, np.array(regime_predictions)
