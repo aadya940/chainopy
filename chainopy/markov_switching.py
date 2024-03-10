@@ -96,7 +96,7 @@ class MarkovSwitchingModel:
 
     def predict(self, start_regime: str, steps: int = 1) -> np.ndarray:
         """
-        Predicts the expected mean for the given number of steps into the future.
+        Predicts the target values for given number of steps into the future.
 
         Parameters
         ----------
@@ -131,7 +131,7 @@ class MarkovSwitchingModel:
         Parameters
         ----------
         ts_test: ndarray
-            Real target values of the Time Series 
+            Real target values of the Time Series
         ts_pred: ndarray
             Predicted target values of the Time Series
 

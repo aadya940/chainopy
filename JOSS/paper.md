@@ -16,22 +16,15 @@ bibliography: paper.bib
 
 
 ### Statement of Need
-There are significant limitations in current Markov Chain packages that rely solely on pure NumPy [@harris2020array] and Python for implementation. Markov Chains often require iterative convergence-based algorithms [@rosenthal1995convergence], where Python's dynamic typing, Global Interpreter Lock (GIL), and garbage collection can hinder potential performance improvements like Parallelism. To address these issues, we enhance our library with extensions like Cython and Numba for efficient algorithm implementation. Additionally, we introduce a Markov Chain Neural Network [@awiszus2018markov] that simulates given Markov Chains while preserving statistical properties from the training data. This approach eliminates the need for post-processing steps such as sampling from the outcome distribution while giving neural networks stochastic properties rather than deterministic behavior.
+There are significant limitations in current Markov Chain packages that rely solely on pure NumPy [@harris2020array] and Python for implementation. Markov Chains often require iterative convergence-based algorithms [@rosenthal1995convergence], where Python's dynamic typing, Global Interpreter Lock (GIL), and garbage collection can hinder potential performance improvements like Parallelism. To address these issues, we enhance our library with extensions like Cython and Numba for efficient algorithm implementation. Additionally, we introduce a Markov Chain Neural Network [@awiszus2018markov] that simulates given Markov Chains while preserving statistical properties from the training data. This approach eliminates the need for post-processing steps such as sampling from the outcome distribution while giving neural networks stochastic properties rather than deterministic behavior. Finally, we implement the famous Markov Switching Models [@hamilton2010regime] which are one of the fundamental and widely used models in Finance applications like Stock Market Prediction.
 
 ### Implementation
 
-We implement two public classes `MarkovChain` and `MarkovChainNeuralNetwork` that contain core functionalities of the package. Performance itensive functions for the `MarkovChain` class are implemented in the `_backend` directory where a
-custom cython [@behnel2010cython] backend is implemented circumventing drawbacks of python like the GIL, dynamic typing etc. The `MarkovChain` class implements various functionalities for discrete-time Markov chains. It provides methods for fitting the transition matrix from data, simulating the chain, calculating properties such as ergodicity, irreducibility, symmetry, and periodicity, as well as computing stationary distributions, absorption probabilities, expected time to absorption, and expected number of visits. It also supports visualization of the transition matrix and chain.  
+We implement three public classes `MarkovChain`, `MarkovChainNeuralNetwork` and `MarkovSwitchingModel` that contain core functionalities of the package. Performance itensive functions for the `MarkovChain` class are implemented in the `_backend` directory where a custom cython [@behnel2010cython] backend is implemented circumventing drawbacks of python like the GIL, dynamic typing etc. The `MarkovChain` class implements various functionalities for discrete-time Markov chains. It provides methods for fitting the transition matrix from data, simulating the chain, calculating properties such as ergodicity, irreducibility, symmetry, and periodicity, as well as computing stationary distributions, absorption probabilities, expected time to absorption, and expected number of visits. It also supports visualization of the transition matrix and chain.  
 
 We do the following key optimizations: 
 
 - Efficient matrix power: If the matrix is diagonalizable, a Eigenvalue decomposition based Matrix power is Performed.
-
-```math
-[ A^n = V \Lambda^n V^{-1} ]
-```
-
-
 - Parallel Execution: Some functions are parallelized (eg: `MarkovChain().is_absorbing()`)
 - JIT compilation with Numba [@lam2015numba]: Numba is used for just-in-time compilation to improve performance.
 - `__slots__` usage: `__slots__` is used instead of `__dict__` for storing object attributes, reducing memory overhead.
@@ -43,6 +36,7 @@ We do the following key optimizations:
 The `MarkovChainNeuralNetwork` implementation defines a neural network model, MarkovChainNeuralNetwork, using PyTorch [@paszke2019pytorch] for simulating Markov chain behavior. It takes a Markov chain object and the number of layers as input, with each layer being a linear layer. The model's forward method computes the output probabilities for the next state. The model is trained using stochastic gradient descent (SGD) with a learning rate scheduler. Finally, the model's performance is evaluated using the KL divergence between the original Markov chain's transition probabilities and those estimated from the simulated walks.
 
 The steps to generate training data as described in [@awiszus2018markov]  are as follows:
+    
     1. Input Data Augmentation: Add a random value (r) between 0 and 1 to the input data. This value influences the output, simulating the Markov chain's probabilistic nature.
 
     2. Cumulative Frequency Calculation: Calculate the cumulative frequency for each possible transition from the current state to the next states based on transition probabilities.
@@ -92,6 +86,15 @@ API of the library:
             - train_model()
             - get_weights()
             - simulate_random_walk()
+
+    - chainopy.MarkovSwitchingModel()
+
+            Public Methods
+            --------------
+
+            - fit()
+            - predict()
+            - evaluate()
     
     - chainopy.divergance_analysis(MarkovChain, MarkovChainNeuralNetwork)
 
@@ -101,7 +104,7 @@ For Documentation we use Sphinx. For Testing and Benchmarking the `MarkovChain` 
 
 The results are as follows:
 
-- `is_absorbing` and `stationary_dist \ pi` Methods
+- `is_absorbing` Methods
 
 | Transition-Matrix Size | 10            | 50            | 100           | 500           | 1000          | 2500          |
 |------------------------ |---------------|---------------|---------------|---------------|---------------|---------------|
@@ -109,8 +112,15 @@ The results are as follows:
 | Function                |               |               |               |               |               |               |
 | 1. is_absorbing (ChainoPy) | 97.3ns        | 2.46ns        | 91.8ns        | 0.329ns       | 98ns          | 0.4ns         | 97.6ns        | 0.475ns       | 106ns         | 1.48ns        | 103ns         | 1.37ns        |
 | 1. is_absorbing (PyDTMC)  | 386ns         | 5.79ns        | 402ns         | 2.01ns        | 417ns         | 3ns           | 416ns         | 2.44ns        | 418ns         | 0.837ns       | 433ns         | 6.3ns         |
-| 2. stationary_dist (ChainoPy) | 1.47us     | 1.36us        | 93.4ns        | 5.26ns        | 96.6ns        | 3.9ns         | 550ns         | 344ns         | 753ns         | 685ns         | 857ns         | 850ns         |
-| 2. pi (PyDTMC)            | 137us         | 12.9us        | 395ns         | 15.4ns        | 398ns         | 10.5ns        | 1.28us        | 1.79us        | 1.21us        | 1.71us        | 1.41us        | 1.85us        |
+
+- `stationary_dist` vs `pi` Methods
+
+| Transition-Matrix Size | 10            | 50            | 100           | 500           | 1000          | 2500          |
+|------------------------ |---------------|---------------|---------------|---------------|---------------|---------------|
+|                           | Mean                   | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       |
+| Function                |               |               |               |               |               |               |
+| 1. stationary_dist (ChainoPy) | 1.47us     | 1.36us        | 93.4ns        | 5.26ns        | 96.6ns        | 3.9ns         | 550ns         | 344ns         | 753ns         | 685ns         | 857ns         | 850ns         |
+| 1. pi (PyDTMC)            | 137us         | 12.9us        | 395ns         | 15.4ns        | 398ns         | 10.5ns        | 1.28us        | 1.79us        | 1.21us        | 1.71us        | 1.41us        | 1.85us        |
 
 
 
