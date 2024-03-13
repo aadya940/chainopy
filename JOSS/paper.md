@@ -16,20 +16,21 @@ bibliography: paper.bib
 
 
 ### Statement of Need
-There are significant limitations in current Markov Chain packages that rely solely on pure NumPy [@harris2020array] and Python for implementation. Markov Chains often require iterative convergence-based algorithms [@rosenthal1995convergence], where Python's dynamic typing, Global Interpreter Lock (GIL), and garbage collection can hinder potential performance improvements like Parallelism. To address these issues, we enhance our library with extensions like Cython and Numba for efficient algorithm implementation. Additionally, we introduce a Markov Chain Neural Network [@awiszus2018markov] that simulates given Markov Chains while preserving statistical properties from the training data. This approach eliminates the need for post-processing steps such as sampling from the outcome distribution while giving neural networks stochastic properties rather than deterministic behavior. Finally, we implement the famous Markov Switching Models [@hamilton2010regime] which are one of the fundamental and widely used models in Finance applications like Stock Market Prediction.
+There are significant limitations in current Markov Chain packages that rely solely on NumPy [@harris2020array] and Python for implementation. Markov Chains often require iterative convergence-based algorithms [@rosenthal1995convergence], where Python's dynamic typing, Global Interpreter Lock (GIL), and garbage collection can hinder potential performance improvements like parallelism. To address these issues, we enhance our library with extensions like Cython and Numba for efficient algorithm implementation. Additionally, we introduce a Markov Chain Neural Network [@awiszus2018markov] that simulates given Markov Chains while preserving statistical properties from the training data. This approach eliminates the need for post-processing steps such as sampling from the outcome distribution while giving neural networks stochastic properties rather than deterministic behavior. Finally, we implement the famous Markov Switching Models [@hamilton2010regime] which are one of the fundamental and widely used models in Finance applications such as Stock Market price prediction.
+
 
 ### Implementation
 
-We implement three public classes `MarkovChain`, `MarkovChainNeuralNetwork` and `MarkovSwitchingModel` that contain core functionalities of the package. Performance itensive functions for the `MarkovChain` class are implemented in the `_backend` directory where a custom cython [@behnel2010cython] backend is implemented circumventing drawbacks of python like the GIL, dynamic typing etc. The `MarkovChain` class implements various functionalities for discrete-time Markov chains. It provides methods for fitting the transition matrix from data, simulating the chain, calculating properties such as ergodicity, irreducibility, symmetry, and periodicity, as well as computing stationary distributions, absorption probabilities, expected time to absorption, and expected number of visits. It also supports visualization of the transition matrix and chain.  
+We implement three public classes `MarkovChain`, `MarkovChainNeuralNetwork` and `MarkovSwitchingModel` that contain core functionalities of the package. Performance intensive functions for the `MarkovChain` class are implemented in the `_backend` directory where a custom cython [@behnel2010cython] backend is implemented circumventing drawbacks of python like the GIL, dynamic typing etc. The `MarkovChain` class implements various functionalities for discrete-time Markov chains. It provides methods for fitting the transition matrix from data, simulating the chain, calculating properties such as ergodicity, irreducibility, symmetry, and periodicity, as well as computing stationary distributions, absorption probabilities, expected time to absorption, and expected number of visits. It also supports visualization of the transition matrix and chain.  
 
 We do the following key optimizations: 
 
-- Efficient matrix power: If the matrix is diagonalizable, a Eigenvalue decomposition based Matrix power is Performed.
-- Parallel Execution: Some functions are parallelized (eg: `MarkovChain().is_absorbing()`)
+- Efficient matrix power: If the matrix is diagonalizable, an eigenvalue decomposition based matrix power is performed.
+- Parallel Execution: Some functions are parallelized.
 - JIT compilation with Numba [@lam2015numba]: Numba is used for just-in-time compilation to improve performance.
 - `__slots__` usage: `__slots__` is used instead of `__dict__` for storing object attributes, reducing memory overhead.
 - Caching decorator: Class methods are decorated with caching to avoid recomputation of unnecessary results.
-- Direct LAPACK use: LAPACK function `dgeev` is directly used to calculate stationary-distribution via SciPy's [@virtanen2020scipy] `cython_lapack` API 
+- Direct LAPACK use: LAPACK function `dgeev` is directly used to calculate stationary-distribution via SciPy's [@virtanen2020scipy] `cython_lapack` API instead of additional numpy overhead.
 - Utility functions for visualization: Utility functions are implemented for visualizing the Markov chain.
 - Sparse storage of transition matrix: The model is stored as a JSON object, and if 40% or more elements of the transition matrix are near zero, it is stored in a sparse format.
 
@@ -37,13 +38,25 @@ The `MarkovChainNeuralNetwork` implementation defines a neural network model, Ma
 
 The steps to generate training data as described in [@awiszus2018markov]  are as follows:
     
-    1. Input Data Augmentation: Add a random value (r) between 0 and 1 to the input data. This value influences the output, simulating the Markov chain's probabilistic nature.
+    1. Input Data Augmentation: Add a random value (r) between 0 and 1 
+    to the input data. This value influences the output, simulating the
+    Markov chain's probabilistic nature.
 
-    2. Cumulative Frequency Calculation: Calculate the cumulative frequency for each possible transition from the current state to the next states based on transition probabilities.
+    2. Cumulative Frequency Calculation: Calculate the cumulative 
+    frequency for each possible transition from the current state to 
+    the next states based on transition probabilities.
 
-    3. Training Data Generation: Generate training data by sampling random numbers (r) and selecting the next state based on the calculated cumulative frequencies. This reflects the Markov chain's transition probabilities.
+    3. Training Data Generation: Generate training data by sampling 
+    random numbers (r) and selecting the next state based on the 
+    calculated cumulative frequencies. This reflects the Markov chain's 
+    transition probabilities.
 
-    4. Example: If the transition probabilities from state 1 to states 2, 3, and 4 are 1/3 each, the cumulative frequencies would be [0, 1/3, 2/3, 1]. For instance, with a random number of 0.5, the next state might be 3, resulting in the pair (0.5, 1, 0, 0, 0) → (0, 0, 1, 0) for state 1.
+    Example: If the transition probabilities from state 1 to states 2, 3, 
+    and 4 are 1/3 each, the cumulative frequencies would be [0, 1/3, 2/3, 1].
+    For instance, with a random number of 0.5, the next state might be 3, 
+    resulting in the pair (0.5, 1, 0, 0, 0) → (0, 0, 1, 0) for state 1.
+
+
 
 API of the library:
 
