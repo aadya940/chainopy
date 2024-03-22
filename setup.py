@@ -34,4 +34,5 @@ setup(
     author_email="aadyachinubhai@gmail.com",
     ext_modules=cythonize(extensions, language_level=3),
     include_dirs=[np.get_include()],
+    license="LICENSE",    
 )
