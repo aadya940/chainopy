@@ -100,8 +100,8 @@ class MarkovSwitchingModel:
 
         Parameters
         ----------
-        regime_sequence : List[str]
-            Regime sequence indicating the current regime at each time step.
+        start_regime : str
+            Regime at the start of the prediction
         steps : int, optional
             Number of steps into the future to predict, by default 1.
 
@@ -109,8 +109,6 @@ class MarkovSwitchingModel:
         -------
         np.ndarray
             Array of predicted Target Values for each feature for each step.
-        np.ndarray
-            Array of predicted Regimes for each feature for each step.
         """
         predictions = np.zeros(steps, dtype=np.float32)
         regime_predictions = []
@@ -121,7 +119,7 @@ class MarkovSwitchingModel:
             prediction = _model.model.predict(_model.params)[-1]
             predictions[i] = prediction
 
-        return predictions, np.array(regime_predictions)
+        return predictions
 
     def evaluate(self, ts_test, ts_pred):
         """
