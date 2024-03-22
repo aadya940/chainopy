@@ -47,8 +47,8 @@ pip install .
 
 # How to run ChainoPy Tests?
  1. Clone the project locally 
- 2. Install packages mentioned in `requirements_test.txt`
- 3. Travel to the directory containing `tests` folder
+ 2. Install packages mentioned in `requirements.txt` and `requirements_test.txt`
+ 3. Navigate to the directory containing `tests` folder
  4. Run the following command:
 ```bash
 python -m pytest tests/
