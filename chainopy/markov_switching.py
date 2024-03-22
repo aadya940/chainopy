@@ -119,7 +119,7 @@ class MarkovSwitchingModel:
             prediction = _model.model.predict(_model.params)[-1]
             predictions[i] = prediction
 
-        return predictions
+        return predictions, np.array(regime_predictions)
 
     def evaluate(self, ts_test, ts_pred):
         """
