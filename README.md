@@ -1,3 +1,5 @@
+![logo1](https://github.com/aadya940/chainopy/assets/77720426/9c8d3781-945a-4ccb-a70f-2515cc1a8be6)
+
 # ChainoPy 1.0
 A Python 🐍 Package for Markov Chains and Markov Chain Neural Networks.
 
