@@ -79,5 +79,5 @@ Create a Markov Switching Model as follows:
 >>> y, regime_y = mod.predict("High", steps=20)
 ```
 
-### Example - Apple Weekly High Stock data prediction
+### Example - Apple Weekly High Stock data prediction using chainopy.MarkovSwitchingModel
 ![image](https://github.com/aadya940/chainopy/assets/77720426/b58929b7-1d3c-4e2e-ab60-6f57364e8304)
