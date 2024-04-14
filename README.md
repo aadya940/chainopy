@@ -1,5 +1,7 @@
+![logo1](https://github.com/aadya940/chainopy/assets/77720426/9c8d3781-945a-4ccb-a70f-2515cc1a8be6)
+
 # ChainoPy 1.0
-A Python 🐍 Package for Markov Chains and Markov Chain Neural Networks.
+A Python 🐍 Package for Markov Chains, Markov Chain Neural Networks and Markov Switching Models.
 
 ## Why ChainoPy?
 - Covers most of the fundamental agorithms for Markov Chain Analysis
@@ -47,8 +49,8 @@ pip install .
 
 # How to run ChainoPy Tests?
  1. Clone the project locally 
- 2. Install packages mentioned in `requirements_test.txt`
- 3. Travel to the directory containing `tests` folder
+ 2. Install packages mentioned in `requirements.txt` and `requirements_test.txt`
+ 3. Navigate to the directory containing `tests` folder
  4. Run the following command:
 ```bash
 python -m pytest tests/
@@ -76,3 +78,6 @@ Create a Markov Switching Model as follows:
 >>> mod.fit(data, regime_col)
 >>> y, regime_y = mod.predict("High", steps=20)
 ```
+
+### Example - Apple Weekly High Stock data prediction using chainopy.MarkovSwitchingModel
+![image](https://github.com/aadya940/chainopy/assets/77720426/b58929b7-1d3c-4e2e-ab60-6f57364e8304)
