@@ -80,4 +80,4 @@ Create a Markov Switching Model as follows:
 ```
 
 ### Example - Apple Weekly High Stock data prediction using chainopy.MarkovSwitchingModel
-![image](https://github.com/aadya940/chainopy/assets/77720426/b58929b7-1d3c-4e2e-ab60-6f57364e8304)
+![image](https://github.com/aadya940/chainopy/assets/77720426/2d3ed6c0-5936-4fbe-9984-fdbe33e85e9a)
