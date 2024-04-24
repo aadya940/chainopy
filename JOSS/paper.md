@@ -1,5 +1,5 @@
 ---
-title: 'ChainoPy: A Python Library for Discrete Time Markov Chains and Markov Chain Neural Networks'
+title: 'ChainoPy: A Python Library for Discrete Time Markov Chain based stochastic analysis'
 tags:
     - Markov Chains
     - Markov Chain Neural Networks
