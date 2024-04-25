@@ -7,7 +7,7 @@ tags:
     - High Performance Computing
 authors:
     - name: Aadya A. Chinubhai
-    - affiliation: 1
+      affiliation: 1
 affiliations:
     - name: School of Engineering and Applied Sciences (SEAS), Ahmedabad University, Ahmedabad, Gujarat, India
       index: 1
