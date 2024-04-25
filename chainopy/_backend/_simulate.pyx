@@ -25,5 +25,5 @@ def _simulate_cython(list states, double[:, :] tpm, str initial_state, int n_ste
     for _ in range(1, n_steps):
         next_state_index = np.random.choice(num_states, p=tpm[next_state_index, :])
         sims.append(states[next_state_index])
-    
-    return sims
+
+    return sims[0: n_steps]

@@ -53,6 +53,8 @@ class MarkovSwitchingModel:
         regime_sequence: list
                     Training data consisting of Regimes in chronological
                     Order.
+        lags: int,
+            Time lags to consider during autoregression
         """
         MarkovSwitchingModel._validate_data(
             ts_data=ts_data, regime_sequence=regime_sequence

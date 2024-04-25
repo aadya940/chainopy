@@ -25,14 +25,19 @@ extensions = [
     ),
 ]
 
+with open("README.md", "r") as f:
+    long_description = f.read()
 
 setup(
     name="chainopy",
     version="1.0",
     packages=["chainopy"],
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/aadya940/chainopy",
     author="Aadya Aneesh Chinubhai",
     author_email="aadyachinubhai@gmail.com",
     ext_modules=cythonize(extensions, language_level=3),
     include_dirs=[np.get_include()],
-    license="LICENSE",    
+    license="LICENSE",
 )
