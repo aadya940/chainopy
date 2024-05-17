@@ -24,9 +24,8 @@ Fork and Clone the Chainopy repository to your local machine using Git:
 git clone https://github.com/username/chainopy.git
 ```
 
-```bash
-cd chainopy
-```
+Navigate to the directory which contains the `setup.py` file.
+
 ### 2. Install Dependencies
 ```bash
 pip install -r requirements.txt
