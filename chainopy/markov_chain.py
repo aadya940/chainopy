@@ -46,10 +46,10 @@ class MarkovChain:
     def __repr__(self) -> str:
         if self.tpm is None:
             return (
-            f"<Object of type MarkovChain with uninitialized transition matrix  "
-            f"\n"
-            f"and unknown states>"
-        )
+                f"<Object of type MarkovChain with uninitialized transition matrix  "
+                f"\n"
+                f"and unknown states>"
+            )
         return (
             f"<Object of type MarkovChain with {self.tpm.shape[0]} x {self.tpm.shape[1]} sized transition matrix  "
             f"\n"
