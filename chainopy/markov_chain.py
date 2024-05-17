@@ -57,11 +57,7 @@ class MarkovChain:
         )
 
     def __str__(self) -> str:
-        return (
-            f"<Object of type MarkovChain with {self.tpm.shape[0]} x {self.tpm.shape[1]} sized transition matrix  "
-            f"\n"
-            f"and {len(self.states)} states>"
-        )
+        return self.__repr__()
 
     def _validate_transition_matrix(
         self, p: np.ndarray, states: List[str], epsilon
