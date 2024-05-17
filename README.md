@@ -18,10 +18,10 @@ Before you begin, ensure you have the following installed on your system:
 - Python (>= 3.9 )
 
 ### 1. Clone the Repository
-Clone the Chainopy repository to your local machine using Git:
+Fork and Clone the Chainopy repository to your local machine using Git:
 
 ```bash
-git clone https://github.com/username/Chainopy.git
+git clone https://github.com/username/chainopy.git
 ```
 
 ```bash
