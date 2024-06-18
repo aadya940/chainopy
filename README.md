@@ -82,9 +82,9 @@ Create a Markov Switching Model as follows:
 ```
 
 Generates Data as follows:
-`X`: We generate 1000 data points by combining a normal distribution (mean = 0, standard deviation = 1) with a logistic 
+- `X`: We generate 1000 data points by combining a normal distribution (mean = 0, standard deviation = 1) with a logistic 
 distribution (mean = 5, scale = 10). This creates a complex dataset with variations.
-`regime_col`: We assign one of three possible regimes ("High", "Low", "Stagnant") to each data point. This is done by randomly
+- `regime_col`: We assign one of three possible regimes ("High", "Low", "Stagnant") to each data point. This is done by randomly
 selecting one of these regimes for each of the 1000 data points.
 
 Later, Creates a Markov Switching Model using `chainopy.MarkovSwitchingModel` with 3 regimes (High, Low and Stagnant) and 
