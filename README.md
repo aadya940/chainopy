@@ -66,6 +66,8 @@ Create Markov Chains and Markov Chain Neural Networks as follows:
 >>> neural_network = chainopy.MarkovChainNeuralNetwork(mc, num_layers = 5)    # Creates a 5-layered Neural Network that simulates `mc`. 
 ```
 
+![image](https://github.com/aadya940/chainopy/blob/master/figs/Simulation-MCNN-2x2.png)
+
 Create a Markov Switching Model as follows:
 
 ```{bash}
