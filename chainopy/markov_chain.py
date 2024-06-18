@@ -87,11 +87,7 @@ class MarkovChain:
                                             should be Unique"
                     )
 
-                if (
-                    p.shape[0] != len(states)
-                    or p.shape[1] != len(states)
-                    or p.shape[0] != p.shape[1]
-                ):
+                if not (p.shape[0] == len(states) and p.shape[0] == p.shape[1]):
                     raise ValueError(f"Invalid TPM {p}")
 
                 if not np.allclose(np.sum(p, axis=1), 1, atol=epsilon * len(states)):
@@ -126,8 +122,7 @@ class MarkovChain:
         _tpm, _states = _learn_matrix.learn_matrix_cython(data, epsilon=epsilon)
         self.tpm = _tpm
         self.epsilon = epsilon
-        if self.states is None:
-            self.states = _states
+        self.states = _states
         self._validate_transition_matrix(self.tpm, self.states, self.epsilon)
         return _tpm
 
