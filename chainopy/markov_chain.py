@@ -544,9 +544,19 @@ class MarkovChain:
         """
 
         result = _load_model_markovchain(path)
-        if len(result) == 4:
+        if len(result) == 3:
             self.tpm, self.states, self.eigendecom, self.epsilon = result
-        else:
+        elif len(result) == 4:
+            self.tpm, self.states, self.eigendecom, self.epsilon = result
+        elif len(result) == 5:
+            (
+                self.tpm,
+                self.states,
+                self.eigendecom,
+                self.eigenvalues,
+                self.eigenvectors,
+            ) = result
+        elif len(result) == 6:
             (
                 self.tpm,
                 self.states,

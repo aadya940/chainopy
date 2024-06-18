@@ -151,9 +151,9 @@ def _load_model_markovchain(filepath):
                 _eigenvalues,
                 _eigenvectors,
                 epsilon,
-            ]
+            ]  # 6
 
-        return [transition_matrix, states, eigendecom, epsilon]
+        return [transition_matrix, states, eigendecom, epsilon]  # 4
 
     elif isinstance(data["tpm"], list):
         # Handle Non - Sparse Matrix Cases
@@ -171,9 +171,15 @@ def _load_model_markovchain(filepath):
                 data["eigenvectors-imag"], np.complex_
             )
 
-            return [transition_matrix, states, eigendecom, _eigenvalues, _eigenvectors]
+            return [
+                transition_matrix,
+                states,
+                eigendecom,
+                _eigenvalues,
+                _eigenvectors,
+            ]  # 5
 
-        return [transition_matrix, states, eigendecom]
+        return [transition_matrix, states, eigendecom]  # 3
 
 
 def load_text(path: str):
