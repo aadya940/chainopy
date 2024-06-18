@@ -90,3 +90,16 @@ predicts the next twenty steps if the start states is "High".
 
 ### Example - Apple Weekly High Stock data prediction using chainopy.MarkovSwitchingModel
 ![image](https://github.com/aadya940/chainopy/assets/77720426/2d3ed6c0-5936-4fbe-9984-fdbe33e85e9a)
+
+# How to Contribute?
+
+1. Fork the Project.
+2. Clone the Project locally.
+3. Create a New Branch to Contribute.
+4. run `pip install -r requirements.txt` and `pip install -r requirements_test.txt` to download dependencies.
+5. Do the changes of interest (Make sure to write docstrings).
+6. Write Unit Tests and test your implementation.
+7. Format the code using the Black Formatter.
+8. Push the changes and submit a Pull Request.
+
+Note: If your implementation is Cython, justify its usage in your PR to make the code more maintainable.
