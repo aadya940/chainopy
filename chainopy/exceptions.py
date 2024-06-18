@@ -27,8 +27,12 @@ def handle_exceptions(func):
                             "Argument 'state' must be a string and present in MarkovChain.states."
                         )
 
-            elif func.__name__ in ["fit", "fit_from_file"]:
-                data = args[1]
+            elif func.__name__ in ["fit"]:
+                if len(args) == 2:
+                    data = args[1]
+                else:
+                    data = kwargs.get("data")
+
                 if (
                     not (isinstance(data, str) or isinstance(data, list))
                     or len(data) == 0
@@ -36,8 +40,16 @@ def handle_exceptions(func):
                     raise ValueError("Argument 'data' must be a non-empty string.")
 
             elif func.__name__ == "simulate":
-                n_steps = args[2]
-                initial_state = args[1]
+                if len(args) > 2:
+                    n_steps = args[2]
+                else:
+                    n_steps = kwargs.get("n_steps")
+
+                if len(args) > 1:
+                    initial_state = args[1]
+                else:
+                    initial_state = kwargs.get("initial_state")
+
                 if not isinstance(n_steps, int) or n_steps <= 0:
                     raise ValueError("Argument 'n_steps' must be a non-empty string.")
 
