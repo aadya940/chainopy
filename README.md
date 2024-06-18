@@ -62,8 +62,8 @@ You're all Set! 😃 👍
 Create Markov Chains and Markov Chain Neural Networks as follows:
 ```{bash}
 >>> import chainopy
->>> mc = chainopy.MarkovChain([[0, 1], [1, 0]], states = ["Rain", "No-Rain"])
->>> neural_network = chainopy.MarkovChainNeuralNetwork(mc, num_layers = 5)
+>>> mc = chainopy.MarkovChain([[0, 1], [1, 0]], states = ["Rain", "No-Rain"])    # Creates a two-states Markov Chain stored in `mc`.
+>>> neural_network = chainopy.MarkovChainNeuralNetwork(mc, num_layers = 5)    # Creates a 5-layered Neural Network that simulates `mc`. 
 ```
 
 Create a Markov Switching Model as follows:
@@ -78,6 +78,15 @@ Create a Markov Switching Model as follows:
 >>> mod.fit(X, regime_col)
 >>> y, regime_y = mod.predict("High", steps=20)
 ```
+
+Generates Data as follows:
+`X`: We generate 1000 data points by combining a normal distribution (mean = 0, standard deviation = 1) with a logistic 
+distribution (mean = 5, scale = 10). This creates a complex dataset with variations.
+`regime_col`: We assign one of three possible regimes ("High", "Low", "Stagnant") to each data point. This is done by randomly
+selecting one of these regimes for each of the 1000 data points.
+
+Later, Creates a Markov Switching Model using `chainopy.MarkovSwitchingModel` with 3 regimes (High, Low and Stagnant) and 
+predicts the next twenty steps if the start states is "High". 
 
 ### Example - Apple Weekly High Stock data prediction using chainopy.MarkovSwitchingModel
 ![image](https://github.com/aadya940/chainopy/assets/77720426/2d3ed6c0-5936-4fbe-9984-fdbe33e85e9a)
