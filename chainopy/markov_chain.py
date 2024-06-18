@@ -569,7 +569,6 @@ class MarkovChain:
         _idx = self.states.index(state)
         return np.sum(self.tpm[:, _idx])
 
-    @handle_exceptions
     def fit_from_file(self, path: str, epsilon: float = 1e-16):
         """
         Args
@@ -587,4 +586,7 @@ class MarkovChain:
             to the new transition-matrix.
         """
         _data_list = load_text(path)
+        if (_data_list is None) or (len(_data_list) == 0):
+            raise ValueError("Invalid contents of the text file.")
+
         return _learn_matrix.learn_matrix_cython(_data_list, epsilon)
