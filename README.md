@@ -61,8 +61,9 @@ You're all Set! 😃 👍
 # The Basics
 Create Markov Chains and Markov Chain Neural Networks as follows:
 ```{bash}
->>> mc = chainopy.MarkovChain([[0, 1], [1, 0]], states = ["Rain, "No-Rain"])
->>> neural_network = chainoy.MarkovChainNeuralNetwork(mc, num_layers = 5)
+>>> import chainopy
+>>> mc = chainopy.MarkovChain([[0, 1], [1, 0]], states = ["Rain", "No-Rain"])
+>>> neural_network = chainopy.MarkovChainNeuralNetwork(mc, num_layers = 5)
 ```
 
 Create a Markov Switching Model as follows:
@@ -74,7 +75,7 @@ Create a Markov Switching Model as follows:
 >>> X = np.random.normal(0, 1, 1000) + np.random.logistic(5, 10, 1000) # Generate Random Training Data
 >>> regime_col = [random.choice(["High", "Low", "Stagnant"]) for _ in range(1000)] # Generate Regimes for Training Data
 >>> mod = MarkovSwitchingModel()
->>> mod.fit(data, regime_col)
+>>> mod.fit(X, regime_col)
 >>> y, regime_y = mod.predict("High", steps=20)
 ```
 
