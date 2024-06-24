@@ -97,6 +97,7 @@ class MarkovChain:
                     )
 
     @handle_exceptions
+    @cache(class_method=True)
     def fit(self, data: Union[str, list], epsilon: float = 1e-16) -> np.ndarray:
         """
         Learn Transition Matrix from Sequence (list or str) of Data.
