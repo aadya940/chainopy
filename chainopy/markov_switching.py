@@ -1,5 +1,5 @@
 import numpy as np
-from typing import List
+from typing import List, Tuple
 from statsmodels.tsa.ar_model import AutoReg
 
 from .markov_chain import MarkovChain
@@ -104,30 +104,59 @@ class MarkovSwitchingModel:
             X = ts_data[_regime_sequence == self.regimes[i]]
             self.models[self.regimes[i]] = AutoReg(X, lags=lags).fit()
 
-    def predict(self, start_regime: str, steps: int = 1) -> np.ndarray:
+    def predict(
+        self, start_regime: str, steps: int = 1
+    ) -> Tuple[np.ndarray, np.ndarray]:
         """
-        Predicts the target values for given number of steps into the future.
+        Predicts the target values for a given number of steps into the future.
 
         Parameters
         ----------
-        start_regime : str
-            Regime at the start of the prediction
-        steps : int, optional
+        start_regime: str
+            Regime at the start of the prediction.
+        steps: int, optional
             Number of steps into the future to predict, by default 1.
 
         Returns
         -------
-        np.ndarray
-            Array of predicted Target Values for each feature for each step.
+        Tuple[np.ndarray, np.ndarray]
+            Tuple containing the array of predicted target values and the predicted regime sequence.
         """
         predictions = np.zeros(steps, dtype=np.float32)
-        regime_predictions = []
-        current_regime = start_regime
-        regime_predictions = self._markov_chain.simulate(current_regime, steps)
+        regime_predictions = self._markov_chain.simulate(start_regime, steps)
+
+        # Initialize current values for each regime
+        current_values = {
+            regime: list(
+                self.models[regime].model.endog[
+                    -len(self.models[regime].model.ar_lags) :
+                ]
+            )
+            for regime in self.regimes
+        }
+
         for i, regime in enumerate(regime_predictions):
-            _model = self.models[regime]
-            prediction = _model.model.predict(_model.params)[-1]
+            model = self.models[regime]
+            available_lags = len(current_values[regime])
+
+            if available_lags < len(model.model.ar_lags):
+                # Use all available data if there are fewer data points than lags
+                start_index = -available_lags
+                prediction = model.model.predict(
+                    model.params, start=start_index, end=-1
+                )[0]
+            else:
+                # Use the full lag window if enough data points are available
+                prediction = model.predict(
+                    start=len(model.model.endog), end=len(model.model.endog)
+                )[0]
+
             predictions[i] = prediction
+
+            # Update current values for the regime with the new prediction
+            current_values[regime].append(prediction)
+            if len(current_values[regime]) > len(model.model.ar_lags):
+                current_values[regime].pop(0)
 
         return predictions, np.array(regime_predictions)
 
