@@ -78,7 +78,7 @@ class MarkovSwitchingModel:
             if i == len(regime_sequence) - 1:
                 __regime_str += regime
                 continue
-            
+
             __regime_str += regime + " "
 
         self._markov_chain.fit(__regime_str)
