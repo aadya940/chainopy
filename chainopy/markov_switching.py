@@ -62,7 +62,7 @@ class MarkovSwitchingModel:
         self._learn_regime_proba(regime_sequence)
         self._learn_models(ts_data, regime_sequence, lags=lags)
 
-    def _learn_regime_proba(self, regime_sequence: List[str]) -> np.ndarray:
+    def _learn_regime_proba(self, regime_sequence: str) -> np.ndarray:
         """
         Learns transition probabilities for regimes. Overrides, if these
         probabilities already exist.
@@ -73,7 +73,15 @@ class MarkovSwitchingModel:
                     Training data consisting of Regimes in chronological
                     Order.
         """
-        self._markov_chain.fit(regime_sequence)
+        __regime_str = ""
+        for i, regime in enumerate(regime_sequence):
+            if i == len(regime_sequence) - 1:
+                __regime_str += regime
+                continue
+            
+            __regime_str += regime + " "
+
+        self._markov_chain.fit(__regime_str)
         self.regimes = self._markov_chain.states
         self.num_regimes = len(self.regimes)
 
