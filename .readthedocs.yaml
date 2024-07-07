@@ -1,7 +1,7 @@
 version: 2
 
 formats: 
-  - html
+  - htmlzip
 
 build:
   os: ubuntu-20.04
