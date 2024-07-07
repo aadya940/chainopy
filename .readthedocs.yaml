@@ -6,9 +6,11 @@ build:
   os: ubuntu-20.04
   tools:
     python: "3.10"
-  before_build:
-    - python setup.py build_ext --inplace
-    - sphinx-apidoc -o docs/source chainopy/
+  jobs:
+    pre_build:
+      - python setup.py build_ext --inplace
+      - sphinx-apidoc -o docs/source chainopy/
+
 
 python:
   install:
