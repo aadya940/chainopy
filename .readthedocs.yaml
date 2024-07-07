@@ -9,8 +9,6 @@ build:
   jobs:
     pre_build:
       - python setup.py build_ext --inplace
-      - sphinx-apidoc -o docs/source chainopy/
-
 
 python:
   install:
