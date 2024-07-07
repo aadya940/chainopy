@@ -1,6 +1,7 @@
 version: 2
 
-formats: all
+formats: 
+  - html
 
 build:
   os: ubuntu-20.04
