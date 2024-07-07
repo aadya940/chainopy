@@ -19,3 +19,9 @@
 
 ```{include} ../../README.md
 ```
+
+```{include} chainopy.rst
+```
+
+```{include} modules.rst
+```
