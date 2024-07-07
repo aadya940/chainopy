@@ -2,8 +2,9 @@ version: 2
 
 formats: all
 
+os: ubuntu-20.04
+
 build:
-  os: ubuntu-20.04
   tools:
     python: "3.10"
 
