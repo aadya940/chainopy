@@ -9,7 +9,7 @@ build:
     python: "3.10"
   jobs:
     post_build:
-      script: sphinx-apidoc -o docs/source chainopy/ *.pyx
+      - sphinx-apidoc -o docs/source chainopy/ *.pyx
 
 python:
   install:
