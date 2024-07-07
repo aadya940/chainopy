@@ -10,7 +10,7 @@ import os
 import sys
 
 # Root Path
-sys.path.insert(0, os.path.abspath("../../chainopy"))
+sys.path.insert(0, os.path.abspath("../../."))
 
 
 project = "Chainopy"
@@ -24,21 +24,21 @@ release = "1.0"
 extensions = [
     "myst_parser",
     "sphinx.ext.autodoc",
-    'sphinx.ext.napoleon',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.doctest',
-    'sphinx.ext.coverage',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.ifconfig',
-    'sphinx.ext.githubpages',
-    'sphinx.ext.extlinks',
-    'sphinx_autodoc_typehints',
+    "sphinx.ext.napoleon",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.doctest",
+    "sphinx.ext.coverage",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.todo",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.ifconfig",
+    "sphinx.ext.githubpages",
+    "sphinx.ext.extlinks",
+    "sphinx_autodoc_typehints",
 ]
 
-bibtex_bibfiles = ["paper.bib"] 
+bibtex_bibfiles = ["paper.bib"]
 
 source_suffix = {
     ".rst": "restructuredtext",
@@ -48,19 +48,19 @@ source_suffix = {
 templates_path = ["_templates"]
 exclude_patterns = [
     ".ipynb_checkpoints",
-    '_build', 
-    'Thumbs.db', 
-    '.DS_Store', 
-    'chainopy.tests.rst'
+    "_build",
+    "Thumbs.db",
+    ".DS_Store",
+    "chainopy.tests.rst",
 ]
 
 autodoc_default_options = {
-    'members': True,
-    'undoc-members': True,
-    'private-members': True,
-    'special-members': '__init__',
-    'inherited-members': True,
-    'show-inheritance': True,
+    "members": True,
+    "undoc-members": True,
+    "private-members": True,
+    "special-members": "__init__",
+    "inherited-members": True,
+    "show-inheritance": True,
 }
 
 napoleon_google_docstring = True
@@ -76,9 +76,9 @@ napoleon_use_param = True
 napoleon_use_rtype = True
 
 intersphinx_mapping = {
-    'python': ('https://docs.python.org/3', None),
-    'numpy': ('https://numpy.org/doc/stable/', None),
-    'scipy': ('https://docs.scipy.org/doc/scipy/reference/', None),
+    "python": ("https://docs.python.org/3", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "scipy": ("https://docs.scipy.org/doc/scipy/reference/", None),
 }
 
 # -- Options for HTML output -------------------------------------------------
@@ -87,12 +87,14 @@ intersphinx_mapping = {
 html_theme = "furo"
 html_static_path = ["_static"]
 
+
 def skip_cython_docstring(app, what, name, obj, skip, options):
     # Skip docstrings in Cython files
     if what == "module" and name.endswith(".pyx"):
         return True
     return skip
 
+
 def setup(app):
     # Call event.
-    app.connect('autodoc-skip-member', skip_cython_docstring)
+    app.connect("autodoc-skip-member", skip_cython_docstring)
