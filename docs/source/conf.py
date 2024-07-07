@@ -26,6 +26,8 @@ extensions = [
     "sphinx.ext.autodoc",
 ]
 
+bibtex_bibfiles = ["paper.bib"] 
+
 source_suffix = {
     ".rst": "restructuredtext",
     ".md": "markdown",
@@ -33,8 +35,11 @@ source_suffix = {
 
 templates_path = ["_templates"]
 exclude_patterns = [
-    "build",
     ".ipynb_checkpoints",
+    '_build', 
+    'Thumbs.db', 
+    '.DS_Store', 
+    'chainopy.tests.rst'
 ]
 
 autodoc_default_options = {

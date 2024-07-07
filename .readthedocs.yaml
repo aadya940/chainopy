@@ -10,6 +10,7 @@ build:
   jobs:
     pre_build:
       - python setup.py build_ext --inplace
+    - sphinx-apidoc -o docs/source chainopy/
 
 python:
   install:
@@ -25,3 +26,7 @@ sphinx:
   builder: html
   configuration: docs/source/conf.py
   fail_on_warning: false
+
+submodules:
+  include: []
+  recursive: true
