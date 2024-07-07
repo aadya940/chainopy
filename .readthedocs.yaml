@@ -8,9 +8,6 @@ build:
   tools:
     python: "3.10"
   jobs:
-    pre_build:
-      - python setup.py build_ext --inplace
-  jobs:
     - sphinx-apidoc -o docs/source chainopy/ *.pyx
 
 python:
