@@ -105,6 +105,7 @@ class MarkovChain:
         It will override the current transition-matrix.
 
         Args:
+        ----
             data: Union[str, list]
                 Data on which the MarkovChain model must
                 be fitted.
@@ -112,9 +113,11 @@ class MarkovChain:
                 Small dummy value to avoid zeros in the Transition-Matrix
 
         Returns:
+        -------
             ndarray: Transition - Matrix based on `data`
 
         Usage:
+        -----
             >>> chainopy.MarkovChain().fit("My name is John.")
         """
         return self._learn_matrix(data=data, epsilon=epsilon)
@@ -133,12 +136,14 @@ class MarkovChain:
         Simulate the Markov Chain for `n_steps` steps.
 
         Args:
+        ----
             initial_state: str
                 State from which the simulation starts
             n_steps: int
                 Number of steps to simulate the chain for
 
         Returns:
+        -------
             list: Contains states attained during simulation
         """
         return _simulate._simulate_cython(self.states, self.tpm, initial_state, n_steps)
@@ -157,6 +162,7 @@ class MarkovChain:
     def adjacency_matrix(self) -> np.ndarray:
         """
         Returns:
+        -------
             ndarray: Adjacency matrix of the chain.
         """
         return (self.tpm > self.epsilon).astype(int)
@@ -166,10 +172,12 @@ class MarkovChain:
         Return the next most likely states.
 
         Args:
+        ----
             initial_state : str
                 Initial state.
 
         Returns:
+        -------
             str: Next most likely state.
         """
         initial_vect = self._vectorize(self.states, initial_state)
@@ -181,10 +189,12 @@ class MarkovChain:
         Calculates the distribution of the Markov Chain after n-steps.
 
         Args:
+        ----
             n_steps : int
                 Number of steps.
 
         Returns:
+        -------
             ndarray: Distribution of the Markov Chain.
         """
         is_eigendecom = self.eigendecom
@@ -207,6 +217,7 @@ class MarkovChain:
         Checks if the Markov chain is ergodic.
 
         Returns:
+        -------
             bool: True if the Markov chain is ergodic, False otherwise.
         """
         return self.is_irreducible() and self.is_aperiodic()
@@ -217,6 +228,7 @@ class MarkovChain:
         Checks if the Markov chain is symmetric.
 
         Returns:
+        -------
             bool: True if the Markov chain is symmetric, False otherwise.
         """
         return np.allclose(self.tpm, self.tpm.transpose())
@@ -227,6 +239,7 @@ class MarkovChain:
         Returns the stationary distribution of the Markov chain.
 
         Returns:
+        -------
             ndarray: Stationary distribution.
         """
         tpm_T = self.tpm.transpose()
@@ -239,6 +252,7 @@ class MarkovChain:
         Checks if two states are communicating.
 
         Args:
+        ----
             state1 : str
                 First state.
             state2 : str
@@ -247,6 +261,7 @@ class MarkovChain:
                 Threshold for convergence. Defaults to 1000.
 
         Returns:
+        -------
             bool: True if the states are communicating, False otherwise.
         """
         return _is_communicating.is_communicating_cython(
@@ -259,6 +274,7 @@ class MarkovChain:
         Checks if the Markov chain is irreducible.
 
         Returns:
+        -------
             bool: True if the Markov chain is irreducible, False otherwise.
         """
         return all(
@@ -275,6 +291,7 @@ class MarkovChain:
         Returns all absorbing states.
 
         Returns:
+        -------
             List[str]: Absorbing states.
         """
         indices = self._absorbing_state_indices()
@@ -286,6 +303,7 @@ class MarkovChain:
         Checks if the Markov chain is absorbing.
 
         Returns:
+        -------
             bool: True if the Markov chain is absorbing, False otherwise.
         """
         absorbing_states_ = self.absorbing_states()
@@ -309,6 +327,7 @@ class MarkovChain:
         Checks if the Markov chain is aperiodic.
 
         Returns:
+        -------
             bool: True if the Markov chain is aperiodic, False otherwise.
         """
         if self.period() == 1:
@@ -321,6 +340,7 @@ class MarkovChain:
         Returns the period of the Markov chain.
 
         Returns:
+        -------
             int: Period of the Markov chain.
         """
         if np.any(np.diag(self.tpm) > self.epsilon):
@@ -365,10 +385,12 @@ class MarkovChain:
         Checks if a state is transient.
 
         Args:
+        ----
             state : str
                 State to check.
 
         Returns:
+        -------
             bool: True if the state is transient, False otherwise.
         """
 
@@ -406,10 +428,12 @@ class MarkovChain:
         Checks if a state is recurrent.
 
         Args:
+        ----
             state : str
                 State to check.
 
         Returns:
+        -------
             bool: True if the state is recurrent, False otherwise.
         """
         return not self.is_transient(state)
@@ -420,6 +444,7 @@ class MarkovChain:
         Returns the fundamental matrix.
 
         Returns:
+        -------
             Union[ndarray, None]: Fundamental matrix.
         """
 
@@ -442,6 +467,7 @@ class MarkovChain:
         Returns the absorption probabilities matrix for each state.
 
         Returns:
+        -------
             ndarray: Absorption probabilities matrix.
         """
         fundamental_matrix = self.fundamental_matrix()
@@ -460,6 +486,7 @@ class MarkovChain:
         Returns the expected time to absorption for each state.
 
         Returns:
+        -------
             ndarray: Expected time to absorption.
         """
         absorption_probs = self.absorption_probabilities()
@@ -471,6 +498,7 @@ class MarkovChain:
         Returns the expected number of visits to each state before absorption.
 
         Returns:
+        -------
             ndarray: Expected number of visits.
         """
         absorption_probs = self.absorption_probabilities()
@@ -482,10 +510,12 @@ class MarkovChain:
         Returns the expected hitting time to reach the given absorbing state.
 
         Args:
+        ----
             state : str
                 Absorbing state.
 
         Returns:
+        -------
             Union[float, None]: Expected hitting time.
         """
         fundamental_matrix = self.fundamental_matrix()
@@ -518,6 +548,7 @@ class MarkovChain:
         as a sparse matrix.
 
         Args:
+        ----
             filename : str
                 Name of the file to save.
             epsilon: float
@@ -532,10 +563,12 @@ class MarkovChain:
         and return as a `MarkovChain` object.
 
         Args:
+        ----
             path : str
                 Path to the file.
 
         Raises:
+        ------
             ValueError: If the file cannot be loaded.
         """
 
