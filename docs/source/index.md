@@ -12,11 +12,10 @@
 
 # Indices and tables
 
+- {ref}`genindex`
+- {ref}`modindex`
+- {ref}`search`
+
+
 ```{include} ../../README.md
-```
-
-```{include} chainopy.rst
-```
-
-```{include} modules.rst
 ```
