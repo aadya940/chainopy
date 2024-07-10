@@ -15,7 +15,7 @@ class MarkovChainNeuralNetwork(nn.Module):
     Neural network for simulating Markov chain behavior.
 
     Args:
-    ----
+    -----
         markov_chain : chainopy.MarkovChain
             Markov chain object.
         num_layers : int
@@ -23,7 +23,7 @@ class MarkovChainNeuralNetwork(nn.Module):
 
 
     Raises:
-    ------
+    -------
         ValueError: If markov_chain is not of type MarkovChain.
 
     """
@@ -62,12 +62,12 @@ class MarkovChainNeuralNetwork(nn.Module):
         Forward pass of the neural network.
 
         Args:
-        ----
+        -----
             x : torch.tensor
                 Input data.
 
         Returns:
-        -------
+        --------
             torch.Tensor: Output data after passing through the network.
 
         """
@@ -82,7 +82,7 @@ class MarkovChainNeuralNetwork(nn.Module):
         Generates training data for the model.
 
         Args:
-        ----
+        -----
             num_samples : int
                 Number of samples to generate.
                 In reality, number of samples are multiple
@@ -90,12 +90,12 @@ class MarkovChainNeuralNetwork(nn.Module):
                 equally distribution of samples.
 
         Returns:
-        -------
+        --------
             torch.Tensor: Input data.
             torch.Tensor: Output data.
 
         References:
-        ----------
+        -----------
             Makov-Chain-Neural-Networks<https://openaccess.thecvf.com/content_cvpr_2018_workshops/papers/w42/Awiszus_Markov_Chain_Neural_CVPR_2018_paper.pdf>_.
         """
 
@@ -152,7 +152,7 @@ class MarkovChainNeuralNetwork(nn.Module):
         Trains the neural network model.
 
         Args:
-        ----
+        -----
             num_samples : int
                 Number of training samples.
             epochs : int
@@ -206,7 +206,7 @@ class MarkovChainNeuralNetwork(nn.Module):
         Returns the weights of the model.
 
         Returns:
-        -------
+        --------
             dict: Dictionary containing layer names and corresponding weights.
 
         """
@@ -223,14 +223,14 @@ class MarkovChainNeuralNetwork(nn.Module):
         Simulates a random walk based on the trained model.
 
         Args:
-        ----
+        -----
             start_state: int
                 Starting state for the random walk.
             steps: int
                 Number of steps to simulate.
 
         Returns:
-        -------
+        --------
             list: List of states representing the random walk.
 
         """
@@ -263,19 +263,19 @@ def divergance_analysis(mc: MarkovChain, nn: MarkovChainNeuralNetwork) -> float:
     `MarkovChain().fit(MarkovChainNeuralNetwork.simulate_random_walk).tpm`.
 
     Args:
-    ----
+    -----
         mc: MarkovChain
             Original Markov Chain that is used to fit the `MarkovChainNeuralNetwork`.
         nn: MarkovChainNeuralNetwork
             The fitted `MarkovChainNeuralNetwork`.
 
     Returns:
-    -------
+    --------
         float: KL-Divergance
             Lower the KL-Divergance, better the fit.
 
     NOTES:
-    -----
+    ------
         KL-Divergance<https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence>_.
     """
     _real_tpm = mc.tpm.flatten()
