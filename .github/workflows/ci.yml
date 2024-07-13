@@ -74,8 +74,11 @@ jobs:
       - name: Install Doc dependencies
         run: pip install -r requirements_doc.txt
 
+      - name: Build Package
+        run: python setup.py build_ext --inplace
+
       - name: Run apidoc
-        run: sphinx-apidoc -o docs/source ./
+        run: sphinx-apidoc -o docs/source .
 
       - name: Build HTML documentation
         run: sphinx-build -b html docs/source docs/build/html

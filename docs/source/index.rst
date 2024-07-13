@@ -12,8 +12,4 @@ CHAINOPY
    chainopy._markov_switching
    chainopy._nn
 
-
-README File
-===========
-
-.. mdinclude:: ../../README.md
+   ../../README.md
