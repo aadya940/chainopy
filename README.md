@@ -21,7 +21,7 @@ Before you begin, ensure you have the following installed on your system:
 Fork and Clone the Chainopy repository to your local machine using Git:
 
 ```bash
-git clone https://github.com/username/chainopy.git
+git clone https://github.com/aadya940/chainopy.git
 ```
 
 Navigate to the directory which contains the `setup.py` file.
