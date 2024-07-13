@@ -46,8 +46,8 @@ class MarkovSwitchingModel:
         Trains and sets the models `self.models` and `self._markov_chain`
         attributes
 
-        Args:
-        -----
+        Args
+        ----
         ts_data: ndarray
             1D Target values at different timepoints
         regime_sequence: list
@@ -66,8 +66,8 @@ class MarkovSwitchingModel:
         Learns transition probabilities for regimes. Overrides, if these
         probabilities already exist.
 
-        Args:
-        -----
+        Args
+        ----
         regime_sequence: list,
             Training data consisting of Regimes in chronological Order.
         """
@@ -90,8 +90,8 @@ class MarkovSwitchingModel:
         lags,
     ) -> dict:
         """
-        Args:
-        -----
+        Args
+        ----
         ts_data: ndarray,
             1D Target values at different timepoints
         regime_sequence: list
@@ -108,15 +108,15 @@ class MarkovSwitchingModel:
         """
         Predicts the target values for a given number of steps into the future.
 
-        Args:
-        -----
+        Args
+        ----
         start_regime: str
             Regime at the start of the prediction.
         steps: int, optional
             Number of steps into the future to predict, by default 1.
 
-        Returns:
-        --------
+        Returns
+        -------
         Tuple[np.ndarray, np.ndarray]: Tuple containing the array of predicted
         target values and the predicted regime sequence.
         """
@@ -163,15 +163,15 @@ class MarkovSwitchingModel:
         Evaluates the accuracy of the model using the
         mean squared error metric.
 
-        Args:
-        -----
+        Args
+        ----
         ts_test: ndarray
             Real target values of the Time Series
         ts_pred: ndarray
             Predicted target values of the Time Series
 
-        Returns:
-        --------
+        Returns
+        -------
         float: mean square error between `ts_test` and `ts_pred`
         """
         return np.mean(np.square(ts_test - ts_pred))
