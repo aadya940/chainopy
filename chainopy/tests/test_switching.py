@@ -1,7 +1,7 @@
 import numpy as np
 import random
 
-from ..markov_switching import MarkovSwitchingModel
+from .._markov_switching import MarkovSwitchingModel
 
 
 def test_model_fit():

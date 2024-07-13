@@ -4,10 +4,10 @@ from typing import List, Union
 import numpy as np
 import numba
 
-from .exceptions import handle_exceptions
-from .visualizations import _visualize_tpm, _visualize_chain
-from .fileio import _save_model_markovchain, _load_model_markovchain, load_text
-from .caching import cache
+from ._exceptions import handle_exceptions
+from ._visualizations import _visualize_tpm, _visualize_chain
+from ._fileio import _save_model_markovchain, _load_model_markovchain, load_text
+from ._caching import cache
 from ._backend import (
     _simulate,
     _absorbing,

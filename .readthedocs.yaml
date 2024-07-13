@@ -6,7 +6,8 @@ build:
     python: "3.10"
   jobs:
     pre_build:
-      - sphinx-apidoc -o docs/source chainopy/ *.pyx
+      - python setup.py build_ext --inplace
+      - sphinx-apidoc --private -o docs/source ../chainopy/
 
 python:
   install:
@@ -24,5 +25,4 @@ sphinx:
   fail_on_warning: false
 
 submodules:
-  include: ['chainopy']
   recursive: true

@@ -2,7 +2,7 @@ import numpy as np
 from typing import List, Tuple
 from statsmodels.tsa.ar_model import AutoReg
 
-from .markov_chain import MarkovChain
+from ._markov_chain import MarkovChain
 
 
 class MarkovSwitchingModel:
@@ -117,8 +117,8 @@ class MarkovSwitchingModel:
 
         Returns:
         --------
-        Tuple[np.ndarray, np.ndarray]: 
-            Tuple containing the array of predicted target values and the predicted regime sequence.
+        Tuple[np.ndarray, np.ndarray]: Tuple containing the array of predicted
+        target values and the predicted regime sequence.
         """
         predictions = np.zeros(steps, dtype=np.float32)
         regime_predictions = self._markov_chain.simulate(start_regime, steps)

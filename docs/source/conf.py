@@ -38,8 +38,6 @@ extensions = [
     "sphinx_autodoc_typehints",
 ]
 
-bibtex_bibfiles = ["paper.bib"]
-
 source_suffix = {
     ".rst": "restructuredtext",
     ".md": "markdown",
@@ -52,6 +50,10 @@ exclude_patterns = [
     "Thumbs.db",
     ".DS_Store",
     "chainopy.tests.rst",
+    "chainopy._backend.rst",
+    "chainopy.rst",
+    "modules.rst",
+    "_templates"
 ]
 
 autodoc_default_options = {
@@ -59,9 +61,9 @@ autodoc_default_options = {
     "undoc-members": True,
     "private-members": True,
     "special-members": "__init__",
-    "inherited-members": True,
-    "show-inheritance": True,
 }
+
+autosummary_generate=True
 
 napoleon_google_docstring = True
 napoleon_numpy_docstring = True
