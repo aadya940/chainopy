@@ -53,7 +53,7 @@ exclude_patterns = [
     "chainopy._backend.rst",
     "chainopy.rst",
     "modules.rst",
-    "_templates"
+    "_templates",
 ]
 
 autodoc_default_options = {
@@ -63,7 +63,7 @@ autodoc_default_options = {
     "special-members": "__init__",
 }
 
-autosummary_generate=True
+autosummary_generate = True
 
 napoleon_google_docstring = True
 napoleon_numpy_docstring = True
