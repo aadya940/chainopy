@@ -48,11 +48,10 @@ class MarkovSwitchingModel:
 
         Args:
         -----
-        ts_data: ndarray,
+        ts_data: ndarray
             1D Target values at different timepoints
         regime_sequence: list
-                    Training data consisting of Regimes in chronological
-                    Order.
+            Training data consisting of Regimes in chronological Order.
         lags: int,
             Time lags to consider during autoregression
         """
@@ -70,8 +69,7 @@ class MarkovSwitchingModel:
         Args:
         -----
         regime_sequence: list,
-                    Training data consisting of Regimes in chronological
-                    Order.
+            Training data consisting of Regimes in chronological Order.
         """
         __regime_str = ""
         for i, regime in enumerate(regime_sequence):
@@ -119,7 +117,7 @@ class MarkovSwitchingModel:
 
         Returns:
         --------
-        Tuple[np.ndarray, np.ndarray]
+        Tuple[np.ndarray, np.ndarray]: 
             Tuple containing the array of predicted target values and the predicted regime sequence.
         """
         predictions = np.zeros(steps, dtype=np.float32)

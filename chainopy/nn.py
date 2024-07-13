@@ -21,11 +21,9 @@ class MarkovChainNeuralNetwork(nn.Module):
         num_layers : int
             Number of layers in the neural network.
 
-
     Raises:
     -------
         ValueError: If markov_chain is not of type MarkovChain.
-
     """
 
     def __init__(self, markov_chain, num_layers):
@@ -167,7 +165,6 @@ class MarkovChainNeuralNetwork(nn.Module):
                 Patience parameter for learning rate scheduler (default is 500).
             factor : float, optional
                 Factor by which the learning rate will be reduced (default is 0.5).
-
         """
 
         self.optimizer = optim.SGD(
