@@ -64,7 +64,7 @@ class MarkovChainNeuralNetwork(nn.Module):
             x : torch.tensor
                 Input data.
 
-        Returns:
+        Returns
         -------
             torch.Tensor: Output data after passing through the network.
 
@@ -87,13 +87,13 @@ class MarkovChainNeuralNetwork(nn.Module):
                 of num_states, nearest to `num_samples` for
                 equally distribution of samples.
 
-        Returns:
+        Returns
         -------
             torch.Tensor: Input data.
             torch.Tensor: Output data.
 
-        References:
-        ---------
+        References
+        ----------
             Makov-Chain-Neural-Networks<https://openaccess.thecvf.com/content_cvpr_2018_workshops/papers/w42/Awiszus_Markov_Chain_Neural_CVPR_2018_paper.pdf>_.
         """
 
@@ -202,7 +202,7 @@ class MarkovChainNeuralNetwork(nn.Module):
         """
         Returns the weights of the model.
 
-        Returns:
+        Returns
         -------
             dict: Dictionary containing layer names and corresponding weights.
 
@@ -226,7 +226,7 @@ class MarkovChainNeuralNetwork(nn.Module):
             steps: int
                 Number of steps to simulate.
 
-        Returns:
+        Returns
         -------
             list: List of states representing the random walk.
 
@@ -266,12 +266,12 @@ def divergance_analysis(mc: MarkovChain, nn: MarkovChainNeuralNetwork) -> float:
         nn: MarkovChainNeuralNetwork
             The fitted `MarkovChainNeuralNetwork`.
 
-    Returns:
+    Returns
     -------
         float: KL-Divergance
             Lower the KL-Divergance, better the fit.
 
-    NOTES:
+    NOTES
     -----
         KL-Divergance<https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence>_.
     """
