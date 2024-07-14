@@ -96,12 +96,12 @@ The results are as follows:
 
 - `is_absorbing` Methods
 
-| Transition-Matrix Size | 10                             | 50                            | 100                      |
-|------------------------ |---------------|---------------|---------------|---------------|---------------|---------------|
-|                           | Mean                   | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       |
-| Function                |               |               |               |               |               |               |
-| 1. is_absorbing (ChainoPy) | 97.3ns        | 2.46ns        | 91.8ns        | 0.329ns       | 98ns          | 0.4ns         | 97.6ns        | 0.475ns       | 106ns         | 1.48ns        | 103ns         | 1.37ns        |
-| 1. is_absorbing (PyDTMC)  | 386ns         | 5.79ns        | 402ns         | 2.01ns        | 417ns         | 3ns           | 416ns         | 2.44ns        | 418ns         | 0.837ns       | 433ns         | 6.3ns         |
+| Transition-Matrix Size     | 10             |                  | 50             |                  | 100            |                  |
+|----------------------------|----------------|------------------|----------------|------------------|----------------|------------------|
+|                            | Mean           | St. dev          | Mean           | St. dev          | Mean           | St. dev          |
+| Function                   |                |                  |                |                  |                |                  |
+| 1. is_absorbing (ChainoPy) | 97.3ns         | 2.46ns           | 91.8ns         | 0.329ns          | 98ns           | 0.4ns            |
+| 1. is_absorbing (PyDTMC)   | 386ns          | 5.79ns           | 402ns          | 2.01ns           | 417ns          | 3ns              |
 
 - `stationary_dist` vs `pi` Methods
 
