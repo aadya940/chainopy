@@ -96,7 +96,7 @@ The results are as follows:
 
 - `is_absorbing` Methods
 
-| Transition-Matrix Size | 10            | 50            | 100           | 500           | 1000          | 2500          |
+| Transition-Matrix Size | 10                             | 50                            | 100                      |
 |------------------------ |---------------|---------------|---------------|---------------|---------------|---------------|
 |                           | Mean                   | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       |
 | Function                |               |               |               |               |               |               |
