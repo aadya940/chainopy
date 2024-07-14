@@ -105,12 +105,13 @@ The results are as follows:
 
 - `stationary_dist` vs `pi` Methods
 
-| Transition-Matrix Size | 10            | 50            | 100           | 500           | 1000          | 2500          |
-|------------------------ |---------------|---------------|---------------|---------------|---------------|---------------|
-|                           | Mean                   | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       |
-| Function                |               |               |               |               |               |               |
-| 1. stationary_dist (ChainoPy) | 1.47us     | 1.36us        | 93.4ns        | 5.26ns        | 96.6ns        | 3.9ns         | 550ns         | 344ns         | 753ns         | 685ns         | 857ns         | 850ns         |
-| 1. pi (PyDTMC)            | 137us         | 12.9us        | 395ns         | 15.4ns        | 398ns         | 10.5ns        | 1.28us        | 1.79us        | 1.21us        | 1.71us        | 1.41us        | 1.85us        |
+| Transition-Matrix Size     | 10             |                  | 50             |                  | 100            |                  |
+|----------------------------|----------------|------------------|----------------|------------------|----------------|------------------|
+|                            | Mean           | St. dev          | Mean           | St. dev          | Mean           | St. dev          |
+| Function                   |                |                  |                |                  |                |                  |
+| 1. stationary_dist (ChainoPy) | 1.47us      | 1.36us           | 93.4ns         | 5.26ns           | 96.6ns         | 3.9ns            |
+| 1. pi (PyDTMC)             | 137us         | 12.9us           | 395ns          | 15.4ns           | 398ns          | 10.5ns           |
+
 
 
 
