@@ -64,21 +64,14 @@ def test_fit():
     assert x.tpm is not None
 
 
-def test_fundamental_matrix():
-    x = MarkovChain([[0, 1], [1, 0]], ["Rain", "No-Rain"])
-    y = pydtmc.MarkovChain([[0, 1], [1, 0]], ["Rain", "No-Rain"])
-    fm_x = x.fundamental_matrix()
-    fm_y = y.fundamental_matrix
+_tpm_inputs = [
+    [[0, 1], [1, 0]],
+    [[0.1, 0.3, 0.4, 0.2], [0, 0.1, 0.2, 0.7], [0, 0, 1, 0], [0, 0, 0, 1]],
+]
 
-    if (fm_x is None) and (fm_y is None):
-        assert True
-    else:
-        assert np.allclose(fm_x, fm_y, atol=1e-4, equal_nan=True)
 
-    _tpm = np.array(
-        [[0.1, 0.3, 0.4, 0.2], [0, 0.1, 0.2, 0.7], [0, 0, 1, 0], [0, 0, 0, 1]]
-    )
-
+@pytest.mark.parametrize("_tpm", _tpm_inputs)
+def test_fundamental_matrix(_tpm):
     x = MarkovChain(_tpm)
     y = pydtmc.MarkovChain(_tpm)
 
@@ -87,8 +80,8 @@ def test_fundamental_matrix():
 
     if (fm_x is None) and (fm_y is None):
         assert True
-
-    assert np.allclose(fm_x, fm_y, atol=1e-4, equal_nan=True)
+    else:
+        assert np.allclose(fm_x, fm_y, atol=1e-4, equal_nan=True)
 
 
 def test_is_transient():
