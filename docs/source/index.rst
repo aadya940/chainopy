@@ -1,9 +1,6 @@
 Welcome to Chainopy's documentation!
 ====================================
 
-CHAINOPY
---------
-
 .. toctree::
    :maxdepth: 2
 
@@ -19,11 +16,11 @@ Autosummary
    chainopy._markov_switching
    chainopy._nn
 
-README
+Readme
 ------
 
-.. literalinclude:: ../../README.md
-   :language: markdown
-   :caption: README
+.. include:: ../../README.md
+   :parser: myst_parser.sphinx_
+
 
 .. _autosummary:
