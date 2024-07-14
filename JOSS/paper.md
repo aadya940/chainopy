@@ -118,12 +118,13 @@ The results are as follows:
 - `fit` vs `fit_sequence` Method:
 
 
-| Number of Words          | 10            | 50            | 100           | 500           | 1000          | 2500          |
-|--------------------------|---------------|---------------|---------------|---------------|---------------|---------------|
-|                          |    Mean                     | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       | Mean          | St. dev       |
-| Function                 |               |               |               |               |               |               |
-| 1. fit (ChainoPy)           | 116 µs        | 5.28 µs       | 266 µs        | 15 µs         | 496 µs        | 47.3 µs       | 6.58 ms       | 403 µs        | 23.6 ms       | 1.75 ms       | 587 ms        | 30.7 ms       |
-| 1. fit_sequence (PyDTMC)    | 14 ms         | 1.74 ms       | 14.4 ms       | 1.17 ms       | 17.3 ms       | 2.18 ms       | 63.6 ms       | 6.63 ms       | 224 ms        | 5.84 ms       | 5.3 s         | 212 ms        |
+| Number of Words             | 10             |                  | 50             |                  | 100            |                  |
+|-----------------------------|----------------|------------------|----------------|------------------|----------------|------------------|
+|                             | Mean           | St. dev          | Mean           | St. dev          | Mean           | St. dev          |
+| Function                    |                |                  |                |                  |                |                  |
+| 1. fit (ChainoPy)           | 116 µs         | 5.28 µs          | 266 µs         | 15 µs            | 496 µs         | 47.3 µs          |
+| 1. fit_sequence (PyDTMC)    | 14 ms          | 1.74 ms          | 14.4 ms        | 1.17 ms          | 17.3 ms        | 2.18 ms          |
+
 
 
 - `simulate` Method
