@@ -2,9 +2,11 @@ from setuptools import setup, Extension
 from Cython.Build import cythonize
 import numpy as np
 
+
 def parse_requirements(filename):
     with open(filename, "r") as f:
         return f.read().splitlines()
+
 
 _install_requires = parse_requirements("requirements.txt")
 _tests_require = parse_requirements("requirements_test.txt")
@@ -47,12 +49,12 @@ setup(
     ext_modules=cythonize(extensions, language_level=3),
     include_dirs=[np.get_include()],
     license="LICENSE",
-    install_requires=['Cython'] + _install_requires,
+    install_requires=["Cython"] + _install_requires,
     setup_requires=[
-        'Cython',
+        "Cython",
     ],
     extras_require={
-        'tests': _tests_require,
-        'docs': _docs_require,
+        "tests": _tests_require,
+        "docs": _docs_require,
     },
 )
