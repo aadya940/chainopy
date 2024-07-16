@@ -32,9 +32,10 @@ jobs:
         run: |
           python setup.py build_ext --inplace
 
-      - name: Build wheels
+      - name: Build wheel
         run: |
-          python setup.py bdist_wheel
+          python -m pip install build
+          python -m build --wheel
 
       - name: Repair wheels with repairwheel
         run: |
@@ -76,9 +77,10 @@ jobs:
         run: |
           python setup.py build_ext --inplace
 
-      - name: Build wheels
+      - name: Build wheel
         run: |
-          python setup.py bdist_wheel
+          python -m pip install build
+          python -m build --wheel
 
       - name: Upload Windows wheels
         uses: actions/upload-artifact@v2
@@ -113,9 +115,10 @@ jobs:
         run: |
           python setup.py build_ext --inplace
 
-      - name: Build wheels
+      - name: Build wheel
         run: |
-          python setup.py bdist_wheel
+          python -m pip install build
+          python -m build --wheel
 
       - name: Upload MacOS wheels
         uses: actions/upload-artifact@v2
