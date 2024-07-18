@@ -1,6 +1,15 @@
 from setuptools import setup, Extension
-from Cython.Build import cythonize
 import numpy as np
+import os
+
+os.chdir(".")
+os.system("cython --version")
+
+os.system("cython chainopy/_backend/_absorbing.pyx")
+os.system("cython chainopy/_backend/_is_communicating.pyx")
+os.system("cython chainopy/_backend/_learn_matrix.pyx")
+os.system("cython chainopy/_backend/_simulate.pyx")
+os.system("cython chainopy/_backend/_stationary_dist.pyx")
 
 
 def parse_requirements(filename):
@@ -15,22 +24,22 @@ _docs_require = parse_requirements("requirements_doc.txt")
 extensions = [
     Extension(
         name="chainopy._backend._absorbing",
-        sources=["chainopy/_backend/_absorbing.pyx"],
+        sources=["chainopy/_backend/_absorbing.c"],
     ),
     Extension(
         name="chainopy._backend._is_communicating",
-        sources=["chainopy/_backend/_is_communicating.pyx"],
+        sources=["chainopy/_backend/_is_communicating.c"],
     ),
     Extension(
         name="chainopy._backend._learn_matrix",
-        sources=["chainopy/_backend/_learn_matrix.pyx"],
+        sources=["chainopy/_backend/_learn_matrix.c"],
     ),
     Extension(
-        name="chainopy._backend._simulate", sources=["chainopy/_backend/_simulate.pyx"]
+        name="chainopy._backend._simulate", sources=["chainopy/_backend/_simulate.c"]
     ),
     Extension(
         name="chainopy._backend._stationary_dist",
-        sources=["chainopy/_backend/_stationary_dist.pyx"],
+        sources=["chainopy/_backend/_stationary_dist.c"],
     ),
 ]
 
@@ -46,7 +55,7 @@ setup(
     url="https://github.com/aadya940/chainopy",
     author="Aadya Aneesh Chinubhai",
     author_email="aadyachinubhai@gmail.com",
-    ext_modules=cythonize(extensions, language_level=3),
+    ext_modules=extensions,
     include_dirs=[np.get_include()],
     license="LICENSE",
     install_requires=["Cython"] + _install_requires,
