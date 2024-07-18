@@ -1,5 +1,5 @@
 cython
-numpy
+numpy==1.26.1
 scipy
 xarray
 matplotlib
