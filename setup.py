@@ -1,8 +1,5 @@
 from setuptools import setup, Extension
 import os
-
-os.system("python -m pip install numpy")
-
 import numpy as np
 
 os.chdir(".")
