@@ -1,15 +1,7 @@
 from setuptools import setup, Extension
 import os
 import numpy as np
-
-os.chdir(".")
-os.system("cython --version")
-
-os.system("cython chainopy/_backend/_absorbing.pyx")
-os.system("cython chainopy/_backend/_is_communicating.pyx")
-os.system("cython chainopy/_backend/_learn_matrix.pyx")
-os.system("cython chainopy/_backend/_simulate.pyx")
-os.system("cython chainopy/_backend/_stationary_dist.pyx")
+from Cython.Build import cythonize
 
 
 def parse_requirements(filename):
@@ -24,22 +16,22 @@ _docs_require = parse_requirements("requirements_doc.txt")
 extensions = [
     Extension(
         name="chainopy._backend._absorbing",
-        sources=["chainopy/_backend/_absorbing.c"],
+        sources=["chainopy/_backend/_absorbing.pyx"],
     ),
     Extension(
         name="chainopy._backend._is_communicating",
-        sources=["chainopy/_backend/_is_communicating.c"],
+        sources=["chainopy/_backend/_is_communicating.pyx"],
     ),
     Extension(
         name="chainopy._backend._learn_matrix",
-        sources=["chainopy/_backend/_learn_matrix.c"],
+        sources=["chainopy/_backend/_learn_matrix.pyx"],
     ),
     Extension(
-        name="chainopy._backend._simulate", sources=["chainopy/_backend/_simulate.c"]
+        name="chainopy._backend._simulate", sources=["chainopy/_backend/_simulate.pyx"]
     ),
     Extension(
         name="chainopy._backend._stationary_dist",
-        sources=["chainopy/_backend/_stationary_dist.c"],
+        sources=["chainopy/_backend/_stationary_dist.pyx"],
     ),
 ]
 
@@ -55,12 +47,23 @@ setup(
     url="https://github.com/aadya940/chainopy",
     author="Aadya Aneesh Chinubhai",
     author_email="aadyachinubhai@gmail.com",
-    ext_modules=extensions,
+    ext_modules=cythonize(extensions, language_level=3),
     include_dirs=[np.get_include()],
     license="LICENSE",
-    install_requires=["Cython"] + _install_requires,
+    install_requires=[
+        "cython",
+        "numpy",
+        "scipy",
+        "xarray",
+        "matplotlib",
+        "networkx",
+        "torch",
+        "numba",
+        "statsmodels",
+    ],
     setup_requires=[
-        "Cython",
+        "setuptools",
+        "wheel",
     ],
     extras_require={
         "tests": _tests_require,
