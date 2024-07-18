@@ -1,6 +1,9 @@
 from setuptools import setup, Extension
-import numpy as np
 import os
+
+os.system("python -m pip install numpy")
+
+import numpy as np
 
 os.chdir(".")
 os.system("cython --version")
