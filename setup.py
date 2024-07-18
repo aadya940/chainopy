@@ -1,56 +1,57 @@
-from setuptools import setup, Extension
-import numpy as np
-from Cython.Build import cythonize
-
-
-def parse_requirements(filename):
-    with open(filename, "r") as f:
-        return f.read().splitlines()
-
-
-_install_requires = parse_requirements("requirements.txt")
-_tests_require = parse_requirements("requirements_test.txt")
-_docs_require = parse_requirements("requirements_doc.txt")
+from setuptools import setup, find_packages, Extension
+from setuptools.command.build_ext import build_ext
+import numpy
 
 extensions = [
     Extension(
-        name="chainopy._backend._absorbing",
+        "chainopy._backend._absorbing",
         sources=["chainopy/_backend/_absorbing.pyx"],
+        include_dirs=[numpy.get_include()],
     ),
     Extension(
-        name="chainopy._backend._is_communicating",
+        "chainopy._backend._is_communicating",
         sources=["chainopy/_backend/_is_communicating.pyx"],
+        include_dirs=[numpy.get_include()],
     ),
     Extension(
-        name="chainopy._backend._learn_matrix",
+        "chainopy._backend._learn_matrix",
         sources=["chainopy/_backend/_learn_matrix.pyx"],
+        include_dirs=[numpy.get_include()],
     ),
     Extension(
-        name="chainopy._backend._simulate", sources=["chainopy/_backend/_simulate.pyx"]
+        "chainopy._backend._simulate",
+        sources=["chainopy/_backend/_simulate.pyx"],
+        include_dirs=[numpy.get_include()],
     ),
     Extension(
-        name="chainopy._backend._stationary_dist",
+        "chainopy._backend._stationary_dist",
         sources=["chainopy/_backend/_stationary_dist.pyx"],
+        include_dirs=[numpy.get_include()],
+        libraries=["lapack", "blas"],
     ),
 ]
 
-with open("README.md", "r") as f:
-    long_description = f.read()
+
+class CustomBuildExtCommand(build_ext):
+    def build_extensions(self):
+        super().build_extensions()
+
 
 setup(
     name="chainopy",
-    version="1.0",
-    packages=["chainopy"],
-    long_description=long_description,
+    version="1.0.0",
+    description="A Python Library for Markov Chain based Stochastic Analysis!",
+    long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/aadya940/chainopy",
     author="Aadya Aneesh Chinubhai",
     author_email="aadyachinubhai@gmail.com",
-    ext_modules=cythonize(extensions, language_level=3),
-    include_dirs=[np.get_include()],
-    license="LICENSE",
+    url="https://github.com/aadya940/chainopy",
+    packages=find_packages(),
+    include_package_data=True,
+    ext_modules=extensions,
+    cmdclass={"build_ext": CustomBuildExtCommand},
     install_requires=[
-        "cython",
+        "Cython",
         "numpy",
         "scipy",
         "xarray",
@@ -60,12 +61,11 @@ setup(
         "numba",
         "statsmodels",
     ],
-    setup_requires=[
-        "setuptools",
-        "wheel",
+    classifiers=[
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
     ],
-    extras_require={
-        "tests": _tests_require,
-        "docs": _docs_require,
-    },
+    python_requires=">=3.9",
 )

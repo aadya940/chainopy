@@ -1,0 +1,36 @@
+[build-system]
+requires = [
+    "setuptools >= 61.0",
+    "wheel",
+    "numpy >= 1.26.1",
+    "scipy",
+    "Cython",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chainopy"
+version = "1.0.0"
+description = "A Python Library for Markov Chain based Stochastic Analysis!"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Aadya Aneesh Chinubhai", email = "aadyachinubhai@gmail.com" }
+]
+keywords = ["markov chain", "stochastic analysis", "python"]
+dependencies = [
+    "Cython",
+    "numpy",
+    "scipy",
+    "xarray",
+    "matplotlib",
+    "networkx",
+    "torch",
+    "numba",
+    "statsmodels"
+]
+
+[project.urls]
+homepage = "https://chainopy.readthedocs.io/en/latest/"
+repository = "https://github.com/aadya940/chainopy"

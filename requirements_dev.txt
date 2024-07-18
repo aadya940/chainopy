@@ -1,3 +1,2 @@
 repairwheel
 wheel
-cibuildwheel
