@@ -22,6 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
           python -m pip install -r requirements_dev.txt
 
@@ -38,8 +39,7 @@ jobs:
           python -m cibuildwheel --output-dir dist
         env:
           CIBW_BEFORE_BUILD: >
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt 
+            python -m pip install --upgrade pip && pip install -r requirements.txt 
           CIBW_BUILD: "${{ matrix.python }}-*"
 
       - uses: actions/upload-artifact@v4

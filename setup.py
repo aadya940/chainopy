@@ -1,5 +1,4 @@
 from setuptools import setup, Extension
-import os
 import numpy as np
 from Cython.Build import cythonize
 
