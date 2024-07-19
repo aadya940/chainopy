@@ -1,6 +1,8 @@
-name: Build and Repair Wheels
+name: Build and Repair Wheels on Release
 
-on: [push, pull_request]
+on:
+  release:
+    types: [published]
 
 jobs:
   build:
@@ -8,7 +10,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
     - uses: actions/checkout@v4
@@ -18,25 +20,30 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install cibuildwheel
+    - name: Install build dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install cibuildwheel==2.13.1
+        pip install build numpy Cython scipy
 
     - name: Build wheels
-      run: cibuildwheel --output-dir dist
+      run: python -m build --wheel --outdir dist
+
+    - name: Install repairwheel (Linux only)
+      if: runner.os == 'Linux'
+      run: pip install repairwheel
 
     - name: Repair wheels (Linux only)
       if: runner.os == 'Linux'
       run: |
-        pip install repairwheel
-        repairwheel dist/*.whl
+        for whl in dist/*.whl; do
+          repairwheel -o dist "$whl"
+          rm "$whl"
+        done
 
     - name: Upload wheels to PyPI
-      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
       env:
-        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         pip install twine
-        twine upload dist/*
+        twine upload dist/*.whl
