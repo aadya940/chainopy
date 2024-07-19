@@ -14,11 +14,6 @@ A Python 🐍 Package for Markov Chains, Markov Chain Neural Networks and Markov
 
 # How to Install ChainoPy?
 
-### Using pip:
-```
-pip install chainopy==1.0
-```
-
 ### Build from Source
 
 Before you begin, ensure you have the following installed on your system:
