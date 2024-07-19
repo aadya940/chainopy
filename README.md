@@ -31,25 +31,11 @@ Fork and Clone the Chainopy repository to your local machine using Git:
 git clone https://github.com/aadya940/chainopy.git
 ```
 
-Navigate to the directory which contains the `setup.py` file.
+Navigate to the directory which contains the `pyproject.toml` file.
 
-### 2. Install Dependencies
+### 2. Install the package
 ```bash
-pip install -r requirements.txt
-pip install -r requirements_test.txt
-```
-
-### 3. Compile Cython Modules
-```bash
-python3 setup.py build_ext --inplace
-```
-
-### 4. Verify Installation
-Run tests as described in the tests section
-
-### 5. Install 
-```bash
-pip install .
+python -m build
 ```
 
 
