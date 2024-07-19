@@ -1,71 +1,42 @@
-name: Build and Release Wheels
+name: Build and Repair Wheels
 
-on:
-  release:
-    types: [created]
+on: [push, pull_request]
 
 jobs:
-  build_wheels:
+  build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
 
-      - name: Install cibuildwheel
-        run: |
-          python -m pip install --upgrade pip
-          pip install cibuildwheel
+    - name: Install cibuildwheel
+      run: |
+        python -m pip install --upgrade pip
+        pip install cibuildwheel==2.13.1
 
-      - name: Build wheels
-        run: cibuildwheel --output-dir wheelhouse
-        env:
-          CIBW_BUILD: "cp3{9,10,11,12}-*"
-          CIBW_SKIP: "pp*"
+    - name: Build wheels
+      run: cibuildwheel --output-dir dist
 
-      - name: Upload wheels to GitHub
-        uses: actions/upload-artifact@v4
-        with:
-          name: wheels-${{ runner.os }}-${{ matrix.python-version }}
-          path: wheelhouse/
+    - name: Repair wheels (Linux only)
+      if: runner.os == 'Linux'
+      run: |
+        pip install repairwheel
+        repairwheel dist/*.whl
 
-  upload_to_pypi:
-    runs-on: ubuntu-latest
-    needs: build_wheels
-    steps:
-      - name: Download wheels
-        uses: actions/download-artifact@v4
-        with:
-          name: wheels-*
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install numpy
-          pip install cibuildwheel
-
-      - name: Install twine
-        run: |
-          python -m pip install --upgrade pip
-          pip install twine
-
-      - name: Publish wheels to PyPI
-        run: |
-          twine upload wheelhouse/*.whl
-        env:
-          TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+    - name: Upload wheels to PyPI
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+      env:
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+      run: |
+        pip install twine
+        twine upload dist/*
