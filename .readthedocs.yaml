@@ -6,6 +6,7 @@ build:
     python: "3.10"
   jobs:
     pre_build:
+      - sudo apt-get install python3.10-dev
       - python -m pip install build
       - python -m build
       - sphinx-apidoc --private -o docs/source chainopy/
