@@ -58,6 +58,7 @@ exclude_patterns = [
     "modules.rst",
     "setup.rst",
     "_templates",
+    "chainopy._*.rst",
 ]
 
 autodoc_default_options = {
@@ -98,6 +99,10 @@ def skip_cython_docstring(app, what, name, obj, skip, options):
     # Skip docstrings in Cython files
     if what == "module" and name.endswith(".pyx"):
         return True
+
+    if what == "module" and name.startswith("_"):
+        return True
+
     return skip
 
 

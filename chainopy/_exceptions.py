@@ -77,6 +77,6 @@ def _handle_exceptions(func):
     return wrapper
 
 
-class ChainopyException(Exception):
+class _ChainopyException(Exception):
     # Not Implemented
     pass
