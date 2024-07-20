@@ -1,7 +1,7 @@
 import functools
 
 
-def handle_exceptions(func):
+def _handle_exceptions(func):
     """
     Method for function arguments validation.
 

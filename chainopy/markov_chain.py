@@ -4,10 +4,10 @@ from typing import List, Union
 import numpy as np
 import numba
 
-from ._exceptions import handle_exceptions
+from ._exceptions import _handle_exceptions
 from ._visualizations import _visualize_tpm, _visualize_chain
-from ._fileio import _save_model_markovchain, _load_model_markovchain, load_text
-from ._caching import cache
+from ._fileio import _save_model_markovchain, _load_model_markovchain, _load_text
+from ._caching import _cache
 from ._backend import (
     _simulate,
     _absorbing,
@@ -96,8 +96,8 @@ class MarkovChain:
                                             (TPM) {p} must sum to 1."
                     )
 
-    @handle_exceptions
-    @cache(class_method=True)
+    @_handle_exceptions
+    @_cache(class_method=True)
     def fit(self, data: Union[str, list], epsilon: float = 1e-16) -> np.ndarray:
         """
         Learn Transition Matrix from Sequence (list or str) of Data.
@@ -130,7 +130,7 @@ class MarkovChain:
         self._validate_transition_matrix(self.tpm, self.states, self.epsilon)
         return _tpm
 
-    @handle_exceptions
+    @_handle_exceptions
     def simulate(self, initial_state: str, n_steps: int) -> List[str]:
         """
         Simulate the Markov Chain for `n_steps` steps.
@@ -149,7 +149,7 @@ class MarkovChain:
         return _simulate._simulate_cython(self.states, self.tpm, initial_state, n_steps)
 
     @staticmethod
-    @numba.jit(nopython=True, cache=True)
+    @numba.jit(nopython=True, _cache=True)
     def _vectorize(states: List[str], initial_state: str) -> np.ndarray:
         if initial_state in states:
             init = states.index(initial_state)
@@ -183,7 +183,7 @@ class MarkovChain:
         initial_vect = self._vectorize(self.states, initial_state)
         return self.states[np.argmax(initial_vect @ self.tpm)]
 
-    @handle_exceptions
+    @_handle_exceptions
     def nstep_distribution(self, n_steps: int) -> np.ndarray:
         """
         Calculates the distribution of the Markov Chain after n-steps.
@@ -211,7 +211,7 @@ class MarkovChain:
 
         return result if is_eigendecom else np.linalg.matrix_power(self.tpm, n_steps)
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def is_ergodic(self) -> bool:
         """
         Checks if the Markov chain is ergodic.
@@ -222,7 +222,7 @@ class MarkovChain:
         """
         return self.is_irreducible() and self.is_aperiodic()
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def is_symmetric(self) -> bool:
         """
         Checks if the Markov chain is symmetric.
@@ -233,7 +233,7 @@ class MarkovChain:
         """
         return np.allclose(self.tpm, self.tpm.transpose())
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def stationary_dist(self) -> np.ndarray:
         """
         Returns the stationary distribution of the Markov chain.
@@ -245,8 +245,8 @@ class MarkovChain:
         tpm_T = self.tpm.transpose()
         return _stationary_dist.cython_stationary_dist(tpm_T)
 
-    @handle_exceptions
-    @cache(class_method=True)
+    @_handle_exceptions
+    @_cache(class_method=True)
     def is_communicating(self, state1: str, state2: str, threshold: int = 1000) -> bool:
         """
         Checks if two states are communicating.
@@ -268,7 +268,7 @@ class MarkovChain:
             self.tpm, self.states, state1, state2, threshold
         )
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def is_irreducible(self) -> bool:
         """
         Checks if the Markov chain is irreducible.
@@ -285,7 +285,7 @@ class MarkovChain:
     def _absorbing_state_indices(self) -> List[int]:
         return _absorbing._absorbing_states_indices(self.tpm)
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def absorbing_states(self) -> List[str]:
         """
         Returns all absorbing states.
@@ -297,7 +297,7 @@ class MarkovChain:
         indices = self._absorbing_state_indices()
         return [self.states[i] for i in indices]
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def is_absorbing(self) -> bool:
         """
         Checks if the Markov chain is absorbing.
@@ -321,7 +321,7 @@ class MarkovChain:
                 return True
         return False
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def is_aperiodic(self) -> bool:
         """
         Checks if the Markov chain is aperiodic.
@@ -334,7 +334,7 @@ class MarkovChain:
             return True
         return False
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def period(self) -> int:
         """
         Returns the period of the Markov chain.
@@ -372,14 +372,14 @@ class MarkovChain:
         return_times = [return_time(cstate) for cstate in communicating_states]
         return math.gcd(*return_times)
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def _is_eigendecomposable(self) -> bool:
         eigenvalues, _ = np.linalg.eig(self.tpm)
         unique_eigenvalues = np.unique(eigenvalues)
         return len(unique_eigenvalues) == self.tpm.shape[0]
 
-    @handle_exceptions
-    @cache(class_method=True)
+    @_handle_exceptions
+    @_cache(class_method=True)
     def is_transient(self, state: str) -> bool:
         """
         Checks if a state is transient.
@@ -422,7 +422,7 @@ class MarkovChain:
                 return False
         return True
 
-    @handle_exceptions
+    @_handle_exceptions
     def is_recurrent(self, state: str) -> bool:
         """
         Checks if a state is recurrent.
@@ -438,7 +438,7 @@ class MarkovChain:
         """
         return not self.is_transient(state)
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def fundamental_matrix(self) -> Union[np.ndarray, None]:
         """
         Returns the fundamental matrix.
@@ -461,7 +461,7 @@ class MarkovChain:
 
         return np.linalg.inv(I - Q)
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def absorption_probabilities(self) -> np.ndarray:
         """
         Returns the absorption probabilities matrix for each state.
@@ -480,7 +480,7 @@ class MarkovChain:
                             for non-absorbing Markov chains."
             )
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def expected_time_to_absorption(self) -> np.ndarray:
         """
         Returns the expected time to absorption for each state.
@@ -492,7 +492,7 @@ class MarkovChain:
         absorption_probs = self.absorption_probabilities()
         return np.sum(absorption_probs, axis=1)
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def expected_number_of_visits(self) -> np.ndarray:
         """
         Returns the expected number of visits to each state before absorption.
@@ -504,7 +504,7 @@ class MarkovChain:
         absorption_probs = self.absorption_probabilities()
         return np.reciprocal(1 - absorption_probs)
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def expected_hitting_time(self, state: str) -> Union[float, None]:
         """
         Returns the expected hitting time to reach the given absorbing state.
@@ -540,7 +540,7 @@ class MarkovChain:
         """
         _visualize_chain(self.tpm, self.states, self.epsilon)
 
-    @handle_exceptions
+    @_handle_exceptions
     def save_model(self, filename: str, epsilon: float = 1e-16):
         """
         Save Model as a JSON Object.
@@ -556,7 +556,7 @@ class MarkovChain:
         """
         _save_model_markovchain(self, filename, epsilon=epsilon)
 
-    @handle_exceptions
+    @_handle_exceptions
     def load_model(self, path: str):
         """
         Load a ChainoPy Model stored as a JSON Object
@@ -597,7 +597,7 @@ class MarkovChain:
 
         self.tpm = np.where(self.tpm == 0, self.epsilon, self.tpm)
 
-    @cache(class_method=True)
+    @_cache(class_method=True)
     def marginal_dist(self, state: str):
         """
         Args
@@ -629,7 +629,7 @@ class MarkovChain:
             If `self.tpm` is None. Then this sets `self.tpm`
             to the new transition-matrix.
         """
-        _data_list = load_text(path)
+        _data_list = _load_text(path)
         if (_data_list is None) or (len(_data_list) == 0):
             raise ValueError("Invalid contents of the text file.")
 

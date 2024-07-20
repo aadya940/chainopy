@@ -182,7 +182,7 @@ def _load_model_markovchain(filepath):
         return [transition_matrix, states, eigendecom]  # 3
 
 
-def load_text(path: str):
+def _load_text(path: str):
     """
     Reads data from a text file and returns it in a
     `chainopy.MarkovChain.fit()` compatible list.

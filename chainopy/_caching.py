@@ -1,7 +1,7 @@
 from functools import lru_cache, wraps
 
 
-def cache(class_method):
+def _cache(class_method):
     """
     Method for caching results while the Transition-Matrix
     doesn't change.
