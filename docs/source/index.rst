@@ -9,8 +9,8 @@ Welcome to Chainopy's documentation!
 Examples
 --------
 
-You can see example usage of chainopy here: :doc:`../../examples/demo.ipynb`
-
+You can see example usage of chainopy here: 
+`demo.ipynb <../../examples/demo.ipynb>`_
 
 Autosummary
 -----------
