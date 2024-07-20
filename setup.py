@@ -27,7 +27,6 @@ extensions = [
         "chainopy._backend._stationary_dist",
         sources=["chainopy/_backend/_stationary_dist.pyx"],
         include_dirs=[numpy.get_include()],
-        libraries=["lapack", "blas"],
     ),
 ]
 
