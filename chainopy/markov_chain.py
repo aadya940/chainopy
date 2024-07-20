@@ -149,7 +149,6 @@ class MarkovChain:
         return _simulate._simulate_cython(self.states, self.tpm, initial_state, n_steps)
 
     @staticmethod
-    @numba.jit(nopython=True, _cache=True)
     def _vectorize(states: List[str], initial_state: str) -> np.ndarray:
         if initial_state in states:
             init = states.index(initial_state)
