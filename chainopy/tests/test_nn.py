@@ -2,8 +2,8 @@ import pytest
 import numpy as np
 import torch
 
-from .._nn import MarkovChainNeuralNetwork, divergance_analysis
-from .._markov_chain import MarkovChain
+from ..nn import MarkovChainNeuralNetwork, divergance_analysis
+from ..markov_chain import MarkovChain
 
 
 @pytest.fixture

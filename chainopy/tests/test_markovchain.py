@@ -3,7 +3,7 @@ import pydtmc
 import numpy as np
 import os
 
-from .._markov_chain import MarkovChain
+from ..markov_chain import MarkovChain
 
 
 def test_init():

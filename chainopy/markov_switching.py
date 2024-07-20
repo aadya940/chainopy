@@ -2,7 +2,7 @@ import numpy as np
 from typing import List, Tuple
 from statsmodels.tsa.ar_model import AutoReg
 
-from ._markov_chain import MarkovChain
+from .markov_chain import MarkovChain
 
 
 class MarkovSwitchingModel:

@@ -6,7 +6,7 @@ import numpy as np
 import warnings
 import random
 
-from ._markov_chain import MarkovChain
+from .markov_chain import MarkovChain
 from ._backend import _learn_matrix
 
 
