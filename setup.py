@@ -50,16 +50,4 @@ setup(
     include_package_data=True,
     ext_modules=extensions,
     cmdclass={"build_ext": CustomBuildExtCommand},
-    install_requires=[
-        "Cython",
-        "numpy",
-        "scipy",
-        "xarray",
-        "matplotlib",
-        "networkx",
-        "torch",
-        "numba",
-        "statsmodels",
-    ],
-    python_requires=">=3.9",
 )
