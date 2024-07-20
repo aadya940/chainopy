@@ -59,6 +59,10 @@ exclude_patterns = [
     "setup.rst",
     "_templates",
     "chainopy._*.rst",
+    "submodules.rst",
+    "subpackages.rst",
+    "Submodules.rst",
+    "Subpackages.rst",
 ]
 
 autodoc_default_options = {

@@ -10,7 +10,7 @@ Examples
 --------
 
 You can see example usage of chainopy here: 
-`demo.ipynb <../../examples/demo.ipynb>`_
+`demo.ipynb <https://github.com/aadya940/chainopy/blob/master/examples/demo.ipynb>`_
 
 Autosummary
 -----------
