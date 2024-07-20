@@ -51,7 +51,6 @@ exclude_patterns = [
     ".DS_Store",
     "chainopy.tests.rst",
     "chainopy._backend.rst",
-    "chainopy.rst",
     "modules.rst",
     "setup.rst",
     "_templates",

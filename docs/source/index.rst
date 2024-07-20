@@ -12,9 +12,7 @@ Autosummary
 .. autosummary::
    :toctree: _autosummary
 
-   chainopy._markov_chain
-   chainopy._markov_switching
-   chainopy._nn
+   chainopy
 
 Readme
 ------
