@@ -6,6 +6,12 @@ Welcome to Chainopy's documentation!
 
    _autosummary
 
+Examples
+--------
+
+You can see example usage of chainopy here: :doc:`../../examples/demo.ipynb`
+
+
 Autosummary
 -----------
 
