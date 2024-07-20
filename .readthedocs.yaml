@@ -6,7 +6,8 @@ build:
     python: "3.10"
   jobs:
     pre_build:
-      - python setup.py build_ext --inplace
+      - python -m pip install build
+      - python -m build
       - sphinx-apidoc --private -o docs/source chainopy/
 
 python:
