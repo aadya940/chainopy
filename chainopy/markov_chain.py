@@ -16,6 +16,8 @@ from ._backend import (
     _is_communicating,
 )
 
+__all__ = ["MarkovChain"]
+
 
 class MarkovChain:
     """

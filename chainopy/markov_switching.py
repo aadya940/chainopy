@@ -4,6 +4,8 @@ from statsmodels.tsa.ar_model import AutoReg
 
 from .markov_chain import MarkovChain
 
+__all__ = ["MarkovSwitchingModel"]
+
 
 class MarkovSwitchingModel:
     """
