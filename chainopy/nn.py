@@ -9,8 +9,6 @@ import random
 from .markov_chain import MarkovChain
 from ._backend import _learn_matrix
 
-__all__ = ["MarkovChainNeuralNetwork", "divergance_analysis"]
-
 
 class MarkovChainNeuralNetwork(nn.Module):
     """
