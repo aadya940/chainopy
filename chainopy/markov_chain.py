@@ -16,6 +16,7 @@ from ._backend import (
     _is_communicating,
 )
 
+
 class MarkovChain:
     """
     A class containing Fundamental Functions for Discrete Time Markov Chains.
