@@ -72,7 +72,7 @@ exclude_patterns = [
 ]
 
 autodoc_default_options = {
-    "members": False,
+    "members": True,
     "undoc-members": False,
     "special-members": "__init__",
     "private-members": False,
