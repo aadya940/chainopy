@@ -31,7 +31,7 @@ jobs:
 
   download:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build_wheels
 
     steps:
     - name: Download build artifacts
