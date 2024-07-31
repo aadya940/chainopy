@@ -40,4 +40,4 @@ repository = "https://github.com/aadya940/chainopy"
 skip = "pp*"
 
 [tool.cibuildwheel.linux]
-before-all="sudo apt build-dep scipy"
+before-all="apt build-dep scipy"
