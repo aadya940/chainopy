@@ -21,6 +21,15 @@ class MarkovChainNeuralNetwork(nn.Module):
         num_layers : int
             Number of layers in the neural network.
 
+    Attributes
+    ----------
+        input_dim : tuple
+            Input shape of the neural network. Calculated
+            using the transition matrix.
+        output_dim : tuple
+            Output shape of the neural network. Calculated
+            using the transition matrix.
+
     Raises
     ------
         ValueError: If markov_chain is not of type MarkovChain.

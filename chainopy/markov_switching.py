@@ -6,9 +6,19 @@ from .markov_chain import MarkovChain
 
 
 class MarkovSwitchingModel:
-    """
-    This Model estimates the 1D target values given the Current Regime.
-    The Regimes follow a First Order Markov Process.
+    """MarkovSwitchingModel estimates 1D target values given the current regime.
+    The regimes follow a first-order Markov process.
+
+    Attributes
+    ----------
+    regimes : list
+        List of regimes identified in the training data.
+    num_regimes : int
+        Number of unique regimes.
+    models : dict
+        Dictionary mapping regimes to their respective AutoReg models.
+    num_models : int
+        Number of models, corresponding to the number of unique regimes.
     """
 
     def __init__(self):

@@ -18,8 +18,29 @@ from ._backend import (
 
 
 class MarkovChain:
-    """
-    A class containing Fundamental Functions for Discrete Time Markov Chains.
+    """A class containing Fundamental Functions for Discrete Time Markov Chains.
+
+    This class provides a comprehensive suite of methods for working with
+    discrete-time Markov chains (DTMCs), including validation, simulation,
+    and analysis functionalities. It supports learning transition probability
+    matrices (TPMs) from data, checking various properties of the Markov chain
+    (e.g., ergodicity, aperiodicity, symmetry), and computing distributions and
+    probabilities related to the chain's behavior over time.
+
+    Attributes
+    ----------
+    tpm : np.ndarray
+        Transition probability matrix (TPM) representing the Markov chain.
+    states : List[str]
+        List of state names corresponding to the TPM.
+    eigendecom : bool
+        Flag indicating if the TPM is eigendecomposable.
+    eigenvalues : np.ndarray
+        Eigenvalues of the TPM.
+    eigenvectors : np.ndarray
+        Eigenvectors of the TPM.
+    epsilon : float
+        Small value to avoid numerical issues in calculations.
     """
 
     __slots__ = "tpm", "states", "eigendecom", "eigenvalues", "eigenvectors", "epsilon"
