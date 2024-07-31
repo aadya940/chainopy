@@ -20,8 +20,6 @@ jobs:
           package-dir: .
           output-dir: dist
           config-file: "./pyproject.toml"
-        env:
-            CIBW_BEFORE_ALL: sudo apt-get install python3-scipy
 
       - uses: actions/upload-artifact@v4
         with:
