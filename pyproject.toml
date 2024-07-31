@@ -38,3 +38,6 @@ repository = "https://github.com/aadya940/chainopy"
 [tool.cibuildwheel]
 # Disable building PyPy wheels on all platforms
 skip = "pp*"
+
+[tool.cibuildwheel.linux]
+before-all="sudo apt build-dep scipy"
