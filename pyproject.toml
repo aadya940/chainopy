@@ -42,5 +42,5 @@ skip = "pp*"
 [tool.cibuildwheel.linux]
 before-all=[
     "yum install epel-release",
-    "yum install python3-devel numpy-f2py gcc-gfortran openblas-devel lapack-devel",
+    "yum install openblas-devel lapack-devel",
 ]
