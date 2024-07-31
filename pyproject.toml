@@ -34,3 +34,7 @@ dependencies = [
 [project.urls]
 homepage = "https://chainopy.readthedocs.io/en/latest/"
 repository = "https://github.com/aadya940/chainopy"
+
+[tool.cibuildwheel]
+# Disable building PyPy wheels on all platforms
+skip = "pp*"
