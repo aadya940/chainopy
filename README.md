@@ -17,7 +17,7 @@ A Python 🐍 Package for Markov Chains, Markov Chain Neural Networks and Markov
 ### Using pip
 
 ```bash
-pip install git+https://github.com/aadya940/chainopy
+pip install chainopy
 ```
 
 ### Build from Source
