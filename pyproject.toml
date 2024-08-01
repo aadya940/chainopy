@@ -43,3 +43,4 @@ skip = "pp*"
 before-all=[
     "yum install -y openblas-devel",
 ]
+archs = ["auto64"]
