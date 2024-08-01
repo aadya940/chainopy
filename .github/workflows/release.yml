@@ -32,11 +32,9 @@ jobs:
       needs: build_wheels
 
       steps:
-        - name: Download build artifacts
-          uses: actions/download-artifact@v3
-          with:
-            name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
-            path: dist/
-
-        - name: List downloaded files
-          run: ls -l dist/
+        - uses: actions/download-artifact@v4
+        with:
+          # unpacks all CIBW artifacts into dist/
+          pattern: cibw-*
+          path: dist
+          merge-multiple: true
