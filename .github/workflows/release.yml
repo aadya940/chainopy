@@ -33,8 +33,8 @@ jobs:
 
       steps:
         - uses: actions/download-artifact@v4
-        with:
-          # unpacks all CIBW artifacts into dist/
-          pattern: cibw-*
-          path: dist
-          merge-multiple: true
+          with:
+            # unpacks all CIBW artifacts into dist/
+            pattern: cibw-*
+            path: dist
+            merge-multiple: true
