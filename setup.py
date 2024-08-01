@@ -40,7 +40,7 @@ setup(
     name="chainopy",
     version="1.0.0",
     description="A Python Library for Markov Chain based Stochastic Analysis!",
-    long_description=open("README.md").read(),
+    long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="Aadya Aneesh Chinubhai",
     author_email="aadyachinubhai@gmail.com",
