@@ -44,3 +44,6 @@ before-all=[
     "yum install -y openblas-devel",
 ]
 archs = ["auto64"]
+
+[tool.cibuildwheel.windows]
+archs = ["auto64"]
