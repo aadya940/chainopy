@@ -2,6 +2,9 @@ cimport numpy as cnp
 import numpy as np
 import cython
 
+cnp.import_array()
+
+
 def get_index(list listVar, str element):
     idx =  listVar.index(element)
     return idx

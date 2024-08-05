@@ -1,7 +1,9 @@
 import numpy as np
-cimport numpy as np
+cimport numpy as cnp
 from numpy cimport ndarray
 cimport cython
+
+cnp.import_array()
 
 
 @cython.wraparound(False)

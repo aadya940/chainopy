@@ -3,6 +3,7 @@ cimport numpy as cnp
 import cython
 from cython.parallel import prange
 
+cnp.import_array()
 
 @cython.wraparound(False)
 @cython.boundscheck(False)

@@ -3,6 +3,7 @@ import numpy as np
 import cython
 cimport numpy as cnp
 
+cnp.import_array()
 
 @cython.cdivision(True)
 @cython.wraparound(False)

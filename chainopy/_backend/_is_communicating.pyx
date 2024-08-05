@@ -2,6 +2,8 @@ cimport numpy as cnp
 import numpy as np
 import cython
 
+cnp.import_array()
+
 @cython.wraparound(False)
 @cython.boundscheck(False)
 def _is_partially_communicating(cnp.ndarray[cnp.float64_t, ndim=2] tpm, list states, str state1, str state2, int threshold):
