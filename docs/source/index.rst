@@ -15,7 +15,7 @@ You can see example usage of chainopy here:
    :maxdepth: 2
    :caption: Examples:
 
-   ../../examples/demo.ipynb
+   examples/demo.ipynb
 
 Autosummary
 -----------
