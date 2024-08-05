@@ -9,7 +9,10 @@ Welcome to Chainopy's documentation!
 Examples
 --------
 
-You can see example usage of chainopy here: `example notebook <../../examples/demo>`_.
+.. toctree::
+   :maxdepth: 2
+
+   :ref: `Examples Jupyter Notebook <../../examples/demo.ipynb>`
 
 Autosummary
 -----------
