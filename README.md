@@ -23,7 +23,7 @@ pip install chainopy
 ### Build from Source
 
 Before you begin, ensure you have the following installed on your system:
-- Python (>= 3.9 )
+- Python (> 3.9 )
 
 ### 1. Clone the Repository
 Fork and Clone the Chainopy repository to your local machine using Git:
