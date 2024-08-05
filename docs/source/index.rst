@@ -10,7 +10,12 @@ Examples
 --------
 
 You can see example usage of chainopy here: 
-`demo.ipynb <https://github.com/aadya940/chainopy/blob/master/examples/demo.ipynb>`_
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Examples:
+
+   ../../examples/demo.ipynb
 
 Autosummary
 -----------
