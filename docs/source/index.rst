@@ -9,7 +9,7 @@ Welcome to Chainopy's documentation!
 Examples
 --------
 
-You can see example usage of chainopy here:`example notebook <../../examples/demo.ipynb>`_.
+You can see example usage of chainopy here: `example notebook <../../examples/demo>`_.
 
 Autosummary
 -----------
