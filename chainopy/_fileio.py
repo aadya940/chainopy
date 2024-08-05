@@ -164,11 +164,11 @@ def _load_model_markovchain(filepath):
 
         if "eigenvalues-real" in data.keys():
             _eigenvalues = np.array(data["eigenvalues-real"]) + np.array(
-                data["eigenvalues-imaginary"], np.complex_
+                data["eigenvalues-imaginary"], np.complex128
             )
 
             _eigenvectors = np.array(data["eigenvectors-real"]) + np.array(
-                data["eigenvectors-imag"], np.complex_
+                data["eigenvectors-imag"], np.complex128
             )
 
             return [

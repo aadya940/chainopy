@@ -4,7 +4,7 @@ requires = [
     "setuptools >= 61.0",
     "wheel",
     "scipy >= 1.13.1",
-    "Cython",
+    "Cython >= 3.0.4",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -21,14 +21,13 @@ authors = [
 keywords = ["markov chain", "stochastic analysis", "python"]
 dependencies = [
     "numpy == 2.0.0",
-    "Cython",
+    "Cython >= 3.0.4",
     "scipy >= 1.13.0",
-    "xarray",
-    "matplotlib",
-    "networkx",
-    "torch",
-    "numba",
-    "statsmodels"
+    "xarray >= 2024.06.0",
+    "matplotlib >= 3.8.4",
+    "networkx >= 3.3",
+    "torch >= 2.3.0",
+    "statsmodels >= 0.14.2"
 ]
 
 [project.urls]

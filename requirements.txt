@@ -1,9 +1,8 @@
-numpy==2.0.0
-cython
-scipy
-xarray
-matplotlib
-networkx
-torch
-numba
-statsmodels
+numpy == 2.0.0
+cython >= 3.0.4
+scipy >= 1.13.0
+xarray >= 2024.06.0
+matplotlib >= 3.8.4
+networkx >= 3.3
+torch >= 2.3.0
+statsmodels >= 0.14.2
