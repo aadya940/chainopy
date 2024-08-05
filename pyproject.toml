@@ -13,7 +13,7 @@ name = "chainopy"
 version = "1.0.2"
 description = "A Python Library for Markov Chain based Stochastic Analysis!"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { file = "LICENSE" }
 authors = [
     { name = "Aadya Aneesh Chinubhai", email = "aadyachinubhai@gmail.com" }

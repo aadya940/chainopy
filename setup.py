@@ -38,7 +38,7 @@ class CustomBuildExtCommand(build_ext):
 
 setup(
     name="chainopy",
-    version="1.0.1",
+    version="1.0.2",
     description="A Python Library for Markov Chain based Stochastic Analysis!",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
