@@ -2,7 +2,6 @@ import math
 from typing import List, Union
 
 import numpy as np
-import numba
 
 from ._exceptions import _handle_exceptions
 from ._visualizations import _visualize_tpm, _visualize_chain
