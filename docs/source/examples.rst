@@ -1,0 +1,1 @@
+.. include::  ../../examples/demo.ipynb

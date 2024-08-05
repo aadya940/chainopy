@@ -12,7 +12,7 @@ Examples
 .. toctree::
    :maxdepth: 2
 
-   path_file/examples/demo
+   examples
 
 Autosummary
 -----------
