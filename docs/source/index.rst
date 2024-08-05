@@ -12,7 +12,7 @@ Examples
 .. toctree::
    :maxdepth: 2
 
-   :ref: `Examples Jupyter Notebook <examples/demo.ipynb>`
+   path_file/examples/demo
 
 Autosummary
 -----------
