@@ -13,7 +13,7 @@ Examples
    :maxdepth: 2
    :caption: Notebooks
 
-   chainopy/examples/demo.ipynb
+   ../../examples/demo
 
 Autosummary
 -----------
