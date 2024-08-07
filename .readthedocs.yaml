@@ -8,7 +8,8 @@ build:
     pre_build:
       - python -m pip install -r requirements.txt
       - python -m pip install -r requirements_doc.txt
-      - yum install -y pandoc
+      - apt update -y
+      - apt install -y pandoc
       - python -m pip install pandoc
       - python setup.py build_ext --inplace
       - sphinx-apidoc --private -o docs/source chainopy/
