@@ -6,15 +6,6 @@ Welcome to Chainopy's documentation!
 
    _autosummary
 
-Examples
---------
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Notebooks
-
-   examples/demo.ipynb
-
 Autosummary
 -----------
 
@@ -24,6 +15,15 @@ Autosummary
    chainopy.markov_chain
    chainopy.markov_switching
    chainopy.nn
+
+Examples
+--------
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Notebooks
+
+   demo.ipynb
 
 Readme
 ------
