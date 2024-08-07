@@ -3,4 +3,4 @@ sphinx-rtd-theme
 furo
 myst-parser
 sphinx-autodoc-typehints
-myst_nb
+myst-nb
