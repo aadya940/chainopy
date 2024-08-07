@@ -42,8 +42,18 @@ extensions = [
 source_suffix = {
     ".rst": "restructuredtext",
     ".md": "markdown",
-    '.myst': 'myst-nb',
+    ".myst": "myst-nb",
 }
+
+myst_enable_extensions = [
+    "amsmath",
+    "colon_fence",
+    "deflist",
+    "dollarmath",
+    "html_image",
+]
+
+myst_url_schemes = ("http", "https", "mailto")
 
 templates_path = ["_templates"]
 exclude_patterns = [
