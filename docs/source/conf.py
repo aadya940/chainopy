@@ -36,7 +36,7 @@ extensions = [
     "sphinx.ext.githubpages",
     "sphinx.ext.extlinks",
     "sphinx_autodoc_typehints",
-    "nbsphinx",
+    "myst_nb",
 ]
 
 source_suffix = {
