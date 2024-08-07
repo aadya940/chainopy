@@ -36,24 +36,13 @@ extensions = [
     "sphinx.ext.githubpages",
     "sphinx.ext.extlinks",
     "sphinx_autodoc_typehints",
-    "myst_nb",
+    "nbsphinx",
 ]
 
 source_suffix = {
     ".rst": "restructuredtext",
     ".md": "markdown",
-    ".myst": "myst-nb",
 }
-
-myst_enable_extensions = [
-    "amsmath",
-    "colon_fence",
-    "deflist",
-    "dollarmath",
-    "html_image",
-]
-
-myst_url_schemes = ("http", "https", "mailto")
 
 templates_path = ["_templates"]
 exclude_patterns = [
@@ -89,6 +78,8 @@ autodoc_default_options = {
     "special-members": "__init__",
     "private-members": False,
 }
+
+myst_enable_extensions = ["colon_fence", "html_image", "attrs_inline"]
 
 autosummary_generate = True
 

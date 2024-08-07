@@ -13,7 +13,7 @@ Examples
    :maxdepth: 2
    :caption: Notebooks
 
-   examples
+   examples/demo.ipynb
 
 Autosummary
 -----------
