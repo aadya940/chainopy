@@ -44,6 +44,8 @@ source_suffix = {
     ".md": "markdown",
 }
 
+nbsphinx_execute = "never"
+
 templates_path = ["_templates"]
 exclude_patterns = [
     ".ipynb_checkpoints",
