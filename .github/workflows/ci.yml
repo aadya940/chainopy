@@ -70,6 +70,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{matrix.python-version}}
+      
+      - name: Set up pandoc
+        run: sudo apt install pandoc
 
       - name: Install Doc dependencies
         run: pip install -r requirements_doc.txt
