@@ -91,7 +91,7 @@ API of the library:
 
 ### Documentation, Testing and Benchmarking
 
-For Documentation we use Sphinx. For Testing and Benchmarking we use the Pytest and PyDTMC [@pydtmc] package. 
+For Documentation we use Sphinx. For Testing and Benchmarking we use the Pytest and PyDTMC [@pydtmc] packages. 
 
 The results are as follows:
 
