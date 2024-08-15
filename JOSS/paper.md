@@ -1,5 +1,5 @@
 ---
-title: 'ChainoPy: A Python Library for Discrete Time Markov Chain based stochastic analysis'
+title: 'ChainoPy: A Python Library for Discrete Time Markov Chain Based Stochastic Analysis'
 tags:
     - Markov Chains
     - Markov Chain Neural Networks
@@ -22,7 +22,7 @@ There are limitations in current Markov Chain packages like PyDTMC [@pydtmc], si
 
 ### Implementation
 
-We implement three public classes `MarkovChain`, `MarkovChainNeuralNetwork` and `MarkovSwitchingModel` that contain core functionalities of the package. Performance intensive functions for the `MarkovChain` class are implemented in the `_backend` directory where a custom Cython [@behnel2010cython] backend is implemented circumventing drawbacks of Python like the GIL, dynamic typing etc. The `MarkovChain` class implements various functionalities for discrete-time Markov chains. It provides methods for fitting the transition matrix from data, simulating the chain, calculating properties. It also supports visualization for Markov chains.
+We implement three public classes `MarkovChain`, `MarkovChainNeuralNetwork` and `MarkovSwitchingModel` that contain core functionalities of the package. Performance intensive functions for the `MarkovChain` class are implemented in the `_backend` directory where a custom Cython [@behnel2010cython] backend is implemented circumventing drawbacks of Python like the GIL, dynamic typing, etc. The `MarkovChain` class implements various functionalities for discrete-time Markov chains. It provides methods for fitting the transition matrix from data, simulating the chain, and calculating properties. It also supports visualization for Markov chains.
 
 We do the following key optimizations: 
 
@@ -30,11 +30,11 @@ We do the following key optimizations:
 - Parallel Execution: Some functions are parallelized.
 - `__slots__` usage: `__slots__` is used instead of `__dict__` for storing object attributes, reducing memory overhead.
 - Caching decorator: Class methods are decorated with caching to avoid recomputation of unnecessary results.
-- Direct LAPACK use: LAPACK function `dgeev` is directly used to calculate stationary-distribution via SciPy's [@virtanen2020scipy] `cython_lapack` API instead of additional numpy overhead.
+- Direct LAPACK use: LAPACK function `dgeev` is directly used to calculate stationary-distribution via SciPy's [@virtanen2020scipy] `cython_lapack` API instead of additional NumPy overhead.
 - Utility functions for visualization: Utility functions are implemented for visualizing the Markov chain.
 - Sparse storage of transition matrix: The model is stored as a JSON object, and if 40% or more elements of the transition matrix are near zero, it is stored in a sparse format.
 
-The `MarkovChainNeuralNetwork` implementation defines a neural network model, using PyTorch [@ansel2024pytorch] for simulating Markov chain behavior. It takes a Markov chain object and the number of layers as input, with each layer being a linear layer. The model's forward method computes the output probabilities for the next state. The model is trained using stochastic gradient descent (SGD) with a learning rate scheduler. Finally, the model's performance is evaluated using the KL divergence between the original Markov chain's transition probabilities and those estimated from the simulated walks.
+The `MarkovChainNeuralNetwork` implementation defines a neural network model, using PyTorch [@ansel2024pytorch] for simulating Markov chain behavior. It takes a Markov chain object and the number of layers as input, with each layer being a linear layer. The model's forward method computes the output probabilities for the next state. The model is trained using stochastic gradient descent (SGD) with a learning rate scheduler. Finally, the model's performance is evaluated using the Kullback–Leibler divergence between the original Markov chain's transition probabilities and those estimated from the simulated walks.
 
 API of the library:
 
