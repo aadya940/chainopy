@@ -34,7 +34,7 @@ We do the following key optimizations:
 - Utility functions for visualization: Utility functions are implemented for visualizing the Markov chain.
 - Sparse storage of transition matrix: The model is stored as a JSON object, and if 40% or more elements of the transition matrix are near zero, it is stored in a sparse format.
 
-The `MarkovChainNeuralNetwork` implementation defines a neural network model, using PyTorch [@paszke2019pytorch] for simulating Markov chain behavior. It takes a Markov chain object and the number of layers as input, with each layer being a linear layer. The model's forward method computes the output probabilities for the next state. The model is trained using stochastic gradient descent (SGD) with a learning rate scheduler. Finally, the model's performance is evaluated using the KL divergence between the original Markov chain's transition probabilities and those estimated from the simulated walks.
+The `MarkovChainNeuralNetwork` implementation defines a neural network model, using PyTorch [@ansel2024pytorch] for simulating Markov chain behavior. It takes a Markov chain object and the number of layers as input, with each layer being a linear layer. The model's forward method computes the output probabilities for the next state. The model is trained using stochastic gradient descent (SGD) with a learning rate scheduler. Finally, the model's performance is evaluated using the KL divergence between the original Markov chain's transition probabilities and those estimated from the simulated walks.
 
 API of the library:
 
