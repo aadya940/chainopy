@@ -105,7 +105,7 @@ Note: If your implementation is Cython, justify its usage in your PR to make the
 
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.06880/status.svg)](https://doi.org/10.21105/joss.06880)
 
-
+```
 @article{Chinubhai2024ChainoPy,
   author = {Aadya A. Chinubhai},
   title = {ChainoPy: A Python Library for Discrete Time Markov Chain Based Stochastic Analysis},
@@ -117,3 +117,4 @@ Note: If your implementation is Cython, justify its usage in your PR to make the
   doi = {10.21105/joss.06880},
   url = {https://joss.theoj.org/papers/10.21105/joss.06880}
 }
+```
