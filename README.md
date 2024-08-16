@@ -100,3 +100,8 @@ predicts the next twenty steps if the start states is "High".
 8. Push the changes and submit a Pull Request.
 
 Note: If your implementation is Cython, justify its usage in your PR to make the code more maintainable.
+
+# ChainoPy JOSS Paper
+
+Markdown:
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.06880/status.svg)](https://doi.org/10.21105/joss.06880)
