@@ -101,7 +101,19 @@ predicts the next twenty steps if the start states is "High".
 
 Note: If your implementation is Cython, justify its usage in your PR to make the code more maintainable.
 
-# ChainoPy JOSS Paper
+# Cite ChinoPy
 
-Markdown:
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.06880/status.svg)](https://doi.org/10.21105/joss.06880)
+
+
+@article{Chinubhai2024ChainoPy,
+  author = {Aadya A. Chinubhai},
+  title = {ChainoPy: A Python Library for Discrete Time Markov Chain Based Stochastic Analysis},
+  journal = {Journal of Open Source Software},
+  volume = {9},
+  number = {100},
+  pages = {6880},
+  year = {2024},
+  doi = {10.21105/joss.06880},
+  url = {https://joss.theoj.org/papers/10.21105/joss.06880}
+}
