@@ -1,2 +1,2 @@
 pytest
-pydtmc
+pydtmc < 10  # 10.x redefined fundamental_matrix semantics
