@@ -4,6 +4,8 @@ import numpy as np
 import pytest
 import sympy
 
+pytest.importorskip("skverify")
+
 from skverify import to_sympy
 from skverify.helpers import axis_idx
 from skverify.testing import check_formula, check_property, specifies

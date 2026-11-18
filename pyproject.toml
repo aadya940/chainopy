@@ -1,15 +1,13 @@
 [build-system]
 requires = [
-    "numpy == 2.0.0",
     "setuptools >= 61.0",
     "wheel",
-    "scipy >= 1.13.1",
 ]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "chainopy"
-version = "1.0.3"
+version = "1.0.4"
 description = "A Python Library for Markov Chain based Stochastic Analysis!"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,11 +17,11 @@ authors = [
 ]
 keywords = ["markov chain", "stochastic analysis", "python"]
 dependencies = [
-    "numpy == 2.0.0",
+    "numpy >= 2.0",
     "scipy >= 1.13.0",
     "xarray >= 2024.06.0",
     "matplotlib >= 3.8.4",
-    "networkx == 3.3",
+    "networkx >= 3.3",
     "torch >= 2.3.0",
     "statsmodels >= 0.14.2"
 ]
