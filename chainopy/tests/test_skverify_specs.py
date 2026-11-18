@@ -13,10 +13,8 @@ from skverify.testing import check_formula, check_property, specifies
 i, j = sympy.symbols("i j", integer=True)
 P = sympy.IndexedBase("tpm")
 
-TPM = np.array([[0.9, 0.1], [0.5, 0.5]])   # asymmetric on purpose
-TPM3 = np.array([[0.5, 0.3, 0.2],
-                 [0.1, 0.8, 0.1],
-                 [0.3, 0.3, 0.4]])
+TPM = np.array([[0.9, 0.1], [0.5, 0.5]])  # asymmetric on purpose
+TPM3 = np.array([[0.5, 0.3, 0.2], [0.1, 0.8, 0.1], [0.3, 0.3, 0.4]])
 
 
 def entry(F, r, c):
@@ -38,8 +36,7 @@ class TestNStepDistribution:
 
         k = sympy.Dummy("k", integer=True)
         spec = sympy.Sum(P[i, k] * P[k, j], (k, 0, 1))
-        v = check_formula(nstep2, (TPM.copy(),), spec, indices=(i, j),
-                          explore=False)
+        v = check_formula(nstep2, (TPM.copy(),), spec, indices=(i, j), explore=False)
         # chainopy computes P**n by EIGENDECOMPOSITION, so the trace
         # is in sealed eig/inv atoms and tpm never appears
         # symbolically. The honest verdict is the boundary, named:
@@ -47,6 +44,7 @@ class TestNStepDistribution:
         assert "sealed compiled calls" in v.detail
         # the mathematics is still checkable at the value level
         from skverify import to_sympy
+
         out = to_sympy(nstep2, TPM.copy())
         assert np.allclose(np.asarray(out.value, float), TPM @ TPM)
 
@@ -62,14 +60,15 @@ class TestNStepDistribution:
         # over sealed atoms cannot be decided symbolically, and the
         # honest answer is not-a-fake-pass plus a value-level check
         v = check_property(
-            nstep3, (TPM3.copy(),),
-            lambda F: sympy.And(*[
-                sympy.Eq(sum(entry(F, r, c) for c in range(3)), 1)
-                for r in range(3)
-            ]),
+            nstep3,
+            (TPM3.copy(),),
+            lambda F: sympy.And(
+                *[sympy.Eq(sum(entry(F, r, c) for c in range(3)), 1) for r in range(3)]
+            ),
             explore=False,
         )
         assert not v.matches  # never certified through the atoms
+
         # the decorator form of the same fact SKIPS at the boundary
         # rather than failing: a tracer limit is not a chainopy bug
         @specifies.property(
@@ -82,6 +81,7 @@ class TestNStepDistribution:
         with pytest.raises(pytest.skip.Exception):
             decorated()
         from skverify import to_sympy
+
         out = to_sympy(nstep3, TPM3.copy())
         sums = np.asarray(out.value, float).sum(axis=1)
         assert np.allclose(sums, 1.0)
@@ -103,7 +103,11 @@ class TestAdjacency:
         f = out.formula
         e00 = f[0, 0] if hasattr(f, "shape") else f
         assert isinstance(e00, sympy.core.relational.Relational)
-        assert "tpm" in str(e00) and "1.0e-16" in str(e00).replace("e-16", "1.0e-16") or True
+        assert (
+            "tpm" in str(e00)
+            and "1.0e-16" in str(e00).replace("e-16", "1.0e-16")
+            or True
+        )
         vals = np.asarray(out.value, dtype=float)
         assert vals.tolist() == [[1.0, 1.0], [0.0, 1.0]]
 
@@ -141,8 +145,11 @@ class TestStationaryDistribution:
             law="pi @ P == pi and sum(pi) == 1",
             residual=lambda args, result: (
                 "ok"
-                if np.allclose(np.asarray(result) @ np.asarray(args[0]).T,
-                               np.asarray(result), atol=1e-8)
+                if np.allclose(
+                    np.asarray(result) @ np.asarray(args[0]).T,
+                    np.asarray(result),
+                    atol=1e-8,
+                )
                 and np.isclose(np.sum(result), 1.0)
                 else "failed"
             ),
@@ -163,10 +170,11 @@ class TestStationaryDistribution:
             # pure-numpy backend: the eig call seals instead; the
             # defining equation holds at the value level
             from chainopy import MarkovChain as MC
+
             pi = MC(TPM.tolist(), states=["a", "b"]).stationary_dist()
             assert np.allclose(pi @ TPM, pi, atol=1e-8)
         else:
-            (name, checks), = verdicts.items()
+            ((name, checks),) = verdicts.items()
             assert checks.get("residual") == "ok", checks
 
     def test_regression_true_stationary_for_asymmetric_chain(self):

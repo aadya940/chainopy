@@ -3,7 +3,6 @@ import scipy
 import numpy as np
 import os
 
-
 # Write functions to read CSV and real Excel
 
 # Handle Sparse Matrices differently in `save_model`
@@ -96,10 +95,8 @@ def _save_model_markovchain(_object, filename: str, epsilon: float = 1e-16):
                 raise ValueError("Filename should end with `.json`.")
 
     else:
-        raise ValueError(
-            "Can't store _object of class <MarkovChain> \
-                            with transition matrix"
-        )
+        raise ValueError("Can't store _object of class <MarkovChain> \
+                            with transition matrix")
 
 
 def _load_model_markovchain(filepath):

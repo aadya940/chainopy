@@ -34,10 +34,8 @@ class MarkovSwitchingModel:
             raise ValueError("Time Series should be a 1 Dimensional Array.")
 
         if not (ts_data.shape[0] == len(regime_sequence)):
-            raise ValueError(
-                "Regime Sequence and Time Series Data \
-                            must be of the same length"
-            )
+            raise ValueError("Regime Sequence and Time Series Data \
+                            must be of the same length")
 
         if not (isinstance(ts_data, np.ndarray)):
             raise ValueError("Time Series data must be a Numpy Array")

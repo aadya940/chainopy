@@ -102,19 +102,15 @@ class MarkovChain:
 
             if states is not None:
                 if len(states) != len(set(states)):
-                    raise ValueError(
-                        "Names of the states \
-                                            should be Unique"
-                    )
+                    raise ValueError("Names of the states \
+                                            should be Unique")
 
                 if not (p.shape[0] == len(states) and p.shape[0] == p.shape[1]):
                     raise ValueError(f"Invalid TPM {p}")
 
                 if not np.allclose(np.sum(p, axis=1), 1, atol=epsilon * len(states)):
-                    raise ValueError(
-                        f"Rows of the Transition Probability Matrix \
-                                            (TPM) {p} must sum to 1."
-                    )
+                    raise ValueError(f"Rows of the Transition Probability Matrix \
+                                            (TPM) {p} must sum to 1.")
 
     @_handle_exceptions
     @_cache(class_method=True)
@@ -374,10 +370,8 @@ class MarkovChain:
                 if all(self.is_communicating(i, s) for s in self.states):
                     communicating_states.append(i)
                 else:
-                    raise ValueError(
-                        "Chain should be Irreducible to \
-                                    calculate Period"
-                    )
+                    raise ValueError("Chain should be Irreducible to \
+                                    calculate Period")
 
         def return_time(state):
             n = 1
@@ -494,10 +488,8 @@ class MarkovChain:
             absorbing_indices = self._absorbing_state_indices()
             return fundamental_matrix[:, absorbing_indices]
         else:
-            raise ValueError(
-                "Cannot compute absorption probabilities \
-                            for non-absorbing Markov chains."
-            )
+            raise ValueError("Cannot compute absorption probabilities \
+                            for non-absorbing Markov chains.")
 
     @_cache(class_method=True)
     def expected_time_to_absorption(self) -> np.ndarray:

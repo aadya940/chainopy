@@ -17,7 +17,6 @@ def _is_partially_communicating(tpm, states, state1, state2, threshold):
 
 
 def is_communicating_cython(tpm, states, state1, state2, threshold):
-    return (
-        _is_partially_communicating(tpm, states, state1, state2, threshold)
-        and _is_partially_communicating(tpm, states, state2, state1, threshold)
-    )
+    return _is_partially_communicating(
+        tpm, states, state1, state2, threshold
+    ) and _is_partially_communicating(tpm, states, state2, state1, threshold)
